@@ -14,6 +14,7 @@ import pathlib
 import shutil
 import sys
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 import wave
@@ -49,10 +50,23 @@ def load_env():
 
 # ---------- Riot ----------
 
+UA = {"User-Agent": "lol-squad-bot/1.0 (+https://github.com/latifakgun/lol-squad)"}  # Cloudflare Python-urllib'i 1010 ile reddediyor
+
+
+def get_json(url, headers=None):
+    for attempt in range(4):
+        try:
+            with urllib.request.urlopen(urllib.request.Request(url, headers={**UA, **(headers or {})}), timeout=15) as r:
+                return json.load(r)
+        except urllib.error.HTTPError as e:
+            # 429: Riot servis yoğunluğu ya da hız sınırı; Retry-After kadar bekleyip tekrar dene.
+            if e.code != 429 or attempt == 3:
+                raise
+            time.sleep(int(e.headers.get("Retry-After") or 2 * (attempt + 1)))
+
+
 def riot_get(path):
-    req = urllib.request.Request(RIOT + path, headers={"X-Riot-Token": os.environ["RIOT_API_KEY"]})
-    with urllib.request.urlopen(req, timeout=15) as r:
-        return json.load(r)
+    return get_json(RIOT + path, {"X-Riot-Token": os.environ["RIOT_API_KEY"]})
 
 
 def puuids():
@@ -61,8 +75,8 @@ def puuids():
 
 
 def item_names():
-    ver = json.load(urllib.request.urlopen("https://ddragon.leagueoflegends.com/api/versions.json", timeout=15))[0]
-    data = json.load(urllib.request.urlopen(f"https://ddragon.leagueoflegends.com/cdn/{ver}/data/tr_TR/item.json", timeout=15))
+    ver = get_json("https://ddragon.leagueoflegends.com/api/versions.json")[0]
+    data = get_json(f"https://ddragon.leagueoflegends.com/cdn/{ver}/data/tr_TR/item.json")
     return {int(i): v["name"] for i, v in data["data"].items()}
 
 

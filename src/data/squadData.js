@@ -3,29 +3,28 @@ export const squadData = {
   players: {
     l4cg: {
       riotId: "l4cg#TR1",
-      tag: "Mid / Support",
-      summary: "Demir II (Tek/Çift 39 LP · Esnek 33 LP, 46. seviye). Son 10 maçında %60 galibiyet oranı (6G 4M) yakaladı; Xerath ile Tek/Çift'te 13/4/14, Seraphine ile Esnek'te 5/4/20 ve 3/10/21 asist katkısıyla ekibin orta koridor ve destek yükünü sırtlıyor.",
+      tag: "46 Level Dalga Profesörü · 2 Aylık Topçu & CC Kralı",
+      summary: "Daha 46 seviye ve yaklaşık 2 aylık taze bir oyuncu olmasına rağmen, kendinden katbekat tecrübeli 112–395 seviye kurtların döndüğü lobilerde son 10 maçta %60 WR (6G 4M), son 20 maçta %55 WR (2.19 KDA) ve orta koridorda %60 WR tutturarak ekibin beyni gibi oynuyor. Altın/Platin elodaki adamların bile beceremediği dalga yönetimi (Crash + Roam), Veigar ile 7.1 CS/dk (247 ve 217 CS) ve Xerath ile 271 CS (6.4 CS/dk) farm ivmesi, Tek/Çift'te Xerath ile %100 WR (13/4/14, 6.75 KDA, OP Score 9.2; sezon 7 maç %57 WR) şovu ve Esnek'te Seraphine ile patlattığı 5/4/20 (6.25 KDA) ve 3/10/21'lik asist rekorları 2 aylık bir hesap için kelimenin tam anlamıyla şapka çıkartılacak seviye.",
       kpis: [
-        { val: "%60", lbl: "Son 10 Maç WR (6G 4M)" },
-        { val: "%55", lbl: "Son 20 Maç WR (2.19 KDA)" },
-        { val: "%57", lbl: "Sezon Xerath WR (7 Maç)" },
-        { val: "6.4–7.1", lbl: "Mid Zirve CS/dk (Veigar/Xerath)" }
+        { val: "Sv. 46 (2 Ay) → %60 WR", lbl: "Seviyesine Göre Kıyas (Mid %60 · Son 10: 6G 4M)" },
+        { val: "%100 SoloQ WR", lbl: "Tek/Çift Xerath (13/4/14 · OP 9.2 · Sezon %57 WR)" },
+        { val: "6.4–7.1 CS/dk", lbl: "Farm İvmesi (Xerath 271 · Veigar 247 & 217 CS)" },
+        { val: "20 & 21 Asist", lbl: "Premade Seraphine Katkısı (+%9.8 30+ Dk WR)" },
+        { val: "%55 WR (2.19)", lbl: "Son 20 Maç Genel Tablo (Demir II 39 LP)" }
       ],
       good: [
-        "<strong>Koridor Yönetimi ve Roam Zekâsı:</strong> Rakibi kestikten sonra dalgayı kuleye sokup (<em>Crash</em>) minyon kaybettirerek alt ve üst koridora zamanında rotasyon yapıyor.",
-        "<strong>Yüksek Minyon Toplama Tavanı:</strong> Son maçlarında Xerath ile 271 CS, Veigar ile 247 CS ve 217 CS (7.1 CS/dk) barajlarına ulaşarak geç oyunda ciddi altın üstünlüğü kurdu.",
-        "<strong>Geç Oyun ve Takım Savaşı Etkisi:</strong> 30. dakikayı geçen maçlarda kazanma oranı <strong>+%9.8</strong> artıyor; Seraphine ile Esnek maçlarında 20 ve 21 asist üreterek takım savaşlarını çeviriyor."
+        "<strong>2 Aylık Oyuncuda Altın/Platin Seviye Dalga Yönetimi ve Roam Zekâsı:</strong> Oyuna başlayalı daha 2 ay (46 seviye) olmuşken rakibi kestikten sonra minyon dalgasını kuleye sokup (<em>Crash</em>) rakibe altın/XP kaybettirmesi ve oluşan zaman penceresinde alt/üst koridora roam atması, 200–300 seviye oyuncuların bile akıl edemediği usta işi bir makro oyun.",
+        "<strong>Müthiş CS İvmesi ve Geç Oyun Taşıyıcılığı (+%9.8 WR):</strong> 46 seviye bir hesaptan beklenmeyecek bir el alışkanlığıyla Xerath'ta <strong>271 CS</strong> ve <strong>201 CS (6.4 CS/dk)</strong>, Veigar'da ise <strong>247 CS (14/12/14)</strong>, <strong>244 CS</strong> ve <strong>217 CS (7.1 CS/dk, 7/2/5)</strong> barajlarını deviriyor; maç 30. dakikayı geçtiğinde kazanma oranı <strong>+%9.8</strong> fırlayarak takımı sırtlıyor.",
+        "<strong>SoloQ Xerath Keskin Nişancılığı ve Premade Seraphine Motoru:</strong> Dereceli Tek/Çift'te Xerath ile <strong>%100 WR</strong> (son maçında <strong>13/4/14, 134 CS, 6.75 KDA, OP Score 9.2</strong> ve ortalama <strong>11.3/6/12</strong>; sezon genelinde 7 maç <strong>%57 WR</strong>, 64B ustalık) yakalarken, Esnek premade maçlarda Seraphine (31B ustalık) ile <strong>5/4/20 (6.25 KDA, OP Score 7.7 — maç 2.'si)</strong> ve <strong>3/10/21</strong> oynayıp 20–21 asistlik kalkan ve kitle kontrol zinciriyle Minte ve Swag'e vadiyi dar ettiriyor."
       ],
       bad: [
-        "<strong>Veigar ve Xerath'ta Cam Topu Dizilimi:</strong> Suikastçı ve üstüne atlayan rakiplere karşı 0 Can/Kalkan (<em>Luden + Yıldırım Asası + Gölgealev</em>) çıktığı maçlarda çok fazla ölüm veriyor (Xerath 10/23/12, Veigar 9/11/6 ve 14/12/14).",
-        "<strong>Sıfır Kontrol Totemi Alışkanlığı:</strong> Maçların tamamında <em>No Control Wards</em> etiketi bulunuyor; nehir ve çalı görüşü eksik kaldığı için baskınlara açık kalıyor.",
-        "<strong>Seraphine'de Yanlış Eşya ve Çizme Tercihi:</strong> <em>Zaz'Zak + Sihirbaz Pabuçları</em> çıktığında yetenek hızı düşük kalıyor, W kalkanı geç dönüyor ve 3/10/21 gibi yüksek ölüm sayılarına çıkıyor.",
-        "<strong>Üst Koridor Denemeleri:</strong> Sezon genelinde Quinn (6 maç %0 WR, 0.64 KDA) ve Trundle (%50 WR, 1.16 KDA) seçimleri dereceli puanını aşağı çekiyor."
+        "<strong>Gelişim Alanı 1 — Suikastçılara Karşı 'Cam Topu' Eşya Tercihi:</strong> Hasar çıkarma iştahı harika ama Zed, Yone, Sylas gibi üstüne atlayan rakiplere karşı 0 Can/Kalkan (<em>Luden'in Silahı + Yıldırım Asası + Gölgealev</em>) çıktığında korumasız kalıp Veigar (9/11/6, 184 CS ve 14/12/14) ile Xerath (10/23/12, 271 CS) maçlarında gereksiz ölümler verebiliyor.",
+        "<strong>Gelişim Alanı 2 — Seraphine Yetenek Hızı ve Kontrol Totemi Alışkanlığı:</strong> Seraphine'de <em>Zaz'Zak + Sihirbaz Pabuçları</em> çıktığında W kalkanının bekleme süresi uzun kaldığı için 3/10/21 maçındaki gibi açık hedef olabiliyor; ayrıca maçlardaki <em>No Control Wards</em> (0 Pembe Totem) alışkanlığını ve üst koridordaki Quinn (6 maç %0 WR, 0.64 KDA) / Trundle (%50 WR, 1.16 KDA, Top %17 WR) denemelerini geride bıraktığında LP'si uçuşa geçecek."
       ],
       fix: [
-        "<strong>Veigar Hayatta Kalma Reçetesi:</strong> Zed, Yone, Sylas ve Akali gibi suikastçılara karşı <em>Aery'yi Çağır + Kemik Zırh</em> rününe ve <strong>Başmelek Asası → İonia Çizmesi → Rabadon'un Şapkası → Zhonya/Banshee</strong> sırasına geç; arabalı minyonları mutlaka Q ile (+3 stack) al.",
-        "<strong>Xerath Görüş ve Mesafe Koruması:</strong> 9. seviyede anında <strong>Mavi Totem (Uzak Görüş)</strong> al; suikastçılara karşı <em>Sıçra + Bariyer/Bitkinlik</em> seçip 3. eşyada Zhonya veya Banshee'yi ihmal etme.",
-        "<strong>Seraphine Rylai + Kızağı Sinerjisi:</strong> Destek eşyasında Zaz'Zak yerine <strong>Gündönümü Kızağı</strong>, çizmede <strong>İonia Çizmesi</strong> al; ardından <strong>Rylai'nin Kristal Asası + İmparatorun Fermanı</strong> ile tekli E yeteneğini doğrudan mıhlamaya (<em>Root</em>) çevir."
+        "<strong>Veigar'da Suikastçılara Karşı Zırhlı Büyücü Paketi:</strong> 61B ustalıklı Veigar'ında 247 CS yaptığın maçlardaki devasa AP'yi koruyarak hayatta kalmak için Zed/Yone/Sylas/Akali karşısında <em>Aery'yi Çağır + Kemik Zırh</em> rününe ve <strong>Başmelek Asası → İonia Çizmesi → Rabadon'un Şapkası → Zhonya/Banshee</strong> sırasına geç; arabalı minyonları da mutlaka Q ile kesip bedava <strong>+3 stack</strong>'i cebe indir.",
+        "<strong>Xerath'ta 9. Seviye Mavi Totem ve Mesafe Sigortası:</strong> 6.75 KDA'lık SoloQ Xerath şovunu her maça yaymak için 9. seviyede anında <strong>Mavi Totem (Uzak Görüş)</strong> al, nehir çalısına 75 altınlık 1 Pembe Totem bırak ve üstüne uçan rakiplere karşı <em>Sıçra + Bariyer/Bitkinlik</em> ile 3. veya 4. eşyada <strong>Zhonya / Banshee</strong> çek.",
+        "<strong>Seraphine'de Gündönümü Kızağı + Rylai ile Tek Tuş Mıhlama:</strong> 20–21 asistlik premade katkını taçlandırmak için destek eşyasında Zaz'Zak yerine <strong>Gündönümü Kızağı</strong>, çizmede <strong>İonia Çizmesi</strong> al; hemen üstüne <strong>Rylai'nin Kristal Asası + İmparatorun Fermanı</strong> çıktığında tekli E yeteneğin bile rakipleri olduğu yere mıhlayacak (<em>Root</em>) ve W kalkanın çok daha hızlı dönecek."
       ],
       builds: [
         {

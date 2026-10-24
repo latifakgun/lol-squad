@@ -739,31 +739,31 @@ export const squadData = {
     },
     patrick: {
       riotId: "Patrick Cem#OMEN",
-      tag: "395 Sv. Kelle Ödülü Vakfı",
-      summary: "395 hesap seviyesi, sezonda 507 maç (71 Tek/Çift + 436 Esnek) ve kağıt üstünde Altın III (Tek/Çift 20 LP · Esnek 75 LP). 46 ve 30 seviyeli Demir/Bronz arkadaşlarının lobisine girdiğinde beklenti vadide terör estirmesi; gerçekteyse 1.65 sezon KDA'sı (8.1 kill / 8.4 ölüm), %49 Esnek WR'si (213G 223M) ve 36 kill aldığı Rengar maçında bile 20 kere ölerek karşı takımı ihya etmesi.",
+      tag: "395 Sv. Feed Makinesi · Demirlere Domalan Altın",
+      summary: "395 level hesap, sezonda 507 maç (71 Tek/Çift + 436 Esnek) ve kağıt üstünde Altın III (Tek/Çift 20 LP · Esnek 75 LP) ama icraata gelince 30-46 level Demir/Bronz arkadaşlarının lobisinde bile demirlere domalan yürüyen bir feed makinesi amk. 400 level'lık adamın bu eloda tek elle vadinin içinden geçmesi gerekirken 1.65 sezon KDA'sı (maç başı 8.1 kill / 8.4 ölüm), %49 Esnek WR'si (213G 223M) ve 36 kill aldığı Rengar maçında bile 20 kere geberip maçı satmasıyla tam bir oyun içi hayır kurumu.",
       kpis: [
-        { val: "Beklenen: 4+ KDA", lbl: "Gerçek: 1.65 Sezon (Son 20: 1.86)" },
+        { val: "1.65 KDA", lbl: "400 Sv. Feed Makinesi (Son 20: 1.86)" },
         { val: "8.4 Ölüm/Maç", lbl: "507 Sezon Maçı (8.1 Kill / 8.4 Ölüm)" },
-        { val: "%49 WR", lbl: "436 Esnek Maçı (213G 223M · Altın III)" },
-        { val: "395 Sv.", lbl: "287B Vayne · 271B Zed · 203B Yasuo" },
-        { val: "%37 KP", lbl: "Son 20 Maç Skor Katkısı (%55 WR)" }
+        { val: "%49 WR", lbl: "436 Esnek Maçı (213G 223M · Demirlere Kayıp)" },
+        { val: "395 Sv.", lbl: "287B Vayne · 271B Zed · 203B Yasuo (Süs)" },
+        { val: "%37 KP", lbl: "Son 20 Maç Skor Katkısı (Haritada Yok)" }
       ],
       good: [
-        "<strong>Demir Lobisinde Karın Doyuran Mekanik Tavan:</strong> 395 seviyenin hakkını nadiren hatırladığında Esnek'te Rengar ile <strong>28/10/6 (298 CS)</strong> ve <strong>36/20/6 (388 CS)</strong>, Normal maçta Yasuo ile <strong>20/4/1</strong> kesebiliyor — tabii 36 kill'in yanına 20 ölümü sıkıştırıp bütün haritaya hayır hasenat dağıtmasa tam taşıyacak.",
-        "<strong>500 Maçta Tutturduğu İki İstatistik:</strong> 162 maç Vayne (%54 WR, 6.7 CS/dk) ve 9 maç Gnar (%56 WR, 7.8 CS/dk) oynarken minyon kesmeyi unutmuyor; Cho'Gath (<strong>14/12/15, 252 CS</strong>) aldığında da 12 kez ölmesine rağmen etten duvar olup l4cg ve Swag'e nefes aldırıyor."
+        "<strong>Arada Bir Monitörü Açıp Tuşlara Basıyor:</strong> 395 level olduğunu kırk yılda bir hatırlayınca Esnek'te Rengar ile <strong>28/10/6 (298 CS)</strong>, Normal maçta Yasuo ile <strong>20/4/1</strong> kesip lobiyi tokatlıyor — tabii diğer Rengar maçında <strong>36/20/6 (388 CS)</strong> oynayıp 20 kere ölerek karşı takımı zengin etmese gerçekten taşıyacak amk.",
+        "<strong>507 Maçta Bozuk Saat Gibi Tutan İki İstatistik:</strong> 162 maç Vayne (%54 WR, 6.7 CS/dk) ve 9 maç Gnar (%56 WR, 7.8 CS/dk) oynarken en azından minyon kesebiliyor; Cho'Gath (<strong>14/12/15, 252 CS</strong>) aldığında da 12 kere ölse bile koca gövdesiyle l4cg ve Swag'in önüne etten barikat oluyor."
       ],
       bad: [
-        "<strong>400 Level'lık Hesapla Demir/Bronz Lobisine Feed:</strong> Altın III apoletiyle girdiği maçlarda beklenti koridoru 10 dakikada kapatmasıyken; Tek/Çift'te Ekko ile <strong>2/10/1 (OP Score 1.4 — Maç 10.'su!)</strong>, 203.223 ustalık puanlı Yasuo'suyla <strong>3/12/14 (OP Score 3.9 — Maç 7.'si)</strong> oynayarak adeta 'ustalık puanı var, oyun bilgisi yok' dersi veriyor.",
-        "<strong>Yürüyen Kelle Ödülü (Shutdown) Bankası:</strong> Sezon genelinde 507 maçta maç başı <strong>8.1 kill alıp 8.4 kez ölüyor</strong> (1.65 KDA). 24 Ekim Esnek maçında Rengar ile <strong>36 kill ve 388 CS</strong> yapıp <strong>20 kez ölerek</strong> rakip takıma binlerce altınlık <em>Shutdown</em> ikram etti ve 36 kill'li maçı kaybettirmeyi başardı.",
-        "<strong>436 Esnek Maçında Negatif Winrate (%49 WR):</strong> Bütün sezonu Esnek kademesinde (213G 223M) geçirip hâlâ %50'nin altında kalmak büyük istikrar; son 20 maçta da sadece <strong>%37 skor katkısı (KP)</strong> ile takım savaşları yerine haritanın öbür ucunda 1v3 av peşinde koşuyor.",
-        "<strong>287B Ustalıklı Üst Koridor Vayne Sendromu:</strong> Takımda zaten Veigar/Xerath ve Jhin/MF gibi kırılganlar varken üst koridora inatla 162 maç Vayne veya suikastçı çekip ön safı bomboş bırakıyor; girdiği son Vayne maçından da <strong>10/7/6</strong> mağlubiyetle çıktı.",
-        "<strong>Son 10 Maçta 98 Ölüm (Maç Başı 9.8 Ölüm!):</strong> Son 10 maçının sadece 2'sinde (20/4/1 Yasuo ve 8/4/5 Rengar) 6'nın altında öldü; geri kalanlarda <strong>20, 12, 12, 10, 10, 7, 7, 6 ölüm</strong> dizerek gri ekran izleme rekoru kırdı."
+        "<strong>395 Level Hesapla Demir/Bronz Lobisinde Domalmak:</strong> Neredeyse 400 level olmuşsun, sezonda 507 maç atmışsın amk; karşıdaki 30 level demirleri 10 dakikada sıraya dizmen gerekirken Tek/Çift'te Ekko ile <strong>2/10/1 (OP Score 1.4 — Maç 10.'su!)</strong>, 203.223 ustalık puanlı Yasuo'nla <strong>3/12/14 (OP Score 3.9 — Maç 7.'si)</strong> oynayıp koridorda paspas oluyorsun.",
+        "<strong>36 Kill Alıp 20 Kere Geberen Kelle Ödülü Bankası:</strong> Sezon genelinde 507 maçta maç başı <strong>8.1 kill alıp 8.4 kere ölüyor</strong> (1.65 KDA). 24 Ekim Esnek maçında Rengar ile <strong>36 kill ve 388 CS</strong> kasıp üstüne <strong>20 kere ölmek</strong> ne demek amk? Karşıdaki Demir/Bronz adamlara binlerce altınlık <em>Shutdown</em> dağıta dağıta 36 kill'li maçı tek başına sattı.",
+        "<strong>436 Esnek Maçında Negatif Winrate (%49 WR) ve %37 KP:</strong> Hayatsız gibi 436 maç Esnek atıp 213G 223M ile hâlâ %49 WR'de sürünmek büyük başarı; son 20 maçta da <strong>%37 skor katkısı (KP)</strong> ile takım 4v5 can çekişirken haritanın öbür ucunda solo kill kovalayıp yine ölüyor.",
+        "<strong>287B Ustalıklı Vayne Top Kanserliği:</strong> Takımda zaten Veigar/Xerath ve Jhin/MF gibi üflesen ölecek çarlar varken üst koridora inatla 162 maç Vayne veya suikastçı çekip takımı ön safsız bırakıyor; son Vayne maçında da <strong>10/7/6</strong> ile kule altında eriyip kaybetti.",
+        "<strong>Son 10 Maçta 98 Ölüm (Gri Ekran Simülatörü):</strong> Son 10 maçta toplam <strong>98 kere öldü</strong> (maç başı 9.8 ölüm amk!). Sadece 2 maçta (20/4/1 Yasuo ve 8/4/5 Rengar) insan gibi hayatta kaldı; kalanlarda <strong>20, 12, 12, 10, 10, 7, 7, 6 ölüm</strong> dizerek oyunu siyah-beyaz ekrandan izledi."
       ],
       fix: [
-        "<strong>395 Seviye Gibi Oyna, Kelle Ödülünü Bağışlama:</strong> Rengar veya Yasuo ile 10+ kill'e ulaştığında üzerinde <strong>1000 altınlık Shutdown</strong> varken karanlık ormana 1v3 atlamayı bırak; 3. veya 4. eşyada <strong>Ölümün Dansı / Koruyucu Melek / Sterak'ın Güvencesi</strong> alıp Baron ve Ejder etrafında oyna.",
-        "<strong>5'li Esnekte Ön Saf (Tank/Dövüşçü) Zorunluluğu:</strong> Ormanda Minte (Briar), ortada l4cg (Veigar/Xerath) ve altta Swag (Jhin/MF) varken üst koridora Vayne veya suikastçı çekme; <strong>Cho'Gath, Darius (%60 WR), Garen (%60 WR) veya Gnar (7.8 CS/dk)</strong> alıp takımın ön safını tut.",
-        "<strong>%37 Skor Katkısını %55+ Seviyesine Çıkar:</strong> Dakika 20'den sonra yan koridorda tek başına yakalanıp 40 saniye gri ekran beklemek yerine <em>Işınlanma</em> veya ulti temposunu takımın kitle kontrolüyle (Seraphine R / Veigar E) birleştir.",
-        "<strong>0/2 Başladığın Koridorda Freni Bul:</strong> Ekko (2/10/1) ve Yasuo (3/12/14) maçlarındaki gibi ilk iki ölümden sonra hâlâ kule altına dalmak yerine minyonu kulenin önünde dondur ve ormancıyı bekle."
+        "<strong>Kafanda 1000 Altınlık Shutdown Varken 1v3 Atlamayı Kes:</strong> Rengar veya Yasuo ile 10+ kill aldıktan sonra kendini ilah sanıp karanlık ormana kafa atma amk; 3. veya 4. eşyada <strong>Ölümün Dansı / Koruyucu Melek / Sterak'ın Güvencesi</strong> çek ve Ejder/Baron önünde takımınla dur.",
+        "<strong>5'li Esnekte Egoist Vayne/Suikastçı Seçimini Bırak, Tank Al:</strong> Ormanda Minte (Briar), ortada l4cg (Veigar/Xerath) ve altta Swag (Jhin/MF) varken üst koridora kırılgan çar alma; <strong>Cho'Gath, Darius (%60 WR), Garen (%60 WR) veya Gnar (7.8 CS/dk)</strong> çekip önde hasarı tankla.",
+        "<strong>%37 Skor Katkısını %55+ Seviyesine Çek:</strong> Dakika 20'den sonra yan koridorda 1v2 yakalanıp 45 saniye gri ekran bekleyeceğine <em>Işınlanma</em> veya Rengar ultisini Seraphine R / Veigar E kombosunun üstüne kullan.",
+        "<strong>0/2 Başladığın Koridorda Kule Altına Dalma:</strong> Ekko (2/10/1) ve Yasuo (3/12/14) maçlarındaki gibi koridorda iki kere kesildikten sonra hâlâ 'bu sefer keserim' diye atlayıp feed makinesine bağlama; dalgayı kulenin önünde dondurup ormancıyı bekle."
       ],
       builds: [
         {

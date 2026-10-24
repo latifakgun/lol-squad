@@ -739,32 +739,36 @@ export const squadData = {
     },
     patrick: {
       riotId: "Patrick Cem#OMEN",
-      tag: "Top / Flex Joker",
-      summary: "Altın III (Tek/Çift 20 LP, %54 WR · Esnek 75 LP, 395. seviye). Ekibin en yüksek seviyeli ve en tecrübeli oyuncusu; son 20 maçında %55 WR yakaladı. Üst koridorda Vayne (287B ustalık), Yasuo (203B ustalık) ve Cho'Gath oynuyor, ayrıca son premade Esnek maçlarında Rengar ile 28 ve 36 kill'lik devasa skorlara ulaştı.",
+      tag: "395 Sv. Kelle Ödülü Vakfı",
+      summary: "395 hesap seviyesi, sezonda 507 maç (71 Tek/Çift + 436 Esnek) ve kağıt üstünde Altın III (Tek/Çift 20 LP · Esnek 75 LP). 46 ve 30 seviyeli Demir/Bronz arkadaşlarının lobisine girdiğinde beklenti vadide terör estirmesi; gerçekteyse 1.65 sezon KDA'sı (8.1 kill / 8.4 ölüm), %49 Esnek WR'si (213G 223M) ve 36 kill aldığı Rengar maçında bile 20 kere ölerek karşı takımı ihya etmesi.",
       kpis: [
-        { val: "Altın III", lbl: "Tek/Çift (%54 WR) & Esnek" },
-        { val: "%55", lbl: "Son 20 Maç WR (1.86 KDA)" },
-        { val: "395", lbl: "Hesap Seviyesi (505 Sezon Maçı)" },
-        { val: "287B", lbl: "Vayne Ustalık (%54 WR)" }
+        { val: "Beklenen: 4+ KDA", lbl: "Gerçek: 1.65 Sezon (Son 20: 1.86)" },
+        { val: "8.4 Ölüm/Maç", lbl: "507 Sezon Maçı (8.1 Kill / 8.4 Ölüm)" },
+        { val: "%49 WR", lbl: "436 Esnek Maçı (213G 223M · Altın III)" },
+        { val: "395 Sv.", lbl: "287B Vayne · 271B Zed · 203B Yasuo" },
+        { val: "%37 KP", lbl: "Son 20 Maç Skor Katkısı (%55 WR)" }
       ],
       good: [
-        "<strong>Yüksek Mekanik Tavan ve Kartopu Gücü:</strong> Son 24 Ekim Esnek maçlarında Rengar ile <strong>28/10/6 (298 CS)</strong> ve <strong>36/20/6 (388 CS)</strong>, Swiftplay'de Yasuo ile <strong>20/4/1</strong> oynayarak tek başına skor yükünü çekti.",
-        "<strong>Geniş Şampiyon Havuzu ve Üst Koridor Hakimiyeti:</strong> Sezon genelinde 162 maç Vayne (%54 WR, 6.7 CS/dk), 50 maç Yasuo (%56 WR) ve 9 maç Gnar (%56 WR, 7.8 CS/dk) ile koridor kazanma oranı yüksek.",
-        "<strong>Ön Saf Tankladığında Ekip Rahatlıyor:</strong> Cho'Gath (14/12/15, 252 CS), Darius (%60 WR) ve Garen (%60 WR) aldığında l4cg ve Swag gibi kırılgan taşıyıcılara harika alan açıyor."
+        "<strong>Demir Lobisinde Karın Doyuran Mekanik Tavan:</strong> 395 seviyenin hakkını nadiren hatırladığında Esnek'te Rengar ile <strong>28/10/6 (298 CS)</strong> ve <strong>36/20/6 (388 CS)</strong>, Normal maçta Yasuo ile <strong>20/4/1</strong> kesebiliyor — tabii 36 kill'in yanına 20 ölümü sıkıştırıp bütün haritaya hayır hasenat dağıtmasa tam taşıyacak.",
+        "<strong>500 Maçta Tutturduğu İki İstatistik:</strong> 162 maç Vayne (%54 WR, 6.7 CS/dk) ve 9 maç Gnar (%56 WR, 7.8 CS/dk) oynarken minyon kesmeyi unutmuyor; Cho'Gath (<strong>14/12/15, 252 CS</strong>) aldığında da 12 kez ölmesine rağmen etten duvar olup l4cg ve Swag'e nefes aldırıyor."
       ],
       bad: [
-        "<strong>Yüksek Ölüm Ortalaması (Sezon 8.4 Ölüm/Maç):</strong> 505 sezon maçında ortalama 8.1 kill alırken <strong>8.4 kez ölüyor</strong>; 36 kill aldığı Rengar maçında bile 20 kez ölerek rakibe yüksek kelle ödülü (<em>Shutdown</em>) verdi.",
-        "<strong>Çok Sık Rol ve Şampiyon Değiştirme:</strong> Her maç farklı bir rol ve şampiyon (Rengar, Cho'Gath, Yasuo, Vayne, Ekko) denediği için premade kompozisyonunda bazen ön saf tamamen boş kalıyor.",
-        "<strong>Suikastçı ile Geç Oyunda Tek Başına Yakalanma:</strong> Rengar ve Ekko (2/10/1) gibi şampiyonlarla geç oyunda 1v3 girdiğinde ölüm süreleri uzadığı için takım 4v5 kalıyor."
+        "<strong>400 Level'lık Hesapla Demir/Bronz Lobisine Feed:</strong> Altın III apoletiyle girdiği maçlarda beklenti koridoru 10 dakikada kapatmasıyken; Tek/Çift'te Ekko ile <strong>2/10/1 (OP Score 1.4 — Maç 10.'su!)</strong>, 203.223 ustalık puanlı Yasuo'suyla <strong>3/12/14 (OP Score 3.9 — Maç 7.'si)</strong> oynayarak adeta 'ustalık puanı var, oyun bilgisi yok' dersi veriyor.",
+        "<strong>Yürüyen Kelle Ödülü (Shutdown) Bankası:</strong> Sezon genelinde 507 maçta maç başı <strong>8.1 kill alıp 8.4 kez ölüyor</strong> (1.65 KDA). 24 Ekim Esnek maçında Rengar ile <strong>36 kill ve 388 CS</strong> yapıp <strong>20 kez ölerek</strong> rakip takıma binlerce altınlık <em>Shutdown</em> ikram etti ve 36 kill'li maçı kaybettirmeyi başardı.",
+        "<strong>436 Esnek Maçında Negatif Winrate (%49 WR):</strong> Bütün sezonu Esnek kademesinde (213G 223M) geçirip hâlâ %50'nin altında kalmak büyük istikrar; son 20 maçta da sadece <strong>%37 skor katkısı (KP)</strong> ile takım savaşları yerine haritanın öbür ucunda 1v3 av peşinde koşuyor.",
+        "<strong>287B Ustalıklı Üst Koridor Vayne Sendromu:</strong> Takımda zaten Veigar/Xerath ve Jhin/MF gibi kırılganlar varken üst koridora inatla 162 maç Vayne veya suikastçı çekip ön safı bomboş bırakıyor; girdiği son Vayne maçından da <strong>10/7/6</strong> mağlubiyetle çıktı.",
+        "<strong>Son 10 Maçta 98 Ölüm (Maç Başı 9.8 Ölüm!):</strong> Son 10 maçının sadece 2'sinde (20/4/1 Yasuo ve 8/4/5 Rengar) 6'nın altında öldü; geri kalanlarda <strong>20, 12, 12, 10, 10, 7, 7, 6 ölüm</strong> dizerek gri ekran izleme rekoru kırdı."
       ],
       fix: [
-        "<strong>5'li Esnekte Ön Saf / Dövüşçü Dengesi:</strong> Ormanda Minte (Briar), ortada l4cg (Veigar/Xerath) ve altta Swag (MF/Jhin) varken üst koridorda <strong>Cho'Gath, Gwen, Gnar veya Darius</strong> seçerek takımın ön safını garantile.",
-        "<strong>Kelle Ödülü (Shutdown) Koruma Disiplini:</strong> Rengar veya Yasuo ile 10+ kill'e ulaştığında tek başına rakip ormana girmek yerine <strong>Koruyucu Melek / Ölümün Dansı / Sterak</strong> çıkıp objektif etrafında oyna."
+        "<strong>395 Seviye Gibi Oyna, Kelle Ödülünü Bağışlama:</strong> Rengar veya Yasuo ile 10+ kill'e ulaştığında üzerinde <strong>1000 altınlık Shutdown</strong> varken karanlık ormana 1v3 atlamayı bırak; 3. veya 4. eşyada <strong>Ölümün Dansı / Koruyucu Melek / Sterak'ın Güvencesi</strong> alıp Baron ve Ejder etrafında oyna.",
+        "<strong>5'li Esnekte Ön Saf (Tank/Dövüşçü) Zorunluluğu:</strong> Ormanda Minte (Briar), ortada l4cg (Veigar/Xerath) ve altta Swag (Jhin/MF) varken üst koridora Vayne veya suikastçı çekme; <strong>Cho'Gath, Darius (%60 WR), Garen (%60 WR) veya Gnar (7.8 CS/dk)</strong> alıp takımın ön safını tut.",
+        "<strong>%37 Skor Katkısını %55+ Seviyesine Çıkar:</strong> Dakika 20'den sonra yan koridorda tek başına yakalanıp 40 saniye gri ekran beklemek yerine <em>Işınlanma</em> veya ulti temposunu takımın kitle kontrolüyle (Seraphine R / Veigar E) birleştir.",
+        "<strong>0/2 Başladığın Koridorda Freni Bul:</strong> Ekko (2/10/1) ve Yasuo (3/12/14) maçlarındaki gibi ilk iki ölümden sonra hâlâ kule altına dalmak yerine minyonu kulenin önünde dondur ve ormancıyı bekle."
       ],
       builds: [
         {
           champ: "Vayne",
-          note: "Top / ADC · Tank Eritici (287B Ustalık · 162 Maç %54 WR)",
+          note: "Top / ADC · 287B Ustalık (162 Maç %54 WR — Ön Safımız Yokken Alma!)",
           variants: [
             {
               title: "Üst Koridor & Geç Oyun İsabet (On-Hit) Dizilimi",
@@ -778,17 +782,17 @@ export const squadData = {
                 { name: "Savaşçı Çizmeleri", note: "Saldırı hızı" },
                 { name: "Guinsoo'nun Hiddeti", note: "Çift Gümüş Ok tetiklemesi" },
                 { name: "Sonlandırma (Terminus)", note: "Zırh/büyü direnci + delme" },
-                { name: "Jak'Sho, Çok Yüzlü", note: "Takım savaşında ölümsüzlük" }
+                { name: "Jak'Sho, Çok Yüzlü", note: "Takım savaşında tek yememe sigortası" }
               ]
             }
           ]
         },
         {
           champ: "Yasuo",
-          note: "Mid / Top · Kritik Dövüşçü (203B Ustalık · 50 Maç %56 WR)",
+          note: "Mid / Top · 203B Ustalık (50 Maç %56 WR — 0/10 Güç Patlaması Garantili)",
           variants: [
             {
-              title: "Standart Kritik & Hayatta Kalma Dizilimi",
+              title: "Standart Kritik & Hayatta Kalma Dizilimi (3/12 Oynamamak İçin)",
               kind: "standard",
               enemies: "Menzilli büyücüler ve dövüşçüler",
               keystone: "Ölümcül Tempo",
@@ -799,14 +803,14 @@ export const squadData = {
                 { name: "Mahvolmuş Kralın Kılıcı", note: "Düello + yavaşlatma" },
                 { name: "Ölümsüz Kalkanyay", note: "%100 kritik + kalkan" },
                 { name: "Ebedi Kılıç", note: "Maksimum kritik hasarı" },
-                { name: "Ölümün Dansı / Koruyucu Melek", note: "Shutdown koruma" }
+                { name: "Ölümün Dansı / Koruyucu Melek", note: "Shutdown vermemek için şart" }
               ]
             }
           ]
         },
         {
           champ: "Cho'Gath",
-          note: "Top · Dev Ön Saf Tankı",
+          note: "Top · Dev Ön Saf Tankı (Ekibin Gerçekten İhtiyacı Olan Çar)",
           variants: [
             {
               title: "Tam Tank & Takım Koruması",

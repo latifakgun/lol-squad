@@ -276,28 +276,29 @@ export const squadData = {
     },
     minte: {
       riotId: "minte#000",
-      tag: "Jungle · Briar OTP",
-      summary: "Altın IV (96 LP) Tek/Çift ve Gümüş III (78 LP) Esnek oyuncusu (112. seviye). 577.479 ustalık puanıyla sezonun %88'ini ormanda (65 maç Briar, 12.9/7.4/5.5 KDA, 7.0 CS/dk) geçiriyor; Briar aldığında ekibin birincil taşıyıcısı konumunda.",
+      tag: "577B Ustalıklı Altın IV Sürünücüsü · Tek Çarlı FF Butonu",
+      summary: "112 level hesap, Briar'da 577.479 ustalık puanı (56. seviye ustalık) ve sözde TR #1,637'ncisi ama gel gör ki Tek/Çift'te hâlâ Altın IV (96 LP), Esnek'te Gümüş III (78 LP) bataklığında sürünüyor amk. Sezonun %88'ini ormanda (65 maç Briar, 12.9/7.4/5.5 KDA, 7.0 CS/dk) tek tuşla W basıp koşarak geçiren bu tek çarlı kolsuz, Briar elinden alındığı saniye üst koridorda Mordekaiser ile 4/13/5, Cho'Gath ile 7/13/6 oynayıp vadideki kulelere bile domalan, geriye düştüğü ilk dakikada da +%24.2 FF oranıyla teslimiyet oylaması spamlamaktan başka bir sikim bilmeyen süzme bir OTP.",
       kpis: [
-        { val: "Altın IV", lbl: "Tek/Çift (96 LP)" },
-        { val: "577B", lbl: "Briar Ustalık (#1,637 TR)" },
-        { val: "7.0", lbl: "Sezon Briar CS/dk (65 Maç)" },
-        { val: "%50", lbl: "Son 10 Maç WR (5G 5M)" }
+        { val: "577B → Altın IV", lbl: "TR #1,637 Briar (96 LP Sürünüyor)" },
+        { val: "4/13 & 7/13", lbl: "Briar Dışı Top (Morde / Cho Feed)" },
+        { val: "+%24.2 FF", lbl: "Erken Teslimiyet (20 dk WR: -%13.3)" },
+        { val: "6/9/2", lbl: "Gerideyken Tahsildar İnadı (Son 10: %50 WR)" },
+        { val: "7.0 CS/dk", lbl: "65 Maç Briar (12.9/7.4/5.5 KDA)" }
       ],
       good: [
-        "<strong>Elit Briar Farm Hızı ve Taşıyıcılık:</strong> Sezon genelinde 65 Briar maçında ortalama <strong>12.9 Kill ve 7.0 CS/dk</strong> (521.3 altın/dk) üretiyor; son maçlarında 29/6/6 (276 CS), 23/5/7 (266 CS) ve 14/3/5 (204 CS) ile MVP (OP Score 10) aldı.",
-        "<strong>Baron ve Kule Hakimiyeti:</strong> Öne geçtiği her maçta <em>Good Baron Usage</em> ve <em>Turrets Destroyer</em> madalyalarını toplayarak harita hedeflerini hızla eritiyor.",
-        "<strong>Seri Yakalama İvmesi:</strong> Günün ilk galibiyetinden sonra kazanma oranı <strong>+%7.2</strong>, ikinci maçında <strong>+%11.2</strong> yükseliyor."
+        "<strong>Kendi Kendine Oynayan Çarda 577B Ustalık Şovu:</strong> W basıp klavyeden elini çektiği Briar ile sezonda 65 maçta ortalama <strong>12.9 kill, 7.0 CS/dk (521.3 altın/dk)</strong> kasıyor; rakipler keriz gibi önüne dizilince <strong>29/6/6 (276 CS)</strong>, <strong>23/5/7 (266 CS)</strong> ve <strong>14/3/5 (204 CS)</strong> oynayıp OP Score 10 (MVP) alarak kendini bir bok sanıyor.",
+        "<strong>Öne Geçerse Baron ve Kule Kemiriyor:</strong> Erken oyunda ağlayıp FF vermezse <em>Good Baron Usage</em> ve <em>Turrets Destroyer</em> madalyalarıyla kuleleri eritiyor; ilk maçı kazandıktan sonra WR'si <strong>+%7.2</strong>, günün 2. maçında <strong>+%11.2</strong> artıyor — tabii ilk maçta 0/2 başlayıp mentalini çökertmezse amk."
       ],
       bad: [
-        "<strong>Orman Dışı Koridor Denemeleri:</strong> Üst koridorda Mordekaiser (4/13/5) ve Cho'Gath (7/13/6) aldığında Briar'daki can çalma alışkanlığıyla takasa girip 13 kez ölüyor.",
-        "<strong>Geriye Düşünce Tam Suikastçı Eşyasında Israr:</strong> 6/9/2 gibi geriye düştüğü Briar maçlarında savunma almak yerine 2. eşya <em>Tahsildar (The Collector)</em> çıktığı için W bastığında anında eriyor.",
-        "<strong>Kontrol Totemi ve Erken Teslimiyet:</strong> Maçlarda 0 pembe totem (<em>No Control Wards</em>) kullanıyor ve erken oyunda skor gerideyse (+%24.2 FF oranı) maçı kafada çabuk bitiriyor."
+        "<strong>577.479 Ustalık Puanıyla Altın IV'te Sürünmek (TR #1,637 Komedisi):</strong> Bir çarda <strong>577 bin ustalık puanı (56 Sv.)</strong> kasıp, sezonda 65 maç gömüp hâlâ <strong>Altın IV (96 LP)</strong> ve Esnek <strong>Gümüş III (78 LP)</strong> eloda takılı kalmak için monitörü kapalı oynaman lazım amk; TR #1,637 etiketi de ayrı bir sirk, o kadar puanla hâlâ Demir/Gümüş lobilerinde son 10 maçta <strong>%50 WR (5G 5M)</strong> çekiyorsun.",
+        "<strong>Briar Elinden Alınınca Yürüyen 300 Altın (Morde 4/13/5 · Cho 7/13/6):</strong> Sezonun %88'inde orman dönüp koridora çıktığı an beyni mavi ekran veriyor; 23 Ekim Esnek maçlarında üst koridorda Mordekaiser ile <strong>4/13/5 (149 CS)</strong> ve Cho'Gath ile <strong>7/13/6 (206 CS)</strong> oynayıp iki maçta toplam <strong>26 kere geberdi</strong> (Cho'Gath %0 sezon WR, Vayne/Jinx/Ezreal %0 WR). Cho'Gath maçını da l4cg (3/10/21 Seraphine) ve Swag (4/9/13 Jhin) sırtlamasa onu da satacaktı.",
+        "<strong>Geriye Düşünce Freni Patlamış Kamyon Gibi Tahsildar Çıkmak (6/9/2):</strong> Briar'la önde değilse oyun bilgisi sıfırlanıyor; <strong>6/9/2 (122 CS)</strong> ve <strong>6/10/0</strong> gittiği maçlarda bile zırh/can almak yerine 2. eşya inatla <em>Tahsildar (The Collector)</em> çıkıp W bastığı saniye CC yiyerek patates oluyor (SoloQ ortalama <strong>8.0 ölüm/maç</strong>, Briar sezon ortalama <strong>7.4 ölüm/maç</strong>).",
+        "<strong>+%24.2 FF Oranı ve Sıfır Pembe Totemle Ağlama Duvarı:</strong> Maçların tamamında <strong>0 Kontrol Totemi</strong> (<em>No Control Wards</em>) ve kısa maçlarda <em>Rift Herald Ignored</em> damgası var; kendi skoru <strong>2/2/1 (118 CS)</strong> gibi kötü başlayınca <strong>+%24.2 fazla teslimiyet (FF)</strong> oranıyla 15. dakikada 'çıkalım amk' diye ağlayıp 20. dakika kazanma oranını <strong>-%13.3</strong>'e çakıyor."
       ],
       fix: [
-        "<strong>Derecelide %100 Orman Disiplini:</strong> Sezon verisinde %88 orman rolü dışındaki tüm denemeler (Cho'Gath %0 WR, Vayne/Jinx/Ezreal %0 WR) kaybettiriyor; Briar yasaklanırsa <strong>Amumu, Diana veya Warwick</strong> seç.",
-        "<strong>Geriye Düşülen Maçlarda Dövüşçü (Bruiser) Briar:</strong> Maça 0/3 başlandığında <em>Kâfir Hidra + Tahsildar</em> yerine <strong>Haşmetli Hidra / Mahvolmuş Kralın Kılıcı → Kara Balta → Sterak'ın Güvencesi</strong> dizilimine dön.",
-        "<strong>Vadi'nin Alameti ve Görüş Kontrolü:</strong> İlk dönüşte 1 Kontrol Totemi alıp 14. dakikadaki Vadi'nin Alameti'ni orta koridor (l4cg) kulesini açmak için kullan."
+        "<strong>Üst Koridorda 13 Kere Domalmayı Bırak, %100 Ormanda Kal:</strong> Sezonda %88 orman oynayıp yan rollerde Cho'Gath/Vayne/Jinx/Ezreal ile <strong>%0 WR</strong> çekiyorsun; Mordekaiser (4/13/5) veya Cho'Gath (7/13/6) alıp koridoru satacağına Briar banlanırsa ormanda <strong>Diana (62B ustalık), Amumu veya Warwick</strong> kilitle.",
+        "<strong>0/3 Başladığın Briar Maçında Tahsildar'ı Götüne Sokma, Bruiser Çık:</strong> Gerideyken <em>Kâfir Hidra + Tahsildar</em> çıkıp 6/9/2 erimek yerine <strong>Haşmetli Hidra / Mahvolmuş Kralın Kılıcı → Kara Balta → Sterak'ın Güvencesi</strong> dizilimine dön ki W bastığında 1 saniyede tek yeme.",
+        "<strong>20. Dakikada FF Spamlamayı Kes ve 75 Altına Pembe Totem Al:</strong> Ekibin 30+ dakika kazanma oranı <strong>+%10</strong> artarken senin 20. dakika WR'n <strong>-%13.3</strong>; erken oyunda 2/2/1 düştün diye FF butonuna abanma, ilk dönüşte 1 Kontrol Totemi al ve 14. dakikadaki Vadi'nin Alameti'ni görmezden gelmek yerine l4cg'nin orta kulesine aç."
       ],
       builds: [
         {

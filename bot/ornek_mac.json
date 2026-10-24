@@ -1,0 +1,10 @@
+{
+ "_not": "Test için örnek veri: 24 Ekim Esnek maçının sitedeki satırlarından; altın/hasar/görüş değerleri temsilî.",
+ "queue": "Esnek", "minutes": 34,
+ "squad": {
+  "Patrick": {"champ": "Rengar", "role": "JUNGLE", "win": false, "kills": 36, "deaths": 20, "assists": 6, "cs": 388, "cs_per_min": 11.4, "gold": 24100, "damage": 61200, "vision": 9, "kill_participation": 52, "items": ["Hayalet Kılıç", "Tahsildar", "Ebedi Kılıç"], "level": 395},
+  "Latif": {"champ": "Xerath", "role": "MIDDLE", "win": false, "kills": 10, "deaths": 23, "assists": 12, "cs": 271, "cs_per_min": 8.0, "gold": 15800, "damage": 48300, "vision": 14, "kill_participation": 28, "items": ["Luden'in Silahı", "Sihirbaz Pabuçları", "Gölgealev"], "level": 46},
+  "Swag": {"champ": "Jhin", "role": "BOTTOM", "win": false, "kills": 3, "deaths": 20, "assists": 7, "cs": 168, "cs_per_min": 4.9, "gold": 10200, "damage": 17400, "vision": 11, "kill_participation": 13, "items": ["Kibir", "Atiklik Çizmesi"], "level": 30}
+ },
+ "others": []
+}

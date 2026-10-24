@@ -1,6 +1,6 @@
 # Maç sonu ses botu
 
-Discord'da `/bitti` yazınca: Riot'un resmî API'sinden ekibin son maçını çeker → Argon (Gemini CLI) konuşma metnini yazar → Gemini Pro TTS (Fenrir sesi) seslendirir → bot komutu yazanın ses kanalına girer, okur, çıkar. Metin aynı anda kanala da yazılır.
+Discord'da `/bitti` yazınca: Riot'un resmî API'sinden ekibin son maçını çeker → Argon (Gemini CLI) konuşma metnini yazar → Gemini Pro TTS (Fenrir sesi, Google Cloud Text-to-Speech API) seslendirir → bot komutu yazanın ses kanalına girer, okur, çıkar. Metin aynı anda kanala da yazılır.
 
 LoL istemcisine, oyun belleğine ya da Vanguard'ın gördüğü hiçbir şeye dokunmaz; yalnızca Riot'un web API'sini kullanır.
 

@@ -32,10 +32,11 @@ SQUAD = {
 }
 RIOT = "https://europe.api.riotgames.com"
 ARGON_MODEL = "gemini-4-argon"
-TTS_MODEL, TTS_VOICE = "gemini-2.5-pro-tts", "Fenrir"
-TTS_STYLE = ("Bunu Türk bir Twitch yayıncısı gibi oku: enerjik, samimi, bol küfürlü, arkadaşlarına acımadan laf sokuyor, "
-             "espri yerlerinde gülerek vurguluyor. Patrick Cem'in repliklerini (Yarma ya yarma, Ölüsünü sikicem onun, "
-             "Ya kanka hadi ya, Ya yok amına koyayım ya) onu taklit eder gibi abartılı, sızlanan, dalga geçen bir sesle oku:\n\n")
+TTS_MODEL, TTS_VOICE, TTS_RATE = "gemini-2.5-pro-tts", "Fenrir", 0.9
+# Cloud TTS'te prompt ve text ayrı alan: ton talimatı asla seslendirilmez.
+TTS_STYLE = ("Türk bir Twitch yayıncısı gibi oku: samimi, enerjik, bol küfürlü, arkadaşlarına acımadan laf sokuyor, "
+             "espri yerlerinde gülerek vurguluyor. Acele etmeden, rahat bir tempoda konuş. Patrick Cem'in lafları "
+             "geçtiğinde onu taklit eder gibi sızlanan, abartılı bir sesle söyle.")
 QUEUES = {400: "Normal", 420: "Dereceli Tek/Çift", 430: "Normal", 440: "Esnek", 450: "ARAM", 490: "Hızlı Oyun"}
 
 
@@ -132,21 +133,34 @@ async def argon_script(summary):
     return text
 
 
+def chunks(text, limit=3500):
+    """Cloud TTS metin alanı 4000 baytla sınırlı: cümle sınırından böl."""
+    out, cur = [], ""
+    for s in text.replace("! ", "!\n").replace("? ", "?\n").replace(". ", ".\n").splitlines():
+        if cur and len((cur + " " + s).encode()) > limit:
+            out.append(cur); cur = s
+        else:
+            cur = f"{cur} {s}".strip()
+    return out + [cur] if cur else out
+
+
 def tts(text, path):
+    import base64, io
     import google.auth
-    from google import genai
-    from google.genai import types
+    from google.auth.transport.requests import AuthorizedSession
 
     project = os.environ["GOOGLE_CLOUD_PROJECT"]
     cred, _ = google.auth.default(scopes=["https://www.googleapis.com/auth/cloud-platform"], quota_project_id=project)
-    client = genai.Client(vertexai=True, project=project, location="global", credentials=cred)
-    r = client.models.generate_content(
-        model=TTS_MODEL, contents=TTS_STYLE + text,
-        config=types.GenerateContentConfig(
-            response_modalities=["AUDIO"],
-            speech_config=types.SpeechConfig(voice_config=types.VoiceConfig(
-                prebuilt_voice_config=types.PrebuiltVoiceConfig(voice_name=TTS_VOICE)))))
-    pcm = r.candidates[0].content.parts[0].inline_data.data
+    session = AuthorizedSession(cred)
+    pcm = b""
+    for part in chunks(text):
+        r = session.post("https://texttospeech.googleapis.com/v1/text:synthesize", timeout=180, json={
+            "input": {"prompt": TTS_STYLE, "text": part},
+            "voice": {"languageCode": "tr-TR", "name": TTS_VOICE, "modelName": TTS_MODEL},
+            "audioConfig": {"audioEncoding": "LINEAR16", "sampleRateHertz": 24000, "speakingRate": TTS_RATE}})
+        r.raise_for_status()
+        with wave.open(io.BytesIO(base64.b64decode(r.json()["audioContent"]))) as w:
+            pcm += w.readframes(w.getnframes())
     with wave.open(str(path), "wb") as w:
         w.setnchannels(1); w.setsampwidth(2); w.setframerate(24000); w.writeframes(pcm)
 

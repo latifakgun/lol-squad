@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LoL Squad Analytics — l4cg · minte · swagisback · Patrick Cem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./src/styles/main.css" />
+</head>
+<body>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <!-- TOP HEADER -->
+  <header class="top-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-logo">⚔️</div>
+        <div>
+          <h1>LoL Squad Command Center</h1>
+          <p class="subtitle">TR Premade Röntgeni · Rün &amp; Eşya Rehberi · Son 20 Maç &amp; Sinerji Analizi</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <span id="last-updated-badge" class="status-pill">Son Güncelleme: 23 Ekim 2026</span>
+        <button id="open-argon-btn" class="btn-argon">
+          <span class="pulse-dot"></span>
+          ⚡ Argon CLI ile Güncelle
+        </button>
+      </div>
+    </div>
+
+    <!-- 5 MAIN TABS -->
+    <nav class="tabs-nav" id="main-tabs" role="tablist">
+      <button class="tab-btn active" data-tab="l4cg" role="tab">
+        <span class="tab-num">1</span>
+        <div class="tab-label">
+          <strong>l4cg#TR1</strong>
+          <small>Mid / Support · Xerath · Veigar · Seraphine</small>
+        </div>
+      </button>
+      <button class="tab-btn" data-tab="minte" role="tab">
+        <span class="tab-num">2</span>
+        <div class="tab-label">
+          <strong>minte#000</strong>
+          <small>Jungle · TR #1,637 Briar OTP</small>
+        </div>
+      </button>
+      <button class="tab-btn" data-tab="swag" role="tab">
+        <span class="tab-num">3</span>
+        <div class="tab-label">
+          <strong>swagisback#333</strong>
+          <small>ADC / Support · Jhin · MF · Morgana</small>
+        </div>
+      </button>
+      <button class="tab-btn" data-tab="patrick" role="tab">
+        <span class="tab-num">4</span>
+        <div class="tab-label">
+          <strong>Patrick Cem#OMEN</strong>
+          <small>Top / Flex · Vayne · Yasuo · Ön Saf</small>
+        </div>
+      </button>
+      <button class="tab-btn tab-premade" data-tab="premade" role="tab">
+        <span class="tab-num">5</span>
+        <div class="tab-label">
+          <strong>🤝 Premade Maç Analizi</strong>
+          <small>En Az 2 Kişilik Ortak Maçlar &amp; Sinerji</small>
+        </div>
+      </button>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT AREA -->
+  <main class="main-container" id="app-root">
+    <!-- Dynamically populated by src/app.js -->
+  </main>
+
+  <!-- ARGON CLI UPDATE MODAL / DRAWER -->
+  <div class="modal-backdrop hidden" id="argon-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h2>⚡ Argon CLI — Canlı Veri &amp; Analiz Güncelleyici</h2>
+          <p>LeagueOfGraphs / OP.GG linklerini veya kopyaladığın sayfa metinlerini (`Ctrl+A` → `Ctrl+C`) aşağıya bırak. Gönderdiğinde yereldeki <strong>Argon CLI (`gemini-4-argon`)</strong> otomatik açılıp analizleri güncelleyecek ve GitHub Pages'e pushlayacak.</p>
+        </div>
+        <button class="close-btn" id="close-argon-btn" title="Kapat">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Quick Source Links -->
+        <div class="quick-links-box">
+          <div class="box-label">🔗 Tek Tıkla Veri Kaynaklarını Aç (Açılan sayfada Ctrl+A ve Ctrl+C yapıp aşağıya yapıştırabilirsin):</div>
+          <div class="quick-links-grid">
+            <a href="https://www.leagueofgraphs.com/summoner/tr/l4cg-TR1" target="_blank" rel="noopener" class="source-link">📊 l4cg#TR1 (LeagueOfGraphs)</a>
+            <a href="https://www.leagueofgraphs.com/summoner/tr/minte-000" target="_blank" rel="noopener" class="source-link">📊 minte#000 (LeagueOfGraphs)</a>
+            <a href="https://www.leagueofgraphs.com/summoner/tr/swagisback-333" target="_blank" rel="noopener" class="source-link">📊 swagisback#333 (LeagueOfGraphs)</a>
+            <a href="https://www.leagueofgraphs.com/summoner/tr/Patrick+Cem-OMEN" target="_blank" rel="noopener" class="source-link">📊 Patrick Cem#OMEN (LeagueOfGraphs)</a>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="argon-target">Güncellenecek Sekme / Oyuncu</label>
+            <select id="argon-target">
+              <option value="all">Tüm Ekip (4 Oyuncu + Premade Analizi)</option>
+              <option value="l4cg">1. Sekme — l4cg#TR1</option>
+              <option value="minte">2. Sekme — minte#000</option>
+              <option value="swag">3. Sekme — swagisback#333</option>
+              <option value="patrick">4. Sekme — Patrick Cem#OMEN</option>
+              <option value="premade">5. Sekme — Premade Ortak Maçlar</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="argon-urls">Analiz Linkleri (Virgül veya satır ile ayrılmış)</label>
+            <input type="text" id="argon-urls" value="https://www.leagueofgraphs.com/summoner/tr/l4cg-TR1, https://www.leagueofgraphs.com/summoner/tr/minte-000, https://www.leagueofgraphs.com/summoner/tr/swagisback-333, https://www.leagueofgraphs.com/summoner/tr/Patrick+Cem-OMEN" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="argon-raw-input">Ham Veri / Kopyalanan LeagueOfGraphs Metni veya Ek Notların (İsteğe Bağlı)</label>
+          <textarea id="argon-raw-input" rows="7" placeholder="LeagueOfGraphs sayfasında Ctrl+A -> Ctrl+C yapıp buraya yapıştırabilir veya 'Son 5 maçımızı analiz et, yeni Veigar maçlarıma bak' gibi özel talimat yazabilirsin..."></textarea>
+        </div>
+
+        <div id="argon-status-msg" class="argon-status hidden"></div>
+
+        <div class="modal-footer">
+          <div class="bridge-status" id="bridge-indicator">
+            <span class="dot"></span> Yerel köprü: <code>argon-lol://</code> (kurulum: <code>tools/register_protocol.ps1</code>)
+          </div>
+          <div class="modal-btns">
+            <button id="copy-argon-prompt-btn" class="btn-secondary">📋 Promptu Kopyala</button>
+            <button id="trigger-argon-btn" class="btn-primary">🚀 Argon CLI'ı Aç &amp; Analizi Güncelle</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>

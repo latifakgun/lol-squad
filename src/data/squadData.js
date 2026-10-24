@@ -965,27 +965,28 @@ export const squadData = {
     }
   },
   premade: {
-    summary: "Son 10'ar maçlık kesitte tespit edilen 11 ortak premade maçta ekip %55 galibiyet oranı (6G 5M; Esnek kademesinde 6 maçta 4G 2M · %67 WR) yakaladı. Ormanda Minte (Briar) veya Patrick (Rengar) skor yükünü çekerken l4cg'nin Seraphine/Veigar/Xerath kitle kontrolü ve Swag'in MF/Jhin ulti takibi Esnek maçlarını kazandırıyor.",
+    summary: "11 ortak premade maçta genel tablo %55 WR (6G 5M; Esnek 6 maçta 4G 2M · %67 WR) ama rakamların kapağını kaldırınca ortada 395 level'lık devasa bir 'Patrick Jane' sirk çadırı var amk. Kendini The Mentalist'teki Patrick Jane sanıp Riot ID'sini 'Patrick Cem' koyan bu sözde zihin okuyucu, 30–46 level Demir/Bronz arkadaşlarının lobisinde bile haritayı okuyamayıp 6 ortak maçta tam 57 kere geberdi (maç başı 9.5 ölüm, %50 WR: 3G 3M)! Oysa 395 Sv., sezonda 507 maç (71 SoloQ + 436 Esnek) ve 287B Vayne / 271B Zed / 203B Yasuo ustalığı olan bir adamın normalde Platin–Zümrüt eloda, 3.0+ KDA, maç başı en çok 5 ölüm ve %50+ KP ile bu lobiyi tek elle tokatlaması gerekirken; gerçekte Altın III'te 1.65 KDA, maç başı 8.4 ölüm, %37 KP ve 436 Esnek maçında %49 WR (213G 223M) ile demirlere domalan bir kelle ödülü bankası. Patrick'siz girilen Esnek maçlarında l4cg, Minte ve Swag üçlüsü %75 WR (3G 1M; toplam 5 maçta 3G 2M · %60 WR) çekerken, Patrick girince bozuk saat gibi tutan 28/10/6 Rengar ve 20/4/1 Yasuo maçları dışında 36 kill alıp 20 kere ölerek maç satmasını izliyoruz.",
     kpis: [
-      { val: "%67", lbl: "Esnek Premade WR (4G 2M)" },
-      { val: "%55", lbl: "Toplam Premade WR (6G 5M)" },
-      { val: "+%10", lbl: "30. Dakika Sonrası WR Artışı" },
-      { val: "11 Maç", lbl: "İncelenen Ortak Maç" }
+      { val: "Esnek %75 vs %50", lbl: "Patrick'siz (3G 1M) vs Patrick'li (1G 1M · Toplam %60 vs %50)" },
+      { val: "Platin–Zümrüt · 3+ KDA", lbl: "Patrick Oynaması Gereken (≤5 Ölüm · %50+ KP · 395 Sv. / 507 Maç)" },
+      { val: "Altın III · 1.65 KDA", lbl: "Patrick Gerçek (8.4 Ölüm/Maç · %37 KP · 436 Esnek %49 WR)" },
+      { val: "57 Ölüm (9.5/Maç)", lbl: "Patrick'in 6 Ortak Maç Faturası (Rengar'la 20 Ölüm!)" },
+      { val: "%67 Esnek WR", lbl: "Genel Premade Tablosu (Esnek 4G 2M · Toplam 11 Maç 6G 5M)" }
     ],
     good: [
-      "<strong>Briar + Seraphine/Xerath + MF/Jhin Sinerjisi:</strong> Minte'nin 23/5/7 ve 14/3/5 oynadığı Briar maçlarında l4cg'nin 20+ asistlik Seraphine/Xerath desteği ve Swag'in uzaktan ulti takibi Esnek maçlarını rahat kazandırıyor.",
-      "<strong>Geç Oyun Geri Dönüş Gücü (30+ Dakika +%10 WR):</strong> Takımda Veigar, Xerath, Seraphine ve Briar/Rengar bulunduğundan 25. dakikayı geçen maçlarda tek bir takım savaşıyla 1000 altınlık kelle ödüllerini (<em>Shutdown</em>) toplayıp oyunu çevirebiliyorlar.",
-      "<strong>Esnek Kademesinde Yüksek Uyum:</strong> Son 6 Dereceli Esnek ortak maçının 4'ü kazanıldı (%67 WR); özellikle 3'lü premade (l4cg + minte + swag ve l4cg + swag + patrick) kurgularında skor paylaşımı çok dengeli."
+      "<strong>Patrick'siz Esnek'te %75 WR (l4cg + Minte + Swag Uyum Makinesi):</strong> Sözde 'Mentalist' Patrick Cem kadroda yokken ekibin kafası rahat amk; Esnek'te oynanan 4 maçın 3'ü kazanıldı (<strong>%75 WR</strong>, genel 5 maçta 3G 2M <strong>%60 WR</strong>). 46 level l4cg'nin Seraphine (<strong>5/4/20</strong> ve <strong>3/10/21</strong>) / Xerath (<strong>3/5/10</strong>) kitle kontrolü, Minte'nin <strong>23/5/7 (266 CS, OP Score 10)</strong> ve <strong>14/3/5 (204 CS)</strong> Briar baskısı ve 30 level Swag'in Jhin (<strong>4/9/13, 162 CS</strong>) / MF (<strong>4/9/15</strong>) ulti takibi tıkır tıkır işliyor.",
+      "<strong>46 Level l4cg ve 30 Level Swag'in 395 Level Lobisinde Dik Duruşu:</strong> Daha 2 aylık 46 level l4cg Veigar'la <strong>247 CS (14/12/14)</strong> ve Xerath'la <strong>271 CS</strong> kesip 30. dakika sonrası WR'yi <strong>+%10</strong> yukarı taşırken, 30 level çaylak Swag kendinden 10 kat tecrübeli kurtların arasında <em>Ungankable</em> (baskın yemez) madalyası takıp MF ile <strong>28 skor katkısı (11/17/17)</strong> ve <strong>21 katkı (11/8/10)</strong> üretiyor.",
+      "<strong>Bozuk Saat Bile Günde İki Kere Doğruyu Gösterir (Patrick'in 28/10/6 ve 20/4/1 Maçları):</strong> Hakkını yemeyelim, 395 level olduğunu kırk yılda bir hatırlayınca Esnek'te Rengar'la <strong>28/10/6 (298 CS, OP Score 7.8)</strong>, Normal maçta 203B ustalıklı Yasuo'suyla <strong>20/4/1 (129 CS)</strong> ve hızlı Rengar maçında <strong>8/4/5</strong> oynayıp lobiyi süpürdü — ama 507 maçlık sezonda bozuk saat misali tutan bu iki şov bile diğer maçlarda demirlere domaldığı gerçeğini örtmüyor amk."
     ],
     bad: [
-      "<strong>Aşırı Ölüm ve Cam Topu Dizilimleri:</strong> Kaybedilen 24 Ekim Esnek maçında l4cg (10/23/12), Swag (3/20/7) ve Patrick (36/20/6) toplamda <strong>63 kez öldü</strong>; savunma eşyası çıkmamak (Zhonya/Banshee/Ölümün Dansı eksikliği) öndeki maçları bile riske atıyor.",
-      "<strong>Ana Rol Dışı Denemeler:</strong> Minte'nin orman yerine Mordekaiser Top (4/13/5) veya Swag'in ADC yerine Zed Mid (0/7/2) ve kritik Garen (4/13/4) denediği maçlar doğrudan mağlubiyetle sonuçlanıyor.",
-      "<strong>20. Dakika Erken FF Sendromu:</strong> Bir koridor 0/7 başladığında 20. dakikada erken teslim oylaması başlatılıyor (20 dk WR: -%9 ile -%13 arası), oysa ekibin asıl gücü 30. dakikada açılıyor."
+      "<strong>Oynaması Gereken vs Gerçek (395 Sv. / 507 Maçlık 'Patrick Jane' Komedisi):</strong> Ortak ölçüt net: <strong>395 hesap seviyesi, sezonda 507 maç (71 Tek/Çift + 436 Esnek), 287B Vayne / 271B Zed / 203B Yasuo ustalığı</strong> olan bir oyuncunun bu tecrübeyle <strong>Platin–Zümrüt kademesinde, 3.0+ KDA, maç başı en çok 5 ölüm ve %50+ KP</strong> ile oynaması gerekir. Gel gör ki gerçekteki tablo: <strong>Altın III (Tek/Çift 20 LP · Esnek 75 LP), 1.65 sezon KDA (8.1 kill / 8.4 ölüm), maç başı 8.4 ölüm, %37 KP ve 436 Esnek maçında %49 WR (213G 223M)</strong>! Kendini <em>The Mentalist</em>'teki Patrick Jane sanıp herkesin beynini okuduğunu düşünen adam daha mini haritayı okuyamıyor amk; SoloQ'da bile Demir/Bronz lobisinde Ekko ile <strong>2/10/1 (OP Score 1.4 — Maç 10.'su)</strong> ve Yasuo ile <strong>3/12/14</strong> oynayıp koridorda domaldı.",
+      "<strong>36 Kill Alıp 20 Kere Geberen Premade Kelle Ödülü Bankası (6 Maçta 57 Ölüm!):</strong> Patrick'in girdiği 6 ortak maçta winrate <strong>%50'ye (3G 3M; Esnek 1G 1M)</strong> çakılırken bu 6 maçta toplam <strong>57 kere öldü (maç başı 9.5 ölüm!)</strong>. Hele 24 Ekim Esnek maçında Rengar'la <strong>36 kill ve 388 CS</strong> kasıp üstüne <strong>20 kere ölmek</strong> ne demek lan? Patrick Jane gibi rakibi okuyacağım diye karanlık ormana 1v3 kafa atıp karşıdaki Demir/Bronz adamlara binlerce altınlık <em>Shutdown</em> dağıttı; 1000 altınlık kelle ödüllerini yedire yedire 46 level l4cg (10/23/12 Xerath) ve 30 level Swag'in (3/20/7 Jhin) üstüne kabus gibi çöken rakibi kendi elleriyle besleyip 36 kill'li maçı sattı.",
+      "<strong>%37 KP ile Haritada Hayalet Gezmek ve Rol Dışı Denemeler:</strong> Son 20 maçında <strong>%37 skor katkısı (KP)</strong> ile oynayan sözde 'Mentalist'imiz, takım 4v5 ejder/kule önünde can çekişirken yan koridorda solo kill kovalayıp gank yiyerek gri ekran izliyor. Diğer tarafta Minte kendi ana rolü ormanda Briar'la (23/5/7 ve 14/3/5) taşırken üst koridor Mordekaiser (<strong>4/13/5</strong>) denediğinde, Swag ise alışık olmadığı Zed Mid (<strong>0/7/2</strong>) veya kritik Garen (<strong>4/13/4</strong>) aldığında takımın ön safı eriyor."
     ],
     fix: [
-      "<strong>İdeal 4'lü / 5'li Premade Rol Dağılımı:</strong> <strong>Top:</strong> Patrick Cem (Cho'Gath / Gwen / Darius / Vayne) · <strong>Jungle:</strong> minte (Briar / Diana / Amumu) · <strong>Mid:</strong> l4cg (Veigar / Xerath) · <strong>ADC:</strong> swagisback (Jhin / Miss Fortune) · <strong>Support:</strong> l4cg (Seraphine) veya Patrick (Pyke).",
-      "<strong>25. Dakikayı Görmeden FF Vermemek:</strong> Demir–Altın eloda karşı takım 7/0 olsa bile kule altına tek başına girip kelle ödülü veriyor; Veigar kafesi + Seraphine Rylai E'si + Briar/Rengar atlamasıyla o hedefi 1 kez kesip oyunu çevirin.",
-      "<strong>Eşya Disiplini ve Kontrol Totemi:</strong> Swag Jhin/MF'de <em>Hubris</em> yerine <strong>Tahsildar + Ebedi Kılıç</strong> çıkacak; l4cg Veigar'da <strong>Başmelek Asası</strong> ve Seraphine'de <strong>Gündönümü Kızağı + Rylai</strong> alacak; herkes Baron/Ejder öncesi 1 Pembe Totem taşıyacak."
+      "<strong>Patrick 'Mentalist' RP'sini Bırakıp Haritayı Açacak (Hedef: ≤5 Ölüm & %50+ KP):</strong> 395 level'sın amk, Rengar'la 10+ kill aldıktan sonra 'ben bunların aklını okudum' diyerek 1v3 çalıya atlayıp 20 kere gebermeyi kes! Üzerinde 1000 altın <em>Shutdown</em> varken 3. eşyada <strong>Ölümün Dansı / Koruyucu Melek / Sterak'ın Güvencesi</strong> çek, %37 olan utanç verici KP'ni <strong>%50+</strong> seviyesine çıkar ve 30–46 level kardeşlerine karşı takımı beslemek yerine önlerinde etten duvar ol.",
+      "<strong>İdeal 4'lü / 5'li Premade Rol Disiplini (Herkes Ana İşine):</strong> <strong>Jungle:</strong> minte (Briar ile %100 ormanda kalacak, Mordekaiser Top yasak) · <strong>Mid:</strong> l4cg (Veigar / Xerath) · <strong>ADC:</strong> swagisback (Jhin / Miss Fortune — Zed Mid yok) · <strong>Support:</strong> l4cg (Seraphine) · <strong>Top:</strong> Patrick Cem (egosunu ve 287B Vayne Top sevdasını vestiyere bırakıp <strong>Cho'Gath, Darius veya Gnar</strong> ile takıma ön saf tanklayacak).",
+      "<strong>Eşya Disiplini ve 30+ Dakika Güvencesi (+%10 WR):</strong> Swag Jhin/MF'de <em>Hubris</em> yerine direkt <strong>Tahsildar + Ebedi Kılıç</strong> çıkacak; l4cg Veigar'da suikastçılara karşı <strong>Başmelek Asası + Zhonya</strong> ve Seraphine'de <strong>Gündönümü Kızağı + Rylai</strong> alacak; Minte 20. dakikada FF butonuna abanmayı bırakacak çünkü bu ekip 30. dakikayı gördüğünde <strong>+%10 WR</strong> ile maçı çeviriyor."
     ],
     matches: [
       {
@@ -997,7 +998,7 @@ export const squadData = {
           { key: "l4cg", champ: "Veigar", role: "Mid", kda: "8/7/12", cs: 154 },
           { key: "swag", champ: "Miss Fortune", role: "ADC", kda: "11/8/10", cs: 141 }
         ],
-        verdict: "l4cg ve Swag ikilisi toplam 19 kill üretse de orta oyundaki takım savaşlarında ön saf eksikliği yüzünden maç kaybedildi."
+        verdict: "46 level l4cg (20 skor katkısı, 154 CS) ve 30 level Swag (11 kill, 10 asist, 141 CS) ikilisi toplam 19 kill üretip hasar yükünü sonuna kadar çekti; ikisi de üstüne düşeni fazlasıyla yaptı ama takımda hasarı emecek bir ön saf olmayınca orta oyundaki takım savaşları kıl payı kaybedildi."
       },
       {
         date: "2026-10-24",
@@ -1009,7 +1010,7 @@ export const squadData = {
           { key: "l4cg", champ: "Xerath", role: "Mid", kda: "10/23/12", cs: 271 },
           { key: "swag", champ: "Jhin", role: "ADC", kda: "3/20/7", cs: 168 }
         ],
-        verdict: "Patrick Rengar ile 36 kill ve 388 CS'e ulaştı ancak üçlünün toplam 63 ölümü (Xerath 23, Jhin 20, Rengar 20 ölüm) geç oyunda uzun dirilme süreleriyle maçı kaybettirdi."
+        verdict: "395 level'lık sözde 'Mentalist' Patrick Cem'in 36 kill ve 388 CS kasıp üstüne tam 20 KERE GEBEREREK Demir/Bronz lobisine domaldığı tarihi sirk maçı amk! Kendini Patrick Jane sanıp herkesi okuduğunu düşünen adam haritayı okuyamayıp 1v3 atlayarak karşı takıma binlerce altınlık Shutdown dağıttı; onun beslediği canavarlar 271 CS kesen 46 level l4cg ile 168 CS yapan 30 level Swag'in üstüne çullanınca 36 kill'li maçı kendi elleriyle çöpe attı."
       },
       {
         date: "2026-10-24",
@@ -1021,7 +1022,7 @@ export const squadData = {
           { key: "l4cg", champ: "Veigar", role: "Mid", kda: "14/12/14", cs: 247 },
           { key: "swag", champ: "Miss Fortune", role: "ADC", kda: "11/17/17", cs: 145 }
         ],
-        verdict: "Patrick (28 kill) ve l4cg (14 kill, 247 CS) geç oyunda muazzam hasara ulaştı; Veigar kafesi üstüne Miss Fortune ultisiyle takım savaşları kazanıldı."
+        verdict: "Bozuk saatin günde bir kez doğruyu gösterdiği an: Patrick 28/10/6 (298 CS, OP Score 7.8) ile sonunda 395 level olduğunu hatırladı — gerçi burada bile 10 kere ölüp gri ekrana selam çaktı amk. Asıl omurgayı 247 CS ve 28 skor katkısıyla oynayan l4cg'nin Veigar kafesleri ve Swag'in 28 skor katkılık (11/17/17) Miss Fortune ultileri kurup maçı kapattı."
       },
       {
         date: "2026-10-24",
@@ -1032,7 +1033,7 @@ export const squadData = {
           { key: "patrick", champ: "Rengar", role: "Jungle", kda: "8/4/5", cs: 141 },
           { key: "swag", champ: "Miss Fortune", role: "ADC", kda: "9/11/3", cs: 53 }
         ],
-        verdict: "Patrick'in Rengar baskınları ve Swag'in erken skorlarıyla hızlı kopan galibiyet."
+        verdict: "30 level Swag Miss Fortune ile 9 kill alıp koridorda çatır çatır skor toplarken, Patrick de hayret verici şekilde 20 kere ölmek yerine 8/4/5 (141 CS) oynayıp insan gibi hayatta kalarak hızlı galibiyete eşlik etti."
       },
       {
         date: "2026-10-24",
@@ -1043,7 +1044,7 @@ export const squadData = {
           { key: "patrick", champ: "Rengar", role: "Jungle", kda: "7/6/3", cs: 92 },
           { key: "swag", champ: "Zed", role: "Mid", kda: "0/7/2", cs: 63 }
         ],
-        verdict: "Swag'in Zed denemesi 0/7/2 ile sonuçlanınca Patrick'in 7 kill'lik Rengar çabası yetmedi."
+        verdict: "30 level çaylak Swag alışık olmadığı Zed'i denerken 0/7/2 düşebilir, çocuk daha oyunu öğreniyor; peki 395 level, 507 sezon maçlı 'Patrick Jane' kardeşimiz ormanda Rengar'la 7/6/3 (92 CS) oynayıp 6 kere geberirken hangi zihni okuyordu acaba amk? Çaylağın koridoruna 1 kere bile düzgün çadır kuramayıp maçı beraber batırdı."
       },
       {
         date: "2026-10-23",
@@ -1055,7 +1056,7 @@ export const squadData = {
           { key: "swag", champ: "Jhin", role: "ADC", kda: "4/9/13", cs: 162 },
           { key: "minte", champ: "Cho'Gath", role: "Top", kda: "7/13/6", cs: 206 }
         ],
-        verdict: "Minte Cho'Gath ile önde hasarı emerken l4cg (21 asist Seraphine) ve Swag (Jhin 162 CS) arka saftan kitle kontrol zinciriyle maçı çevirdi."
+        verdict: "Patrick kadroda olmayınca (%75 Esnek WR farkı!) kaos yerine takım oyunu konuşuyor: Minte Cho'Gath ile 206 CS yapıp önde etten duvar olurken, l4cg 21 asistlik Seraphine şovu ve Swag 162 CS'lik (4/9/13) Jhin keskin nişancılığıyla maçı tereyağından kıl çeker gibi aldı."
       },
       {
         date: "2026-10-23",
@@ -1067,7 +1068,7 @@ export const squadData = {
           { key: "l4cg", champ: "Seraphine", role: "Support", kda: "5/4/20", cs: 31 },
           { key: "swag", champ: "Miss Fortune", role: "ADC", kda: "4/9/15", cs: 100 }
         ],
-        verdict: "İmza üçlü kombo: Minte (14/3/5 Briar) içeri uçtu, l4cg (5/4/20 Seraphine) kalkan ve ultiyle rakipleri mıhladı, Swag MF ultisiyle süpürdü."
+        verdict: "Patrick'siz premade'in ders niteliğindeki imza maçı: Minte ana rolü ormanda 14/3/5 (204 CS, 6.33 KDA) Briar ile sadece 3 kez ölerek vadiyi dar etti, l4cg 5/4/20 Seraphine (6.25 KDA) ile kalkan/CC yağdırdı, Swag da 15 asistlik MF ultileriyle skoru süpürdü — 20 kere ölüp Shutdown satan bir 'Mentalist' olmayınca maç ne kadar temiz kazanılıyor."
       },
       {
         date: "2026-10-23",
@@ -1079,7 +1080,7 @@ export const squadData = {
           { key: "swag", champ: "Miss Fortune", role: "ADC", kda: "5/9/13", cs: 102 },
           { key: "minte", champ: "Mordekaiser", role: "Top", kda: "4/13/5", cs: 149 }
         ],
-        verdict: "Minte orman yerine üst koridor Mordekaiser'e geçip 13 kez ölünce ve Veigar savunmasız yakalanınca harita kontrolü kaybedildi."
+        verdict: "l4cg (9/11/6, 184 CS Veigar) ve Swag (18 skor katkılı MF) arka safta direnmeye çalıştı ancak Minte kendi uzmanlığı olan ormanı bırakıp üst koridor Mordekaiser'de 4/13/5 ile 13 ölüm verince ön saf çöktü ve Esnek'teki Patrick'siz tek mağlubiyet yazıldı."
       },
       {
         date: "2026-10-22",
@@ -1090,7 +1091,7 @@ export const squadData = {
           { key: "patrick", champ: "Yasuo", role: "Mid", kda: "20/4/1", cs: 129 },
           { key: "swag", champ: "Garen", role: "Top", kda: "2/5/10", cs: 80 }
         ],
-        verdict: "Patrick Yasuo ile 20/4/1 oynayarak maçı tek başına domine etti, Swag Garen ile 10 asist katkısı verdi."
+        verdict: "Bozuk saatin ikinci kez doğruyu gösterdiği maç: 203B ustalıklı Yasuo'suyla SoloQ'da 3/12/14 gidip demirlere domalan Patrick, bu Normal maçta 20/4/1 (129 CS) keserek nihayet 395 level gibi oynadı; Swag da üst koridor Garen'le 2/5/10 oynayıp 10 asistle tertemiz ön saf tuttu."
       },
       {
         date: "2026-10-22",
@@ -1101,7 +1102,7 @@ export const squadData = {
           { key: "patrick", champ: "Yasuo", role: "Mid", kda: "10/7/6", cs: 142 },
           { key: "swag", champ: "Garen", role: "Top", kda: "4/13/4", cs: 68 }
         ],
-        verdict: "Swag'in kritik Garen dizilimi 4/13/4 ile çökünce Patrick'in 10 kill'lik Yasuo performansı galibiyete yetmedi."
+        verdict: "30 level Swag Garen'de yanlışlıkla kritik eşya (Hayalet Dansçı) deneyip 4/13/4 düştü diye tüm suçu çaylağa atmayın; 203.223 ustalık puanlı, 395 level 'Patrick Jane' de orta koridorda Yasuo ile 7 kere geberip (10/7/6, 142 CS) normal lobide bile maçı taşıyamadı amk."
       },
       {
         date: "2026-10-22",
@@ -1112,7 +1113,7 @@ export const squadData = {
           { key: "minte", champ: "Briar", role: "Jungle", kda: "23/5/7", cs: 266 },
           { key: "l4cg", champ: "Xerath", role: "Support", kda: "3/5/10", cs: 137 }
         ],
-        verdict: "Minte 23/5/7 ve 266 CS (OP Score 10) ile vadiyi yok ederken l4cg Xerath ile uzaktan 10 asistlik tam destek sağladı."
+        verdict: "Minte'nin 23/5/7 ve 266 CS (OP Score 10 — MVP) ile vadiyi parçaladığı, 46 level l4cg'nin ise Xerath'la sadece 5 kez ölüp 10 asist ve 137 CS ile uzaktan topçu ateşine tuttuğu kusursuz ikili şov; 36 kill alıp 20 kere ölen Patrick'in aksine 23 kill alınca nasıl 5 ölümde kalınıp maç kapatılır dersi."
       }
     ]
   }

@@ -1,8 +1,8 @@
 """argon-lol:// köprüsü: siteden gelen isteği Argon CLI'a verir, sonra commit + push yapar.
 
 Kayıt: tools/register_protocol.ps1. Elle: python tools/argon_bridge.py "argon-lol://update?target=all"
-URI: argon-lol://update?target=<all|l4cg|minte|swag|patrick|premade>&urls=<virgüllü>&clip=1
-clip=1 ise ham metin panodan okunur (URI uzunluk sınırı yüzünden).
+URI: argon-lol://update?target=<all|l4cg|minte|swag|patrick|premade>&urls=<virgüllü>&raw=<kısa talimat>&clip=1
+clip=1 ise ham metin panodan okunur (URI uzunluk sınırı yüzünden); kısa talimat raw= ile de gelebilir.
 """
 import datetime
 import pathlib
@@ -24,7 +24,7 @@ def parse(uri):
         sys.exit(f"Bilinmeyen hedef: {target}")
     urls = [u.strip() for u in q.get("urls", [""])[0].replace("\n", ",").split(",")]
     urls = [u for u in urls if u.startswith(("https://", "http://"))]
-    raw = ""
+    raw = q.get("raw", [""])[0]
     if q.get("clip"):
         import tkinter
         tk = tkinter.Tk()

@@ -10,7 +10,14 @@ TON
 - Küfür ve argo dozu YÜKSEK olsun, doğal aksın ("amına koyayım", "siktir et", "domalmak", "ölüsünü sikmek", "yarramın başı" gibi; arkadaş ortamında nasıl konuşuluyorsa öyle). Laflar OYUN üzerinden vursun. Tek yasak: anneye, aileye küfür ve ırk, din, fiziksel görünüş üzerinden hakaret yok.
 - Yazı dili değil, ağızdan çıkan konuşma: kısa cümleler, "kanka", "lan", "oğlum", "valla" gibi dolgu sözcükleri, yer yer soru sorup kendin cevapla.
 - Herkesi kendi seviyesine göre değerlendir: düşük seviyeli biri iyi oynadıysa öv, yüksek seviyeli biri kötü oynadıysa göm. Bu maçın sayılarına dayan, uydurma yok.
-- Patrick Cem kötü oynadıysa onu taklit ederek dalga geç; kendi lafları: "Yarma ya, yarma!", "Ölüsünü sikicem onun!", "Ya kanka hadi ya!", "Ya yok amına koyayım ya!". Kendini The Mentalist'teki Patrick Jane sanıyor ama haritayı okuyamıyor. İyi oynadıysa bunu kabul et ama yine iğnele.
+- PATRICK CEM: metnin en uzun ve en sert bölümü onun. Kötü oynadıysa sövüşün dozunu sonuna kadar aç, onu taklit ederek dalga geç; kendi lafları: "Yarma ya, yarma!", "Ölüsünü sikicem onun!", "Ya kanka hadi ya!", "Ya yok amına koyayım ya!". Kendini The Mentalist'teki Patrick Jane sanıyor ama haritayı okuyamıyor. İyi oynadıysa bunu kabul et ama yine iğnele.
+
+ANLAR ("moments" alanı)
+- Maçın zaman çizelgesi: her kill/ölüm için dakika, haritadaki yer, öldüren, ölen, asist yapanlar, kelle ödülü (shutdown_gold); ayrıca ejder, Baron, inhibitör.
+- Metinde en az dört somut anı dakikasıyla an ("yirmi ikinci dakikada rakip ormana tek başına girip Miss Fortune'a kafa attın"). Dakikayı da yazıyla söyle.
+- Özellikle Patrick'in şu anlarını ara ve göm: rakip ormanda ya da nehirde tek başına ölümleri, asistsiz ölümleri, ölümünden kısa süre sonra rakibin aldığı ejder ya da Baron, verdiği kelle ödülleri, Latif'in koridorunda (orta koridor) olan olaylar: gank'e gelip öldüğü ya da gank'in tuttuğu anlar.
+- Maç toplamı istatistikleri: skillshots_hit (isabet eden skillshot), skillshots_dodged, q_w_e_r_casts (Q W E R kaç kere basıldı), solo_kills, control_wards. Bunlarla "E'yi yüz elli iki kere bastın, maç boyunca yirmi sekiz skillshot tutturdun" gibi konuş.
+- UYDURMA YOK: verinin söylemediği anı söyleme. Hangi anda skill ıskaladığını veri vermez; ıskayı ancak maç toplamı sayılarla söyleyebilirsin.
 - Kısa bir kapanışla bitir.
 
 TTS İÇİN YAZIM KURALLARI (zorunlu)

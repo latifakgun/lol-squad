@@ -109,11 +109,62 @@ def summarize(match, ids_by_key, items):
     for p in info["participants"]:
         k = key_of.get(p["puuid"])
         if k:
-            squad[SQUAD[k][2]] = row(p)
+            ch = p.get("challenges", {})
+            squad[SQUAD[k][2]] = {**row(p), "skillshots_hit": ch.get("skillshotsHit"), "skillshots_dodged": ch.get("skillshotsDodged"),
+                                  "q_w_e_r_casts": [p.get(f"spell{i}Casts") for i in range(1, 5)],
+                                  "solo_kills": ch.get("soloKills"), "control_wards": ch.get("controlWardsPlaced")}
         else:
             others.append({"name": p.get("riotIdGameName"), "team_win": p["win"], **{x: row(p)[x] for x in ("champ", "role", "kills", "deaths", "assists")}})
     return {"queue": QUEUES.get(info["queueId"], str(info["queueId"])), "minutes": round(mins),
             "squad": squad, "others": others}
+
+
+def region(x, y, our_team):
+    """Harita koordinatından kaba bölge. ponytail: köşegen/şerit eşikleri elle; yanlış etiket görülürse eşikleri daralt."""
+    blue_side = x + y < 14800
+    side = "bizim" if blue_side == (our_team == 100) else "rakip"
+    if x < 3600 and y < 3600 or x > 11200 and y > 11200:
+        return f"{side} üs"
+    if abs(y - x) < 1800:
+        return f"orta koridor ({side} taraf)"
+    if x < 2200 or y > 12700:
+        return "üst koridor"
+    if y < 2200 or x > 12700:
+        return "alt koridor"
+    if abs(x + y - 14800) < 1600:
+        return "nehir"
+    return f"{side} orman"
+
+
+def moments(match, timeline, ids_by_key):
+    """Ekipten birinin karıştığı kill/ölümler + objektifler, zaman sırasıyla."""
+    info = match["info"]
+    key_of = {p: k for k, p in ids_by_key.items()}
+    our_team = next(p["teamId"] for p in info["participants"] if p["puuid"] in key_of)
+    who = {}  # participantId → (ad, ekipten mi)
+    for p in info["participants"]:
+        k = key_of.get(p["puuid"])
+        tag = SQUAD[k][2] if k else ("takım arkadaşı" if p["teamId"] == our_team else "rakip")
+        who[p["participantId"]] = (f"{p['championName']} ({tag})", k is not None)
+
+    out = []
+    for fr in timeline["info"]["frames"]:
+        for e in fr["events"]:
+            t = f"{e['timestamp'] // 60000}:{e['timestamp'] // 1000 % 60:02d}"
+            if e["type"] == "CHAMPION_KILL":
+                ids = [e.get("killerId", 0), e["victimId"], *e.get("assistingParticipantIds", [])]
+                if not any(who.get(i, ("", False))[1] for i in ids):
+                    continue
+                out.append({"t": t, "where": region(e["position"]["x"], e["position"]["y"], our_team),
+                            "killer": who.get(e.get("killerId"), ("kule/minyon",))[0], "victim": who[e["victimId"]][0],
+                            "assists": [who[i][0] for i in e.get("assistingParticipantIds", [])],
+                            "shutdown_gold": e.get("shutdownBounty") or None})
+            elif e["type"] == "ELITE_MONSTER_KILL":
+                out.append({"t": t, "objective": e.get("monsterSubType") or e["monsterType"],
+                            "taken_by": "biz" if e.get("killerTeamId") == our_team else "rakip"})
+            elif e["type"] == "BUILDING_KILL" and e.get("buildingType") == "INHIBITOR_BUILDING":
+                out.append({"t": t, "objective": "inhibitör", "lost_by": "biz" if e.get("teamId") == our_team else "rakip"})
+    return out
 
 
 # ---------- Argon + TTS ----------
@@ -215,7 +266,9 @@ def run_bot():
                     return await interaction.followup.send("Yeni maç Riot'a düşmedi. Bir dakika sonra tekrar /bitti yaz.")
 
                 match = await asyncio.to_thread(riot_get, f"/lol/match/v5/matches/{match_id}")
+                timeline = await asyncio.to_thread(riot_get, f"/lol/match/v5/matches/{match_id}/timeline")
                 summary = summarize(match, cache["puuids"], cache["items"])
+                summary["moments"] = moments(match, timeline, cache["puuids"])
                 text, path = await analysis_audio(summary, match_id)
 
                 vc = await voice.channel.connect()

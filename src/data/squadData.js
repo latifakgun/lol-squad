@@ -508,28 +508,28 @@ export const squadData = {
     },
     swag: {
       riotId: "swagisback#333",
-      tag: "ADC / Support",
-      summary: "Seviye 26–30 nişancı ve destek oyuncusu (Morgana 35B, Jhin 13B, Garen 13B, Miss Fortune 8.6B ustalık). Son 10 maçında %50 galibiyet oranı (5G 5M) yakaladı; l4cg'nin Seraphine/Veigar kitle kontrolünün üstüne Miss Fortune ve Jhin ultileriyle iyi skor topluyor ancak orta oyunda minyon kesmeyi bırakması ve yanlış ilk eşya seçimleri hasarını düşürüyor.",
+      tag: "30 Level Çaylak Efsanesi · Gank Yemez Ulti Makinesi",
+      summary: "Daha 26–30 level taze hesap olmasına rağmen kendinden 10 kat tecrübeli (112–395 level) kurtların döndüğü Esnek lobilerinde %50 WR (5G 5M) ve 3.4/7.6/7.4 KDA ile taş gibi ayakta kalan öz hakiki nişancı kumaşı. Çoğu 30 level oyuncunun haritaya bile bakmadığı yerde koridorda 'Ungankable' (baskın yemez) madalyası takması, yenilgiden sonraki maçta +%9.9 WR ile mentalini hiç bozmadan geri dönmesi ve Miss Fortune (11/17/17, 11/8/10, 4/9/15) ile Jhin (4/9/13, 162 CS) maçlarında takım savaşlarına yağdırdığı 15–28 skor katkısı bu tecrübe seviyesine göre şapka çıkartılacak iş; 15. dakika sonrası CS takibini ve ilk eşya tercihini (Hubris yerine Tahsildar) oturttuğu an vadinin içinden geçer.",
       kpis: [
-        { val: "%50", lbl: "Son 10 Maç WR (5G 5M)" },
-        { val: "35.8B", lbl: "Morgana Ustalık (Sv. 6)" },
-        { val: "13.5B", lbl: "Jhin Ustalık (Sv. 4)" },
-        { val: "3.4/7.6/7.4", lbl: "Genel KDA Ortalaması" }
+        { val: "Sv. 30 → %50 WR", lbl: "Seviyesine Göre Kıyas (100-400 Sv. Lobide 5G 5M)" },
+        { val: "+%9.9 WR", lbl: "Çelik Mental (Yenilgi Sonrası Bounces Back)" },
+        { val: "Ungankable", lbl: "Koridorda Baskın Yemez (Jhin / MF / Garen)" },
+        { val: "28 & 21 Katkı", lbl: "MF & Jhin Zirve Skor Katkısı (11/17/17 · 11/8/10)" },
+        { val: "35.8B & 13.5B", lbl: "Morgana (Sv. 6) & Jhin (Sv. 4) Ustalık" }
       ],
       good: [
-        "<strong>Bozulmayan Mental (Bounces Back):</strong> Mağlubiyetten sonraki maçta kazanma oranı <strong>+%9.9</strong> artıyor; tilt olmadan bir sonraki oyuna odaklanabiliyor.",
-        "<strong>Baskınlardan Kaçış (Ungankable):</strong> Koridor aşamasında Jhin, Miss Fortune ve Garen oynarken rakip ormancı baskınlarına karşı güvenli pozisyon alıyor.",
-        "<strong>Takım Savaşı Ulti Takibi:</strong> Seraphine, Veigar ve Briar'ın yakaladığı hedeflere Miss Fortune (11/17/17, 4/9/15) ve Jhin (4/9/13) ile yüksek asist katkısı veriyor."
+        "<strong>30 Level Hesaptan Beklenmeyecek Harita Kokusu (Ungankable):</strong> Oyuna yeni başlayanların koridorda bedava yem olduğu seviyede Jhin (13.5B ustalık), Miss Fortune (8.6B) ve Garen (13B) oynarken rakip ormancı baskınlarını önceden sezerek <em>Ungankable</em> etiketi alıyor; koridor aşamasında kolay kolay gank yemiyor.",
+        "<strong>Bozulmayan Çelik Mental (Bounces Back +%9.9 WR):</strong> Ekibin yüzlerce maçlık oyuncuları erken oyunda tilt olup FF ararken, Swag mağlubiyetten hemen sonraki maçta kazanma oranını <strong>+%9.9</strong> artırıyor; 3/20/7 gibi zor geçen bir maçtan sonra bile kafa olarak oyundan kopmayıp bir sonraki maça sıfırdan asılıyor.",
+        "<strong>Takım Savaşında Kusursuz Ulti Takibi (MF & Jhin Şovu):</strong> l4cg'nin Seraphine/Veigar kitle kontrolünü ve Minte/Patrick ikilisinin girişlerini saniyesinde okuyup Miss Fortune ile <strong>11/17/17 (28 skor katkısı, 145 CS)</strong>, <strong>11/8/10 (21 katkı, 141 CS)</strong>, <strong>4/9/15 (19 katkı)</strong> ve <strong>9/11/3</strong>; Jhin ile de <strong>4/9/13 (17 katkı, 162 CS)</strong> oynayarak takım savaşlarında skoru çatır çatır topluyor."
       ],
       bad: [
-        "<strong>15. Dakikadan Sonra Minyon Kesmeyi Bırakma (Stopped CSing):</strong> Kuleler yıkıldıktan sonra koridor dalgalarını toplamayı bırakıp sürekli kavga arıyor (100 CS, 102 CS, 53 CS); altın geri kaldığı için <em>Low Damage</em> etiketi alıyor.",
-        "<strong>Jhin ve MF'ye İlk Eşya Hubris (Kibir) Çıkma Hatası:</strong> Kritik vuruş nişancılarına suikastçı eşyası <em>Hubris</em> çıktığında %0 kritik şansıyla tanklara hasar vuramıyor.",
-        "<strong>Aşırı Ölüm ve Suikastçı/Kritik Denemeleri:</strong> Son Esnek maçlarında Jhin ile 3/20/7, Miss Fortune ile 11/17/17 gibi çok yüksek ölüm sayılarına çıktı; ayrıca Garen'e <em>Hayalet Dansçı + A.M.K. Kılıcı</em> çıkıp 4/13/4 veya Zed alıp 0/7/2 oynadığı maçlar var."
+        "<strong>Gelişim Alanı 1 — 15. Dakika Sonrası Minyon Takibi (Stopped CSing):</strong> Koridorda Jhin ile 168 ve 162 CS, MF ile 145 ve 141 CS görebilecek kapasitesi var ama kuleler yıkıldıktan sonra takım arkadaşlarına yardıma koşacağım diye minyon kesmeyi erken bırakabiliyor (bazı maçlarda 100 CS, 102 CS ve 53 CS); bu da eşya temposunu yavaşlatıp <em>Low Damage</em> etiketine yol açıyor.",
+        "<strong>Gelişim Alanı 2 — İlk Eşyada Hubris (Kibir) ve Yan Rol Denemeleri:</strong> Jhin (4/9/13, 3/20/7) ve Miss Fortune (4/9/15) maçlarında ilk eşya olarak suikastçı eşyası <em>Kibir (Hubris)</em> çıktığında kritik şansı %0 kaldığı için vuruşları tam potansiyeline ulaşmıyor; bir de Garen'de kritik eşyası (<em>Hayalet Dansçı + A.M.K. Kılıcı</em>, 4/13/4, 68 CS) veya alışık olmadığı Zed Mid (0/7/2, 63 CS) denemeleri henüz eline oturmuyor."
       ],
       fix: [
-        "<strong>Jhin Doğru Eşya Sırası:</strong> Hubris'i tamamen bırakıp <strong>1. Tahsildar → 2. Atiklik Çizmesi → 3. Ebedi Kılıç → 4. Bombardıman Topu → 5. Dominik Efendi'nin Hürmetleri</strong> dizilimini sabitle.",
-        "<strong>Miss Fortune Doğru Eşya Sırası:</strong> <strong>1. Tahsildar (veya Kanlı Kılıç) → 2. Savaşçı Çizmeleri → 3. Ebedi Kılıç → 4. Dominik Efendi'nin Hürmetleri</strong> sırasından şaşma.",
-        "<strong>Orta Oyunda En Az 5.5 CS/dk Kuralı ve Garen Dövüşçü Dizilimi:</strong> Dakika 15 sonrası orta koridorda boş beklemek yerine yan koridor dalgalarını temizle; Garen oynarken kritik yerine <strong>Hızkesen → Kara Balta → Ölü Adamın Zırhı</strong> çık."
+        "<strong>Jhin ve MF'de İlk Eşya Tahsildar + Ebedi Kılıç İkilisi:</strong> O güzelim 15–17 asistlik ultilerin direkt tek atması için <em>Kibir (Hubris)</em> defterini kapatıyoruz; Jhin'de <strong>1. Tahsildar → 2. Atiklik Çizmesi → 3. Ebedi Kılıç → 4. Bombardıman Topu</strong>, Miss Fortune'da ise <strong>1. Tahsildar → 2. Savaşçı Çizmeleri → 3. Ebedi Kılıç → 4. Dominik Efendi'nin Hürmetleri</strong> sırasına geçince hasarın ikiye katlanacak.",
+        "<strong>Dakika 15 Sonrası 'Önce Dalga Sonra Kavga' Kuralı:</strong> Jhin'le 162–168 CS yaptığın maçlardaki disiplini her maça yaymak için orta oyunda kavga yokken yan koridora biriken minyonları (hedef en az <strong>5.5 CS/dk</strong>, 150+ CS) temizle; hem altın farkı açılır hem de 17–20 ölümlü kaotik kavgalardan uzak kalırsın.",
+        "<strong>Üst Koridorda Garen Oynarken Tam Dövüşçü Dizilimi:</strong> Garen (2/5/10 ile kazandığın maçtaki gibi) oynadığında kritik eşyaları yerine <strong>Hızkesen → Kara Balta → Ölü Adamın Zırhı</strong> çıkarsan hem ölmeyen bir tank olursun hem de E + R kombosuyla rakipleri eritirsin."
       ],
       builds: [
         {

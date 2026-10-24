@@ -1,4 +1,5 @@
-import { squadData } from './data/squadData.js';
+// Pages veriyi 10 dk önbellekliyor; Argon güncellemesi hemen görünsün diye her açılışta taze çek.
+const { squadData } = await import(`./data/squadData.js?v=${Date.now()}`);
 
 const $ = (sel) => document.querySelector(sel);
 const root = $('#app-root');

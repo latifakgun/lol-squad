@@ -2,3 +2,4 @@ __pycache__/
 bot/.env
 bot/state.json
 bot/out/
+bot/gecmis.json

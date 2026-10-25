@@ -47,6 +47,12 @@ gemini     # bir kez aç, Vertex AI ile giriş yap, çık
 
 Arkada açık bırakmak için PowerShell penceresini küçültmen yeterli. Bilgisayar açılınca otomatik başlasın istersen Görev Zamanlayıcı'ya `bot.py` eklenir.
 
+## Kullanım
+- `/bitti`: ekibin en yeni, okunmamış maçı. `/bitti mac:1753161251` (ya da `TR1_...`): belirli bir maç.
+- Bot **tek bir bilgisayarda** çalışmalı. `/bitti`'yi kim yazarsa yazsın, pipeline bot'un açık olduğu bilgisayarda koşar. Aynı token'la iki bilgisayarda açarsan ikisi aynı komuta cevap vermeye çalışır.
+- Hafıza `gecmis.json`'da (o bilgisayara özel): son maçtan 4 saat geçtiyse yeni akşam başlar. 1. maç öğretici, doz maç maç artar; bu akşam söylenenler tekrar edilmez, açı ve açılış her maçta rastgele seçilir.
+- Ses kanalı patlarsa tekrar `/bitti` yaz: hazır ses `out/` klasöründen yeniden kullanılır, Argon ve TTS'e tekrar para gitmez.
+
 ## Ayarlar
 - Ekip, Riot ID'ler, model ve ses: `bot.py` başındaki `SQUAD`, `TTS_MODEL`, `TTS_VOICE`.
 - Argon'un ton ve yazım kuralları: `script_prompt.md`.

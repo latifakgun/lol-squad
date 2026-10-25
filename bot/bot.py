@@ -11,6 +11,7 @@ import asyncio
 import json
 import os
 import pathlib
+import random
 import shutil
 import sys
 import time
@@ -22,6 +23,8 @@ import wave
 HERE = pathlib.Path(__file__).resolve().parent
 OUT = HERE / "out"
 STATE = HERE / "state.json"
+HISTORY = HERE / "gecmis.json"  # okunan metinler: akşamın hafızası + tekrar etmeme
+SESSION_GAP = 4 * 3600 * 1000  # son maçtan 4 saat geçtiyse yeni akşam (gece yarısını geçen maçlar aynı akşama sayılır)
 
 # key: (oyun adı, etiket, konuşmada söylenen ad)
 SQUAD = {
@@ -37,6 +40,27 @@ TTS_MODEL, TTS_VOICE, TTS_RATE = "gemini-2.5-pro-tts", "Fenrir", 0.9
 TTS_STYLE = ("Türk bir Twitch yayıncısı gibi oku: samimi, enerjik, bol küfürlü, arkadaşlarına acımadan laf sokuyor, "
              "espri yerlerinde gülerek vurguluyor. Acele etmeden, rahat bir tempoda konuş. Patrick Cem'in lafları "
              "geçtiğinde onu taklit eder gibi sızlanan, abartılı bir sesle söyle.")
+# Tekrarı model tarafında "tekrar etme" demek kırmıyor: açı, açılış ve Patrick lafları burada rastgele seçilir.
+ANGLES = [
+    "maçı belirleyen tek an: o anı kim, nasıl yaşattı",
+    "en iyi oynayan: maçı onun gözünden anlat, diğerleri ona nasıl yük oldu",
+    "en kötü oynayan: maçı nasıl kendi eliyle sattı ya da az kalsın satıyordu",
+    "maçın en saçma istatistiği: o sayıdan yola çıkıp herkese bağla",
+    "koridor savaşları: ekipten herkes kendi rakibine karşı nasıl gitti",
+    "şampiyon ve eşya seçimleri: kim neyi aldı, mantıklı mıydı",
+    "altın farkı hikâyesi: maç nerede kırıldı, nasıl döndü ya da elden kaçtı",
+    "takım oyunu: birlikte mi oynandı, herkes kendi kafasına mı",
+]
+OPENINGS = [
+    "doğrudan en çarpıcı olayla, sanki biri az önce sormuş gibi",
+    "sahte sakin bir başlangıç, sonra patlama",
+    "bir soru sorup cevabını kendin vererek",
+    "maçı tek kelimeyle özetleyip sonra açarak",
+    "birisi hakkında kısa, kesin bir hüküm cümlesiyle",
+    "maç spikeri gibi, anons eder gibi",
+    "fısıldar gibi bir sır vererek",
+]
+PATRICK_LINES = ["Yarma ya, yarma!", "Ölüsünü sikicem onun!", "Ya kanka hadi ya!", "Ya yok amına koyayım ya!"]
 QUEUES = {400: "Normal", 420: "Dereceli Tek/Çift", 430: "Normal", 440: "Esnek", 450: "ARAM", 490: "Hızlı Oyun"}
 
 
@@ -167,6 +191,54 @@ def moments(match, timeline, ids_by_key):
     return out
 
 
+def gold_curve(match, timeline, ids_by_key):
+    """Takım altın farkı (biz eksi rakip): beş dakikada bir, en önde, en geride, son."""
+    info = match["info"]
+    team = {p["participantId"]: p["teamId"] for p in info["participants"]}
+    our = next(p["teamId"] for p in info["participants"] if p["puuid"] in ids_by_key.values())
+    diff = [sum(f["totalGold"] * (1 if team[int(pid)] == our else -1) for pid, f in fr["participantFrames"].items())
+            for fr in timeline["info"]["frames"]]
+    return {"dakika_basina": {i: d for i, d in enumerate(diff) if i and i % 5 == 0},
+            "en_onde": {"dakika": diff.index(max(diff)), "fark": max(diff)},
+            "en_geride": {"dakika": diff.index(min(diff)), "fark": min(diff)}, "son": diff[-1]}
+
+
+def match_end(match):
+    info = match["info"]
+    return info.get("gameEndTimestamp") or info["gameCreation"] + info["gameDuration"] * 1000
+
+
+def load_history():
+    return json.loads(HISTORY.read_text(encoding="utf-8")) if HISTORY.exists() else []
+
+
+def direct(summary, history, match_id, end):
+    """Akşamın hafızasını ve bu konuşmanın açısını özete ekler."""
+    past = [h for h in history if h["end"] < end and h["id"] != match_id]
+    tonight, t = [], end
+    for h in reversed(past):  # geriye doğru, aralar 4 saati geçmeyene kadar
+        if t - h["end"] > SESSION_GAP:
+            break
+        tonight.insert(0, h)
+        t = h["end"]
+    older = past[:len(past) - len(tonight)]
+    recent = {h.get("aci") for h in past[-3:]}
+    summary["oturum"] = {"mac_no": len(tonight) + 1, "onceki_sonuclar": ["G" if h["win"] else "M" for h in tonight],
+                         "bu_aksam_okunanlar": [h["text"] for h in tonight],
+                         "onceki_gunlerin_acilislari": [h["text"].split(".")[0] for h in older[-10:]]}
+    summary["yonlendirme"] = {"aci": random.choice([a for a in ANGLES if a not in recent]), "acilis": random.choice(OPENINGS)}
+    if "Patrick" in summary["squad"]:
+        summary["yonlendirme"]["patrick_laflari"] = random.sample(PATRICK_LINES, 2)
+    return summary
+
+
+def remember(history, match_id, end, summary, text):
+    win = any(p["win"] for p in summary["squad"].values())
+    entry = {"id": match_id, "end": end, "win": win, "aci": summary["yonlendirme"]["aci"], "text": text}
+    keep = sorted([h for h in history if h["id"] != match_id] + [entry], key=lambda h: h["end"])[-30:]
+    HISTORY.write_text(json.dumps(keep, ensure_ascii=False, indent=1), encoding="utf-8")
+
+
 # ---------- Argon + TTS ----------
 
 async def argon_script(summary):
@@ -217,10 +289,12 @@ def tts(text, path):
 
 
 async def analysis_audio(summary, name):
+    path = OUT / f"{name}.wav"
+    if name != "test" and path.exists():  # ses kanalı patlayıp tekrar /bitti denenirse Argon + TTS'e yeniden para verme
+        return (OUT / f"{name}.txt").read_text(encoding="utf-8"), path
     text = await argon_script(summary)
     OUT.mkdir(exist_ok=True)
     (OUT / f"{name}.txt").write_text(text, encoding="utf-8")
-    path = OUT / f"{name}.wav"
     try:
         await asyncio.to_thread(tts, text, path)
     except Exception:  # Gemini TTS ara sıra bağlantıyı yanıtsız kesiyor; bir kez daha dene
@@ -241,7 +315,8 @@ def run_bot():
     cache = {}
 
     @tree.command(name="bitti", description="Maç bitti: son maçı analiz edip ses kanalında oku")
-    async def bitti(interaction: discord.Interaction):
+    @app_commands.describe(mac="İsteğe bağlı: belirli bir maç kimliği (TR1_... ya da sadece numara)")
+    async def bitti(interaction: discord.Interaction, mac: str | None = None):
         voice = interaction.user.voice
         if not voice or not voice.channel:
             return await interaction.response.send_message("Önce bir ses kanalına gir, oraya geleyim.", ephemeral=True)
@@ -256,8 +331,9 @@ def run_bot():
                 done = set(json.loads(STATE.read_text())) if STATE.exists() else set()
 
                 # Maç verisi Riot'a 1-2 dk gecikmeyle düşebilir: 3 dk boyunca 20 sn arayla dene.
-                match_id = None
-                for _ in range(10):
+                mac = mac or os.environ.get("BITTI_MAC")  # tek seferlik: botu BITTI_MAC=<id> ile başlatınca ilk başarılı /bitti o maçı okur
+                match_id = (mac if mac.upper().startswith("TR1_") else f"TR1_{mac}").upper() if mac else None
+                for _ in range(0 if match_id else 10):
                     match_id = await asyncio.to_thread(latest_match_id, cache["puuids"], done)
                     if match_id:
                         break
@@ -269,6 +345,9 @@ def run_bot():
                 timeline = await asyncio.to_thread(riot_get, f"/lol/match/v5/matches/{match_id}/timeline")
                 summary = summarize(match, cache["puuids"], cache["items"])
                 summary["moments"] = moments(match, timeline, cache["puuids"])
+                summary["altin_farki"] = gold_curve(match, timeline, cache["puuids"])
+                history, end = load_history(), match_end(match)
+                direct(summary, history, match_id, end)
                 text, path = await analysis_audio(summary, match_id)
 
                 vc = await voice.channel.connect()
@@ -280,6 +359,8 @@ def run_bot():
                 finally:
                     await vc.disconnect()
                 STATE.write_text(json.dumps(sorted(done | {match_id})))
+                remember(history, match_id, end, summary, text)
+                os.environ.pop("BITTI_MAC", None)
             except Exception as e:
                 await interaction.followup.send(f"Bir şey patladı: `{type(e).__name__}: {str(e)[:300]}`")
                 raise

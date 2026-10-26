@@ -35,8 +35,8 @@ copy .env.example .env      # sonra .env'i doldur
 ```powershell
 gcloud auth application-default login
 gcloud auth application-default set-quota-project <GOOGLE_CLOUD_PROJECT>
-gemini     # bir kez aç, Vertex AI ile giriş yap, çık
 ```
+Argon (`gemini-4-argon`) doğrudan Vertex API'den çağrılır, gemini CLI gerekmez.
 
 ## 3. Çalıştır
 
@@ -45,7 +45,15 @@ gemini     # bir kez aç, Vertex AI ile giriş yap, çık
 .venv\Scripts\python bot.py                          # bot açılır, "Hazır" yazınca /bitti kullanılabilir
 ```
 
-Arkada açık bırakmak için PowerShell penceresini küçültmen yeterli. Bilgisayar açılınca otomatik başlasın istersen Görev Zamanlayıcı'ya `bot.py` eklenir.
+Masaüstünde çalıştırmak yalnızca deneme içindir. Asıl botlar sunucuda (aşağıda).
+
+## Sunucu (27 Eki 2026'dan beri)
+lolbot ve kulak, Google Cloud'daki `lol-squad` sanal makinesinde (`europe-west1-b`, e2-small, Debian 12) 7/24 çalışıyor. Laptopun açık olması gerekmez; Türkiye dışında olduğu için Discord engeli ve TLS kopmaları da yok.
+- Kurulum: `sunucu/kur.sh` (tekrar çalıştırmak güvenli). Servisler `lolbot`, `kulak` (systemd, çökerse 5 sn'de yeniden başlar, makine açılınca kendiliğinden başlar).
+- **Güncelleme:** sunucu 5 dakikada bir GitHub'dan çeker (`sunucu/guncelle.sh`). Yalnızca `.md` (ör. `script_prompt.md`) değiştiyse botlar yeniden başlatılmaz, prompt sonraki `/bitti`'de geçerli olur. Kod değiştiyse ilgili bot yeniden başlar.
+- `.env`, `state.json`, `gecmis.json` ve konuşma dökümleri yalnızca sunucuda; repoya girmez. Riot anahtarı yenilenince sunucudaki `~/lol-squad/bot/.env` güncellenip `sudo systemctl restart lolbot kulak`.
+- Log: `sudo journalctl -u lolbot -u kulak -f`
+- **Laptopta botları açma:** aynı token'la iki kopya aynı komuta cevap vermeye çalışır.
 
 ## Kullanım
 - `/bitti`: ekibin en yeni, okunmamış maçı. `/bitti mac:1753161251` (ya da `TR1_...`): belirli bir maç.

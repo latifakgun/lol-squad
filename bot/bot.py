@@ -251,6 +251,10 @@ def direct(summary, history, match_id, end):
     summary["yonlendirme"] = {"aci": random.choice([a for a in ANGLES if a not in recent]), "acilis": random.choice(OPENINGS)}
     if "Patrick" in summary["squad"]:
         summary["yonlendirme"]["patrick_laflari"] = random.sample(PATRICK_LINES, 2)
+        p = summary["squad"]["Patrick"]
+        # ponytail: "çok kötü" = skor oranı 1'in altı ya da 10+ ölüm; fazla/az tetiklerse eşiği buradan ayarla.
+        if (p["kills"] + p["assists"]) / max(p["deaths"], 1) < 1 or p["deaths"] >= 10:
+            summary["yonlendirme"]["patrick_can_gelsin"] = True
     return summary
 
 

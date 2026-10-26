@@ -394,6 +394,7 @@ def run_bot():
                     vc.play(discord.FFmpegPCMAudio(str(path)), after=lambda e: client.loop.call_soon_threadsafe(finished.set))
                     await interaction.followup.send(f"🎙️ **{summary['queue']} · {summary['minutes']} dk**\n{text}"[:2000])
                     await finished.wait()
+                    await asyncio.sleep(20)  # okuma bitince hemen kaçmasın, ekip tepki versin
                 finally:
                     await vc.disconnect()
                 STATE.write_text(json.dumps(sorted(done | {match_id})))

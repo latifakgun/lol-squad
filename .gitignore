@@ -3,3 +3,8 @@ bot/.env
 bot/state.json
 bot/out/
 bot/gecmis.json
+kulak/node_modules/
+kulak/kayit/
+kulak/konusmalar/
+kulak/*.log
+kulak/*.err

@@ -32,14 +32,16 @@ SQUAD = {
     "minte": ("minte", "000", "Minte"),
     "swag": ("swagisback", "333", "Swag"),
     "patrick": ("Patrick Cem", "OMEN", "Patrick"),
+    "yilmaz": ("ÖLÜYARAK31", "TR1", "Yılmaz"),
+    "gorkem": ("Misty Minstrel", "1895", "Görkem"),
 }
+KONUSMA = HERE.parent / "kulak" / "konusmalar"  # kulak'ın /git sonrası yazdığı konuşma dökümleri (konusma.py)
 RIOT = "https://europe.api.riotgames.com"
 ARGON_MODEL = "gemini-4-argon"
 TTS_MODEL, TTS_VOICE, TTS_RATE = "gemini-2.5-pro-tts", "Fenrir", 0.9
 # Cloud TTS'te prompt ve text ayrı alan: ton talimatı asla seslendirilmez.
-TTS_STYLE = ("Türk bir Twitch yayıncısı gibi oku: samimi, enerjik, bol küfürlü, arkadaşlarına acımadan laf sokuyor, "
-             "espri yerlerinde gülerek vurguluyor. Acele etmeden, rahat bir tempoda konuş. Patrick Cem'in lafları "
-             "geçtiğinde onu taklit eder gibi sızlanan, abartılı bir sesle söyle.")
+# Uzun, emir kipli talimat metin uzayınca sesli okundu (26 Eki); kısa bir ses tarifi olarak kalsın.
+TTS_STYLE = "Samimi, enerjik, gülerek laf sokan bir Türk Twitch yayıncısı sesiyle"
 # Tekrarı model tarafında "tekrar etme" demek kırmıyor: açı, açılış ve Patrick lafları burada rastgele seçilir.
 ANGLES = [
     "maçı belirleyen tek an: o anı kim, nasıl yaşattı",
@@ -88,6 +90,10 @@ def get_json(url, headers=None):
             if e.code != 429 or attempt == 3:
                 raise
             time.sleep(int(e.headers.get("Retry-After") or 2 * (attempt + 1)))
+        except (urllib.error.URLError, TimeoutError, ConnectionError):  # laptopta DNS/bağlantı ara sıra kopuyor
+            if attempt == 3:
+                raise
+            time.sleep(3)
 
 
 def riot_get(path):
@@ -138,7 +144,7 @@ def summarize(match, ids_by_key, items):
                                   "q_w_e_r_casts": [p.get(f"spell{i}Casts") for i in range(1, 5)],
                                   "solo_kills": ch.get("soloKills"), "control_wards": ch.get("controlWardsPlaced")}
         else:
-            others.append({"name": p.get("riotIdGameName"), "team_win": p["win"], **{x: row(p)[x] for x in ("champ", "role", "kills", "deaths", "assists")}})
+            others.append({"name": p.get("riotIdGameName"), "team_win": p["win"], **row(p)})
     return {"queue": QUEUES.get(info["queueId"], str(info["queueId"])), "minutes": round(mins),
             "squad": squad, "others": others}
 
@@ -203,6 +209,22 @@ def gold_curve(match, timeline, ids_by_key):
             "en_geride": {"dakika": diff.index(min(diff)), "fark": min(diff)}, "son": diff[-1]}
 
 
+def talk(match):
+    """Kulak dökümlerinden bu maçın konuşmaları (oyun saatiyle; maç sonrası üç dakika dahil) ve Argon'un notları."""
+    start, end = match["info"]["gameStartTimestamp"], match_end(match)
+    lines, notes = [], []
+    for f in sorted(KONUSMA.glob("*.json")):
+        d = json.loads(f.read_text(encoding="utf-8"))
+        if d["end"] < start or d["start"] > end + 180_000:
+            continue
+        notes.append(d["analiz"])
+        for l in d["satirlar"]:
+            if start <= l["ms"] <= end + 180_000:
+                s = (l["ms"] - start) // 1000
+                lines.append({"t": "maç sonu" if l["ms"] > end else f"{s // 60}:{s % 60:02d}", "kim": l["kim"], "soz": l["soz"]})
+    return lines, notes
+
+
 def match_end(match):
     info = match["info"]
     return info.get("gameEndTimestamp") or info["gameCreation"] + info["gameDuration"] * 1000
@@ -242,8 +264,11 @@ def remember(history, match_id, end, summary, text):
 # ---------- Argon + TTS ----------
 
 async def argon_script(summary):
-    prompt = (HERE / "script_prompt.md").read_text(encoding="utf-8").replace(
-        "__MATCH__", json.dumps(summary, ensure_ascii=False, indent=1))
+    return await argon((HERE / "script_prompt.md").read_text(encoding="utf-8").replace(
+        "__MATCH__", json.dumps(summary, ensure_ascii=False, indent=1)))
+
+
+async def argon(prompt):
     gemini = shutil.which("gemini") or sys.exit("gemini CLI bulunamadı")
     # --yolo yok: metin yazmak için araç gerekmiyor, Argon'un komut çalıştırmasına izin vermiyoruz.
     proc = await asyncio.create_subprocess_exec(
@@ -289,17 +314,21 @@ def tts(text, path):
 
 
 async def analysis_audio(summary, name):
-    path = OUT / f"{name}.wav"
-    if name != "test" and path.exists():  # ses kanalı patlayıp tekrar /bitti denenirse Argon + TTS'e yeniden para verme
-        return (OUT / f"{name}.txt").read_text(encoding="utf-8"), path
-    text = await argon_script(summary)
+    path, txt = OUT / f"{name}.wav", OUT / f"{name}.txt"
+    cached = name != "test"  # bir adım patlayıp tekrar /bitti denenirse hazır metni/sesi kullan, Argon'a baştan yazdırma
+    if cached and path.exists():
+        return txt.read_text(encoding="utf-8"), path
+    text = txt.read_text(encoding="utf-8") if cached and txt.exists() else await argon_script(summary)
     OUT.mkdir(exist_ok=True)
-    (OUT / f"{name}.txt").write_text(text, encoding="utf-8")
-    try:
-        await asyncio.to_thread(tts, text, path)
-    except Exception:  # Gemini TTS ara sıra bağlantıyı yanıtsız kesiyor; bir kez daha dene
-        await asyncio.sleep(3)
-        await asyncio.to_thread(tts, text, path)
+    txt.write_text(text, encoding="utf-8")
+    for attempt in range(5):  # TTS bağlantısı ara sıra kopuyor (yanıtsız kesme, laptopta TLS INVALID_SESSION_ID)
+        try:
+            await asyncio.to_thread(tts, text, path)
+            break
+        except Exception:
+            if attempt == 4:
+                raise
+            await asyncio.sleep(5)
     return text, path
 
 
@@ -346,6 +375,11 @@ def run_bot():
                 summary = summarize(match, cache["puuids"], cache["items"])
                 summary["moments"] = moments(match, timeline, cache["puuids"])
                 summary["altin_farki"] = gold_curve(match, timeline, cache["puuids"])
+                for _ in range(40):  # /git sonrası döküm hâlâ işleniyorsa bekle (en fazla 2 dk)
+                    if not list(KONUSMA.glob("*.isleniyor")):
+                        break
+                    await asyncio.sleep(3)
+                summary["konusmalar"], summary["konusma_notlari"] = talk(match)
                 history, end = load_history(), match_end(match)
                 direct(summary, history, match_id, end)
                 text, path = await analysis_audio(summary, match_id)

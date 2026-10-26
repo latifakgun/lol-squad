@@ -12,7 +12,6 @@ import json
 import os
 import pathlib
 import random
-import shutil
 import sys
 import time
 import urllib.error
@@ -273,16 +272,17 @@ async def argon_script(summary):
 
 
 async def argon(prompt):
-    gemini = shutil.which("gemini") or sys.exit("gemini CLI bulunamadı")
-    # --yolo yok: metin yazmak için araç gerekmiyor, Argon'un komut çalıştırmasına izin vermiyoruz.
-    proc = await asyncio.create_subprocess_exec(
-        gemini, "--model", ARGON_MODEL, "-p", "Stdin'deki görevi uygula. Yalnızca okunacak metni yaz.",
-        stdin=asyncio.subprocess.PIPE, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE, cwd=HERE)
-    out, err = await asyncio.wait_for(proc.communicate(prompt.encode("utf-8")), timeout=240)
-    text = out.decode("utf-8", "ignore").strip()
-    if proc.returncode or not text:
-        raise RuntimeError(f"Argon hata verdi: {err.decode('utf-8', 'ignore')[-400:]}")
-    return text
+    # CLI değil doğrudan Vertex API: sunucuda tarayıcı girişi gerekmiyor, kimlik google.auth.default() (VM servis hesabı).
+    from google import genai
+    from google.genai import types
+
+    client = genai.Client(vertexai=True, project=os.environ["GOOGLE_CLOUD_PROJECT"], location="global")
+    r = await asyncio.wait_for(client.aio.models.generate_content(
+        model=ARGON_MODEL, contents=prompt,
+        config=types.GenerateContentConfig(system_instruction="Verilen görevi uygula. Yalnızca okunacak metni yaz.")), timeout=240)
+    if not (r.text or "").strip():
+        raise RuntimeError("Argon boş döndü")
+    return r.text.strip()
 
 
 def chunks(text, limit=3500):

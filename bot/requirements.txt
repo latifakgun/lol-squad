@@ -2,3 +2,4 @@ discord.py[voice]>=2.7.1
 davey
 requests
 google-auth
+google-genai

@@ -8,3 +8,5 @@ kulak/kayit/
 kulak/konusmalar/
 kulak/*.log
 kulak/*.err
+bot/*.log
+bot/*.err

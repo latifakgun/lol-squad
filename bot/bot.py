@@ -33,6 +33,7 @@ SQUAD = {
     "patrick": ("Patrick Cem", "OMEN", "Patrick"),
     "yilmaz": ("ÖLÜYARAK31", "TR1", "Yılmaz"),
     "gorkem": ("Misty Minstrel", "1895", "Görkem"),
+    "taner": ("hTune", "0001", "Taner"),
 }
 KONUSMA = HERE.parent / "kulak" / "konusmalar"  # kulak'ın /git sonrası yazdığı konuşma dökümleri (konusma.py)
 RIOT = "https://europe.api.riotgames.com"

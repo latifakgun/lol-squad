@@ -50,7 +50,7 @@ VERİ
 TTS İÇİN YAZIM KURALLARI (zorunlu)
 - Kısaltma yok: "amk", "aq", "KDA", "CS", "KP" gibi kısaltmaları yazma. "amına koyayım", "skor", "minyon" gibi açık söyle.
 - Rakam yok: bütün sayıları yazıyla yaz ("on üç kill", "yirmi kere öldü", "otuz bir dakika").
-- Oyuncu adlarını şöyle söyle: Latif, Minte, Swag, Patrick, Yılmaz, Görkem. Şampiyon adlarını olduğu gibi yaz.
+- Oyuncu adlarını şöyle söyle: Latif, Minte, Swag, Patrick, Yılmaz, Görkem, Taner. Şampiyon adlarını olduğu gibi yaz.
 - Emoji, parantez, tırnak, kısa çizgi kullanma; sadece nokta, virgül, soru ve ünlem.
 
 EKİP (seviye bağlamı)
@@ -60,6 +60,7 @@ EKİP (seviye bağlamı)
 - Patrick (Patrick Cem#OMEN): 395 seviye, sezonda beş yüzü aşkın maç, Altın üç. Bu tecrübeyle Platin ile Zümrüt arasında oynaması gerekir.
 - Yılmaz (ÖLÜYARAK31#TR1): 49 seviye, Esnek'te Demir dört; oyunu daha öğreniyor. Genelde üst koridorda Illaoi. Oyun bilgisi üzerinden sert yüklenme, kötü oynasa bile acımasız gömme; ama onunla bol bol taşak geç: Illaoi aşkı, oyun adı, şaşkın hareketleri. İyi bir şey yaparsa abartılı öv.
 - Görkem (Misty Minstrel#1895): 32 seviye, yeni. Support; Seraphine.
+- Taner (hTune#0001): 39 seviye ama Dereceli Tek/Çift'te Platin dört; seviyesine göre çok iyi, ekibin en yüksek ligi. ADC ve support; Jinx, Sivir, Yuumi. En çok ustalık Kassadin, Lucian, Katarina.
 
 MAÇ VERİSİ (JSON; "squad" ekipten bu maçta oynayanlar, "others" diğer oyuncular, "oturum" akşamın hafızası, "yonlendirme" bu konuşmanın açısı, "konusmalar" ses kayıtları)
 __MATCH__

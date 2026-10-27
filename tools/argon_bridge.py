@@ -1,18 +1,23 @@
-"""argon-lol:// köprüsü: siteden gelen isteği Argon CLI'a verir, sonra commit + push yapar.
+"""argon-lol:// köprüsü: siteden gelen isteği tek bir Vertex API çağrısıyla Argon'a verir, sonra commit + push yapar.
+
+CLI ajanı (gemini --yolo) kullanılmaz: her adımda bütün bağlamı yeniden gönderip milyonlarca token yakıyordu (27 Eki).
 
 Kayıt: tools/register_protocol.ps1. Elle: python tools/argon_bridge.py "argon-lol://update?target=all"
 URI: argon-lol://update?target=<all|l4cg|minte|swag|patrick|premade>&urls=<virgüllü>&raw=<kısa talimat>&clip=1
 clip=1 ise ham metin panodan okunur (URI uzunluk sınırı yüzünden); kısa talimat raw= ile de gelebilir.
 """
 import datetime
+import json
 import pathlib
+import re
 import shutil
 import subprocess
 import sys
 import urllib.parse
+import urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-ARSENAL = ROOT.parent.parent / "🛠️ 600-Arsenal"
+DATA = ROOT / "src" / "data" / "squadData.js"
 TARGETS = {"all", "l4cg", "minte", "swag", "patrick", "premade"}
 MODEL = "gemini-4-argon"
 
@@ -42,7 +47,28 @@ def build_prompt(target, urls, raw):
     return (text.replace("__TARGET__", target)
                 .replace("__URLS__", ", ".join(urls) or "(yok, Riot ID'lerden LeagueOfGraphs linkini kendin kur)")
                 .replace("__DATE__", datetime.date.today().isoformat())
-                .replace("__RAW__", raw or "(yok)"))
+                .replace("__RAW__", raw or "(yok)")
+                .replace("__CURRENT__", DATA.read_text(encoding="utf-8")))
+
+
+def argon(prompt):
+    # Kimlik: gcloud ADC (bot/.env'deki proje). URL/arama araçları sunucu tarafında, döngü yok.
+    env = dict(l.split("=", 1) for l in (ROOT / "bot" / ".env").read_text(encoding="utf-8").splitlines() if "=" in l)
+    gcloud = shutil.which("gcloud") or sys.exit("gcloud bulunamadı.")
+    token = subprocess.run([gcloud, "auth", "application-default", "print-access-token"],
+                           capture_output=True, text=True, check=True).stdout.strip()
+    url = (f"https://aiplatform.googleapis.com/v1/projects/{env['GOOGLE_CLOUD_PROJECT'].strip()}"
+           f"/locations/global/publishers/google/models/{MODEL}:generateContent")
+    body = {"contents": [{"role": "user", "parts": [{"text": prompt}]}],
+            "tools": [{"urlContext": {}}, {"googleSearch": {}}],
+            "generationConfig": {"maxOutputTokens": 65536}}
+    req = urllib.request.Request(url, json.dumps(body).encode(), {
+        "Authorization": f"Bearer {token}", "Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=600) as r:
+        d = json.load(r)
+    text = "".join(p.get("text", "") for p in d["candidates"][0]["content"]["parts"])
+    blocks = re.findall(r"```(?:js|javascript)?\n(.*?)```", text, re.S)
+    return (max(blocks, key=len) if blocks else text).strip() + "\n", d.get("usageMetadata", {})
 
 
 def git(*args):
@@ -53,22 +79,21 @@ def main():
     uri = sys.argv[1] if len(sys.argv) > 1 else "argon-lol://update?target=all"
     target, urls, raw = parse(uri)
 
-    # Her site argon-lol:// açabilir ve Argon --yolo çalışıyor: neyin gönderildiğini görmeden başlatma.
+    # Her site argon-lol:// açabilir: neyin gönderildiğini görmeden başlatma.
     print(f"Hedef : {target}\nLinkler: {urls or '-'}\nHam metin: {len(raw)} karakter")
     if raw:
         print("--- ham metnin başı ---\n" + raw[:600] + "\n-----------------------")
     if input("Argon başlatılsın mı? [e/H] ").strip().lower() not in {"e", "evet", "y"}:
         sys.exit("İptal edildi.")
 
-    gemini = shutil.which("gemini") or sys.exit("gemini CLI bulunamadı (npm i -g @google/gemini-cli).")
-    cmd = [gemini, "--model", MODEL, "--yolo", "-p", "Stdin'deki görevi uygula."]
-    if ARSENAL.exists():
-        cmd[1:1] = ["--include-directories", str(ARSENAL)]
-    subprocess.run(cmd, cwd=ROOT, input=build_prompt(target, urls, raw), text=True,
-                   encoding="utf-8", check=True)
-
-    # Argon kendi doğruluyor ama bozuk dosya push'lanmasın diye bir kez de biz bakalım.
-    subprocess.run(["node", "-e", "import('./src/data/squadData.js')"], cwd=ROOT, check=True)
+    old = DATA.read_text(encoding="utf-8")
+    new, usage = argon(build_prompt(target, urls, raw))
+    print(f"Token: girdi {usage.get('promptTokenCount')}, çıktı {usage.get('candidatesTokenCount')}")
+    DATA.write_text(new, encoding="utf-8")
+    # Bozuk dosya push'lanmasın: yüklenmezse eskisini geri koy.
+    if subprocess.run(["node", "-e", "import('./src/data/squadData.js')"], cwd=ROOT).returncode:
+        DATA.write_text(old, encoding="utf-8")
+        sys.exit("Argon'un dosyası yüklenmedi, eski veri geri kondu.")
 
     if (ROOT / ".git").exists():
         git("add", "src/data/squadData.js")

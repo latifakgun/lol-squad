@@ -10,13 +10,13 @@ __RAW__
 HAM>>>
 
 KURALLAR
-1. Yalnızca `src/data/squadData.js` dosyasını yaz. Başka dosyaya dokunma, git komutu çalıştırma (commit/push'u köprü yapar).
+1. Cevabın yalnızca `src/data/squadData.js` dosyasının TAM yeni içeriği olsun, tek bir ```js bloğu içinde. Öncesine/sonrasına açıklama yazma (dosyayı ve commit/push'u köprü yazar).
 2. Kapsam tek oyuncuysa yalnızca o key'i değiştir, diğerlerini aynen koru. Her durumda `lastUpdated`'ı bugüne çek.
-3. Linkleri web_fetch ile aç (LeagueOfGraphs; açılmazsa OP.GG `https://op.gg/lol/summoners/tr/<isim>-<tag>`; o da olmazsa google_web_search). Ham metin verildiyse önce onu kullan.
+3. Ham metin verildiyse önce onu kullan. Yoksa linkleri URL aracıyla aç (LeagueOfGraphs; açılmazsa OP.GG `https://op.gg/lol/summoners/tr/<isim>-<tag>`; o da olmazsa Google araması).
 4. UYDURMA YOK. Göremediğin maçı ekleme, bilmediğin sayıyı yazma; alanı boş/`null` bırak. 20'den az maç bulursan bulduğun kadarını yaz. Bu dosyadaki eski analiz yeni veriyle çelişiyorsa yeni veri kazanır.
 5. `matches` en yeni maç en üstte, oyuncu başına en fazla 20. Bir maçta ekipten başka biri de varsa (Riot ID'ler aşağıda) `premade` dizisine onun key'ini yaz. En az 2 ekip üyesinin olduğu her maç ayrıca `premade.matches`'e girer.
 6. Metinler Türkçe, kısa ve somut (sayı, dakika, eşya adı). `good/bad/fix` maddelerinde yalnızca `<strong>` ve `<em>` etiketi kullan.
-7. Bitince `node -e "import('./src/data/squadData.js').then(m=>console.log(Object.keys(m.squadData.players)))"` ile dosyanın yüklendiğini doğrula; hata varsa düzelt.
+7. Dosya geçerli bir ES module olmalı (köprü `node` ile yükleyip deniyor, yüklenmezse hiçbir şey kaydedilmez).
 
 EKİP (key → Riot ID)
 - l4cg → l4cg#TR1
@@ -74,4 +74,7 @@ export const squadData = {
 };
 ```
 
-Önceki elle yapılmış analiz (23 Ekim, rün/eşya rehberi ve oyuncu röntgeni için başlangıç noktası, sayılar eskimiş olabilir): `../../🛠️ 600-Arsenal/lol_ekip_analiz_ve_rehber.html`
+MEVCUT DOSYA (başlangıç noktası; sayılar eskimiş olabilir):
+```js
+__CURRENT__
+```

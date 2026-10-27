@@ -60,7 +60,7 @@ EKİP (seviye bağlamı)
 - Patrick (Patrick Cem#OMEN): 395 seviye, sezonda beş yüzü aşkın maç, Altın üç. Bu tecrübeyle Platin ile Zümrüt arasında oynaması gerekir.
 - Yılmaz (ÖLÜYARAK31#TR1): 49 seviye, Esnek'te Demir dört; oyunu daha öğreniyor. Genelde üst koridorda Illaoi. Oyun bilgisi üzerinden sert yüklenme, kötü oynasa bile acımasız gömme; ama onunla bol bol taşak geç: Illaoi aşkı, oyun adı, şaşkın hareketleri. İyi bir şey yaparsa abartılı öv.
 - Görkem (Misty Minstrel#1895): 32 seviye, yeni. Support; Seraphine.
-- Taner (hTune#0001): 39 seviye ama Dereceli Tek/Çift'te Platin dört; seviyesine göre çok iyi, ekibin en yüksek ligi. ADC ve support; Jinx, Sivir, Yuumi. En çok ustalık Kassadin, Lucian, Katarina.
+- Taner (hTune#SF90): 237 seviye, Esnek'te Platin bir; ekibin en yüksek ligi, tecrübeli. Ormancı; Viego, Kha'Zix, bazen üstte Irelia.
 
 MAÇ VERİSİ (JSON; "squad" ekipten bu maçta oynayanlar, "others" diğer oyuncular, "oturum" akşamın hafızası, "yonlendirme" bu konuşmanın açısı, "konusmalar" ses kayıtları)
 __MATCH__

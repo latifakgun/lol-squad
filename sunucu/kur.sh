@@ -4,6 +4,10 @@
 set -euo pipefail
 U=$(whoami); R=$HOME/lol-squad
 
+# e2-micro (ücretsiz katman) 1 GB RAM: kurulum ve ses işleme taşmasın diye 1 GB swap.
+[ -f /swapfile ] || { sudo fallocate -l 1G /swapfile; sudo chmod 600 /swapfile; sudo mkswap -q /swapfile
+  sudo swapon /swapfile; echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab >/dev/null; }
+
 sudo apt-get update -q
 sudo apt-get install -yq git python3-venv ffmpeg curl
 command -v node >/dev/null && node -e 'process.exit(+process.versions.node.split(".")[0] < 22)' || {

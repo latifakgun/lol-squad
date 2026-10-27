@@ -376,8 +376,18 @@ def run_bot():
                 if not match_id:
                     return await interaction.followup.send("Yeni maç Riot'a düşmedi. Bir dakika sonra tekrar /bitti yaz.")
 
-                match = await asyncio.to_thread(riot_get, f"/lol/match/v5/matches/{match_id}")
-                timeline = await asyncio.to_thread(riot_get, f"/lol/match/v5/matches/{match_id}/timeline")
+                # Kimlik listeye maç verisinden önce düşebiliyor: veri gelene kadar 404 döner (27 Eki).
+                for _ in range(10):
+                    try:
+                        match = await asyncio.to_thread(riot_get, f"/lol/match/v5/matches/{match_id}")
+                        timeline = await asyncio.to_thread(riot_get, f"/lol/match/v5/matches/{match_id}/timeline")
+                        break
+                    except urllib.error.HTTPError as e:
+                        if e.code != 404:
+                            raise
+                        await asyncio.sleep(20)
+                else:
+                    return await interaction.followup.send(f"{match_id} verisi Riot'ta hâlâ hazır değil. Bir dakika sonra tekrar /bitti yaz.")
                 summary = summarize(match, cache["puuids"], cache["items"])
                 summary["moments"] = moments(match, timeline, cache["puuids"])
                 summary["altin_farki"] = gold_curve(match, timeline, cache["puuids"])

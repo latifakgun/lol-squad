@@ -53,6 +53,8 @@ lolbot ve kulak, Google Cloud'daki `lol-squad` sanal makinesinde (`europe-west1-
 - **Güncelleme:** sunucu 5 dakikada bir GitHub'dan çeker (`sunucu/guncelle.sh`). Yalnızca `.md` (ör. `script_prompt.md`) değiştiyse botlar yeniden başlatılmaz, prompt sonraki `/bitti`'de geçerli olur. Kod değiştiyse ilgili bot yeniden başlar.
 - `.env`, `state.json`, `gecmis.json` ve konuşma dökümleri yalnızca sunucuda; repoya girmez. Riot anahtarı yenilenince sunucudaki `~/lol-squad/bot/.env` güncellenip `sudo systemctl restart lolbot kulak`.
 - Log: `sudo journalctl -u lolbot -u kulak -f`
+- **Bir sonraki /bitti belirli bir maçı (ya da hazır bir sesi) okusun:** sesi önceden `out/<maç>.wav` + `.txt` olarak üret, sonra `sudo systemctl set-environment BITTI_MAC=<maç> && sudo systemctl restart lolbot && sudo systemctl unset-environment BITTI_MAC`. Tek seferlik; bot yeniden başlarsa düşer.
+- **Akşamın toplu özeti:** `toplu_ozet.py "Latif,Patrick,Görkem,Swag" <maç1> … <son maç>` → sesi son maçın önbelleğine yazar, sonra yukarıdaki BITTI_MAC adımı.
 - **Laptopta botları açma:** aynı token'la iki kopya aynı komuta cevap vermeye çalışır.
 
 ## Kullanım

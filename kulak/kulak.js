@@ -10,7 +10,7 @@ const OpusScript = require("opusscript");
 process.loadEnvFile(path.join(__dirname, "..", "bot", ".env"));
 const KAYIT = path.join(__dirname, "kayit");
 // Discord kullanıcı adı ya da görünen ad → konuşmada geçen ad. Listede olmayan kaydedilmez.
-const SQUAD = [[/latif/i, "Latif"], [/feared/i, "Patrick"], [/swag/i, "Swag"], [/pretty when you cry/i, "Minte"], [/yilmaz/i, "Yılmaz"], [/g[öo]rkem/i, "Görkem"]];
+const SQUAD = [[/latif/i, "Latif"], [/feared/i, "Patrick"], [/swag/i, "Swag"], [/pretty when you cry/i, "Minte"], [/yilmaz/i, "Yılmaz"], [/g[öo]rkem/i, "Görkem"], [/taner|htune/i, "Taner"]];
 const PYTHON = process.env.KULAK_PYTHON || "python"; // bot/konusma.py'yi çalıştıracak, lolbot paketleri kurulu olan python
 let since = null; // açık oturumun başlangıcı (ms)
 

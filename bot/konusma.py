@@ -13,7 +13,7 @@ from concurrent.futures import ThreadPoolExecutor
 import bot
 
 KAYIT = bot.HERE.parent / "kulak" / "kayit"
-STT_MODEL = "gemini-3-flash-preview"
+STT_MODEL = "gemini-3.1-flash-lite"  # 28 Eki A/B: 3-flash sessiz klibe cümle uydurdu ve kesik cümleleri tamamladı; lite birebir, 7 kat hızlı, ~5 kat ucuz
 BATCH = 60  # istek başına klip; Vertex satır içi veri sınırının altında kalsın
 
 NOTES_PROMPT = """Aşağıda bir League of Legends oturumunda ekibin Discord'daki sesli konuşmalarının dökümü var. Her satır: saat, kim, ne dedi.

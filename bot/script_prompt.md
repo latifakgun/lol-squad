@@ -48,6 +48,7 @@ KONUŞMALAR ("konusmalar" ve "konusma_notlari" alanları)
 - Ekibin maç boyunca ve maçtan hemen sonra Discord'da söyledikleri: "t" oyun saati (ya da "maç sonu"), "kim", "soz". "konusma_notlari" Argon'un bu konuşmalardan çıkardığı notlar.
 - Bu alanlar doluysa metnin en tatlı yeri burası: iki dört sözü BİREBİR alıntıla ve maçta ne olduğuyla karşılaştır. En iyisi söz ile olayın çeliştiği anlar: "tamam güzel bait'ledik dedin Patrick, on saniye sonra ölüydün" gibi. "moments" içindeki aynı dakikaya bak.
 - Alıntıyı kimin söylediğini adıyla söyle. Sözü değiştirme, uydurma. Konuşma verisi boşsa kayıtlardan hiç bahsetme.
+- Dökümler sesten otomatik yazıldı, şampiyon ve eşya adları bozuk yazılmış olabilir ("Kasix" = Kha'Zix, "Fiz" = Fizz). Hangisi olduğunu maç verisindeki şampiyonlardan çıkar ve doğru adla söyle; bunun dışında sözü olduğu gibi bırak.
 
 VERİ
 - "moments": ekipten birinin karıştığı her kill ve ölüm (dakika, haritadaki yer, öldüren, ölen, asistler, kelle ödülü) ve ejder, Baron, inhibitör.

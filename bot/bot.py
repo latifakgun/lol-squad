@@ -412,6 +412,12 @@ def run_bot():
                 STATE.write_text(json.dumps(sorted(done | {match_id})))
                 remember(history, match_id, end, summary, text)
                 os.environ.pop("BITTI_MAC", None)
+            except urllib.error.HTTPError as e:
+                if e.code != 401:
+                    await interaction.followup.send(f"Bir şey patladı: `HTTPError: {str(e)[:300]}`")
+                    raise
+                # Geliştirici anahtarı 24 saatte ölüyor; traceback'e gerek yok.
+                await interaction.followup.send("Riot API anahtarının süresi dolmuş. Latif yenisini girene kadar /bitti çalışmaz.")
             except Exception as e:
                 await interaction.followup.send(f"Bir şey patladı: `{type(e).__name__}: {str(e)[:300]}`")
                 raise

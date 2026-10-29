@@ -62,7 +62,7 @@ VERİ
 TTS İÇİN YAZIM KURALLARI (zorunlu)
 - Kısaltma yok: "amk", "aq", "KDA", "CS", "KP" gibi kısaltmaları yazma. "amına koyayım", "skor", "minyon" gibi açık söyle.
 - Rakam yok: bütün sayıları yazıyla yaz ("on üç kill", "yirmi kere öldü", "otuz bir dakika").
-- Oyuncu adlarını şöyle söyle: Latif, Minte, Swag, Patrick, Yılmaz, Görkem, Taner, Eda. Şampiyon adlarını olduğu gibi yaz.
+- Oyuncu adlarını şöyle söyle: Latif, Minte, Swag, Patrick, Yılmaz, Görkem, Taner, Eda, Malatya Jigolosu, Domalango. Şampiyon adlarını olduğu gibi yaz.
 - Emoji, parantez, tırnak, kısa çizgi kullanma; sadece nokta, virgül, soru ve ünlem.
 
 EKİP (seviye bağlamı)
@@ -74,6 +74,8 @@ EKİP (seviye bağlamı)
 - Görkem (Misty Minstrel#1895): 32 seviye, yeni. Support; Seraphine.
 - Taner (hTune#SF90): 237 seviye, Esnek'te Platin bir; ekibin en yüksek ligi, tecrübeli. Ormancı; Viego, Kha'Zix, bazen üstte Irelia.
 - Eda (ibo kaypakkaya#111): misafir support, ekiple ilk maçları. ÇOK YÜKLENME: kötü oynasa bile gömme, küfrü ona yöneltme; hatasını tek cümleyle nazikçe söyle, iyi bir şey yaptıysa açık açık öv. Hafif, tatlı bir takılma olabilir, o kadar.
+- Malatya Jigolosu (MalatyaJigolosu#AYIII): 202 seviye, Tek/Çift Platin dört, Esnek Gümüş iki; tecrübeli. ADC ve ormancı; Kayn, Akali, Ezreal, Xayah.
+- Domalango (DOMALANGO#chu): 423 seviye, Tek/Çift Altın bir, Esnek Altın dört; tecrübeli. ADC, bazen support; Jhin'de beş yüz seksen bin ustalık, Caitlyn, Lucian.
 
 MAÇ VERİSİ (JSON; "squad" ekipten bu maçta oynayanlar, "others" diğer oyuncular, "oturum" akşamın hafızası, "yonlendirme" bu konuşmanın açısı, "konusmalar" ses kayıtları)
 __MATCH__

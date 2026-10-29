@@ -64,6 +64,9 @@ OPENINGS = [
     "fısıldar gibi bir sır vererek",
 ]
 PATRICK_LINES = ["Yarma ya, yarma!", "Ölüsünü sikicem onun!", "Ya kanka hadi ya!", "Ya yok amına koyayım ya!"]
+# Kötü oynayan iki kişiye heceye bölünmüş ikili adı: ikisi yan yana gelince küfür çıkar.
+DUO_NAMES = [("Yar", "Rak"), ("Sa", "Lak"), ("Ga", "Vat"), ("Beyin", "Siz"), ("E", "Zik"), ("Dan", "Galak"), ("Ap", "Tal")]
+PATRICK_LINE_CHANCE, DUO_CHANCE = 0.4, 0.35  # ponytail: elle seçilmiş sıklık; hâlâ sık/seyrek gelirse buradan ayarla
 QUEUES = {400: "Normal", 420: "Dereceli Tek/Çift", 430: "Normal", 440: "Esnek", 450: "ARAM", 490: "Hızlı Oyun"}
 
 
@@ -250,18 +253,30 @@ def direct(summary, history, match_id, end):
                          "bu_aksam_okunanlar": [h["text"] for h in tonight],
                          "onceki_gunlerin_acilislari": [h["text"].split(".")[0] for h in older[-10:]]}
     summary["yonlendirme"] = {"aci": random.choice([a for a in ANGLES if a not in recent]), "acilis": random.choice(OPENINGS)}
+    ratio = lambda p: (p["kills"] + p["assists"]) / max(p["deaths"], 1)
     if "Patrick" in summary["squad"]:
-        summary["yonlendirme"]["patrick_laflari"] = random.sample(PATRICK_LINES, 2)
         p = summary["squad"]["Patrick"]
-        # ponytail: "çok kötü" = skor oranı 1'in altı ya da 10+ ölüm; fazla/az tetiklerse eşiği buradan ayarla.
-        if (p["kills"] + p["assists"]) / max(p["deaths"], 1) < 1 or p["deaths"] >= 10:
+        # ponytail: "kötü" = skor oranı 1,5 altı ya da 8+ ölüm; "çok kötü" = oran 1 altı ya da 10+ ölüm. Eşikler elle.
+        if (ratio(p) < 1.5 or p["deaths"] >= 8) and random.random() < PATRICK_LINE_CHANCE:
+            used = {h.get("patrick_lafi") for h in tonight}
+            summary["yonlendirme"]["patrick_lafi"] = random.choice([l for l in PATRICK_LINES if l not in used] or PATRICK_LINES)
+        if ratio(p) < 1 or p["deaths"] >= 10:
             summary["yonlendirme"]["patrick_can_gelsin"] = True
+    # Kötü ikili şakası: gerçekten iki kişi batırdıysa ve bu akşam yapılmadıysa, arada bir.
+    bad = sorted((n for n, p in summary["squad"].items() if n != "Eda" and ratio(p) < 1 and p["deaths"] >= 6),
+                 key=lambda n: ratio(summary["squad"][n]))
+    if len(bad) >= 2 and not any(h.get("ikili") for h in tonight) and random.random() < DUO_CHANCE:
+        used = {tuple(h["ikili"]) for h in older[-10:] if h.get("ikili")}
+        summary["yonlendirme"]["kotu_ikili"] = {"oyuncular": bad[:2],
+                                                "ad": random.choice([d for d in DUO_NAMES if d not in used] or DUO_NAMES)}
     return summary
 
 
 def remember(history, match_id, end, summary, text):
     win = any(p["win"] for p in summary["squad"].values())
-    entry = {"id": match_id, "end": end, "win": win, "aci": summary["yonlendirme"]["aci"], "text": text}
+    y = summary["yonlendirme"]
+    entry = {"id": match_id, "end": end, "win": win, "aci": y["aci"], "text": text,
+             "patrick_lafi": y.get("patrick_lafi"), "ikili": y.get("kotu_ikili", {}).get("ad")}
     keep = sorted([h for h in history if h["id"] != match_id] + [entry], key=lambda h: h["end"])[-30:]
     HISTORY.write_text(json.dumps(keep, ensure_ascii=False, indent=1), encoding="utf-8")
 

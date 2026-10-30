@@ -1,11 +1,12 @@
 """Kulak'ın kayıtlarını yazıya döker, Argon'a not çıkartır → kulak/konusmalar/<başlangıç>.json. /bitti bunu okur.
 
 Kulak /git'te çağırır:  python konusma.py <başlangıç ms> <bitiş ms>
-İşlenen ses dosyaları silinir; yalnızca metin kalır.
+Ses dosyaları silinmez: ses klonu ve konuşma tarzı için lazım. ponytail: VM diski dolarsa eski günler elle temizlenir.
 """
 import asyncio
 import json
 import os
+import re
 import sys
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -49,7 +50,8 @@ def transcribe(files):
                     raise
                 print("yeniden deneniyor:", type(e).__name__, flush=True)
                 time.sleep(15)
-        return [{"ms": int(part[int(it["klip"]) - 1].stem.rsplit("_", 1)[1]), "kim": part[int(it["klip"]) - 1].stem.rsplit("_", 1)[0],
+        clip = lambda it: part[int(re.search(r"\d+", str(it["klip"]))[0]) - 1]  # lite bazen 4 yerine "Klip 4" döndürüyor
+        return [{"ms": int(clip(it).stem.rsplit("_", 1)[1]), "kim": clip(it).stem.rsplit("_", 1)[0],
                  "soz": it["metin"].strip()} for it in json.loads(r.text) if it.get("metin", "").strip()]
 
     # 38 dakikalık kayıt sırayla 7,5 dk sürdü; partileri aynı anda gönder.
@@ -74,8 +76,6 @@ def main(start, end):
         notes = asyncio.run(bot.argon(NOTES_PROMPT + dump)) if lines else ""
         out = {"start": start, "end": end, "satirlar": lines, "analiz": notes}
         (bot.KONUSMA / f"{start}.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
-        for f in files:
-            f.unlink()
         print(f"{len(files)} klip → {len(lines)} satır")
     finally:
         flag.unlink(missing_ok=True)

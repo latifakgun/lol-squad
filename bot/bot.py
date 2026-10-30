@@ -262,8 +262,6 @@ def direct(summary, history, match_id, end):
         if (ratio(p) < 1.5 or p["deaths"] >= 8) and random.random() < PATRICK_LINE_CHANCE:
             used = {h.get("patrick_lafi") for h in tonight}
             summary["yonlendirme"]["patrick_lafi"] = random.choice([l for l in PATRICK_LINES if l not in used] or PATRICK_LINES)
-        if ratio(p) < 1 or p["deaths"] >= 10:
-            summary["yonlendirme"]["patrick_can_gelsin"] = True
     # Kötü ikili şakası: gerçekten iki kişi batırdıysa ve bu akşam yapılmadıysa, arada bir.
     bad = sorted((n for n, p in summary["squad"].items() if n != "Eda" and ratio(p) < 1 and p["deaths"] >= 6),
                  key=lambda n: ratio(summary["squad"][n]))

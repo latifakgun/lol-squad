@@ -253,7 +253,8 @@ def direct(summary, history, match_id, end):
     recent = {h.get("aci") for h in past[-3:]}
     summary["oturum"] = {"mac_no": len(tonight) + 1, "onceki_sonuclar": ["G" if h["win"] else "M" for h in tonight],
                          "bu_aksam_okunanlar": [h["text"] for h in tonight],
-                         "onceki_gunlerin_acilislari": [h["text"].split(".")[0] for h in older[-10:]]}
+                         "onceki_gunlerin_acilislari": [h["text"].split(".")[0] for h in older[-10:]],
+                         "onceki_gunlerin_dersleri": [h["text"] for h in older[-6:]]}
     summary["yonlendirme"] = {"aci": random.choice([a for a in ANGLES if a not in recent]), "acilis": random.choice(OPENINGS)}
     ratio = lambda p: (p["kills"] + p["assists"]) / max(p["deaths"], 1)
     if "Patrick" in summary["squad"]:

@@ -44,6 +44,7 @@ def transcribe(files):
             try:
                 r = client.models.generate_content(model=STT_MODEL, contents=contents,
                                                    config=types.GenerateContentConfig(response_mime_type="application/json"))
+                items = json.loads(r.text)  # lite ara sıra bozuk JSON döndürüyor; o da yeniden denenir
                 break
             except Exception as e:
                 if attempt == 11:
@@ -52,7 +53,7 @@ def transcribe(files):
                 time.sleep(15)
         clip = lambda it: part[int(re.search(r"\d+", str(it["klip"]))[0]) - 1]  # lite bazen 4 yerine "Klip 4" döndürüyor
         return [{"ms": int(clip(it).stem.rsplit("_", 1)[1]), "kim": clip(it).stem.rsplit("_", 1)[0],
-                 "soz": it["metin"].strip()} for it in json.loads(r.text) if it.get("metin", "").strip()]
+                 "soz": it["metin"].strip()} for it in items if it.get("metin", "").strip()]
 
     # 38 dakikalık kayıt sırayla 7,5 dk sürdü; partileri aynı anda gönder.
     with ThreadPoolExecutor(4) as ex:

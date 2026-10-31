@@ -137,7 +137,7 @@ def summarize(match, ids_by_key, items):
             "cs": cs, "cs_per_min": round(cs / mins, 1), "gold": p["goldEarned"],
             "damage": p["totalDamageDealtToChampions"], "vision": p["visionScore"],
             "kill_participation": round(p.get("challenges", {}).get("killParticipation", 0) * 100),
-            "items": [items.get(p[f"item{i}"], "") for i in range(6) if p[f"item{i}"]],
+            "items": [items.get(p[k], "") for k in [*(f"item{i}" for i in range(6)), "roleBoundItem"] if p.get(k)],
             "level": p.get("summonerLevel"),
         }
 

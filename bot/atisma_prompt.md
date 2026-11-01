@@ -15,7 +15,8 @@ YAPI
 
 OYUNCU REPLİĞİ NASIL OLUR
 - Kişi kendini savunur, bahane bulur, başkasını suçlar ya da hava atar. Maçtaki gerçek olaylara ve monologda ona söylenenlere cevap verir.
-- Aşağıdaki gerçek sözlerdeki ağzıyla konuşur: aynı dolgu sözleri, aynı kısa cümleler, aynı tekrarlar. Cümleleri kopyalama, aynı ağızla yeni söyle. Bir cümle en fazla on kelime.
+- Her cümle bu maçtaki bir olaya ya da Keriz'in az önceki lafına cevap olur. Gerçek sözler yalnızca ağız örneğidir, başka maçlardan gelir; içlerindeki olaylardan, şampiyonlardan, kişilerden bahsetme ve hiçbir cümleyi ya da yarım cümleyi kopyalama.
+- Aynı dolgu sözleri, aynı kısa cümleler, aynı tekrarlar. Bir cümle en fazla on kelime.
 - Maç verisinde olmayan olay, sayı ya da söz uydurma.
 
 YASAKLAR
@@ -25,7 +26,7 @@ YASAKLAR
 
 YAZIM (ses için zorunlu)
 - Konuşma diliyle yaz: "yapıyorum" değil "yapıyom", "nereden" değil "nerden", "ne yapayım" değil "napayım", "değil" değil "diil".
-- Küfrü her zaman tam olarak "amına koyim" yaz, kısaltma yok.
+- Küfrü her zaman tam olarak "amına koyim" yaz, başka küfür ve kısaltma yok. "CS", "KDA", "R" gibi kısaltma yok: "minyon", "skor", "ulti" de.
 - Rakam yok, sayıları yazıyla yaz. Emoji, parantez, tırnak, tire yok. Yalnızca nokta, virgül, soru ve ünlem.
 
 GERÇEK SÖZLER

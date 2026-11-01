@@ -18,6 +18,7 @@ import bot
 KLONLU = {"Latif": "Latif", "Minte": "Minte", "Swag": "Swag", "Patrick": "Patrick", "Yılmaz": "Yilmaz"}
 ARA_SN, GIRIS_SN, SINIR_SN = 0.35, 0.9, 270  # Latif: en kötü 5 dk beklenir; Fenrir paralel gidiyor. Seviye monologla aynı: -15 LUFS
 KERIZ = "Keriz"
+YASAK = re.compile(r"\b(an(an|anı|anın|ası|asını|asının)|bacı\w*|orospu\w*|piç\w*|ibne\w*)\b", re.I)  # klon gerçek bir kişinin sesi: prompta güvenilmez, kod garanti eder
 
 
 def gercek_satirlar(ad, n=40):
@@ -30,7 +31,8 @@ def gercek_satirlar(ad, n=40):
 def coz(ham, oynayan):
     """Argon'un JSON'u: kod bloğu sarılı gelebilir, listede olmayan konuşmacı atılır."""
     d = json.loads(re.sub(r"^```(?:json)?|```$", "", ham.strip()).strip())
-    out = [{"kim": x["kim"], "metin": x["metin"].strip()} for x in d if x.get("kim") in {KERIZ, *oynayan} and (x.get("metin") or "").strip()]
+    out = [{"kim": x["kim"], "metin": x["metin"].strip()} for x in d
+           if x.get("kim") in {KERIZ, *oynayan} and (x.get("metin") or "").strip() and not YASAK.search(x["metin"])]
     if not any(x["kim"] != KERIZ for x in out):
         raise ValueError("atışmada oyuncu repliği yok")
     return out
@@ -138,6 +140,8 @@ if __name__ == "__main__":
     a = [{"kim": "Keriz", "metin": " Ne diyon "}, {"kim": "Swag", "metin": "Ya bak"}, {"kim": "Ateck", "metin": "x"}, {"kim": "Minte", "metin": ""}]
     assert coz(json.dumps(a), ["Swag"]) == [{"kim": "Keriz", "metin": "Ne diyon"}, {"kim": "Swag", "metin": "Ya bak"}]
     assert coz("```json\n" + json.dumps(a) + "\n```", ["Swag"])[1]["kim"] == "Swag"
+    b = [{"kim": "Swag", "metin": "Kanka anasını sikeyim ya"}, {"kim": "Swag", "metin": "Ana koridora indim ya, Lux'a bak"}]
+    assert [x["metin"] for x in coz(json.dumps(b), ["Swag"])] == ["Ana koridora indim ya, Lux'a bak"]
     try:
         coz(json.dumps(a[:1]), ["Swag"]); raise SystemExit("yalnız Keriz'li atışma geçmemeli")
     except ValueError:

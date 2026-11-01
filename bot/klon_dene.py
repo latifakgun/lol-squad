@@ -10,6 +10,7 @@ app = modal.App("lol-klon-dene")
 
 @app.function(image=k.image, gpu="T4", volumes={"/veri": k.hacim}, timeout=280)
 def dene(kim, metin, fren, uzat):
+    k.fren_yama()
     import io
     import librosa
     import soundfile as sf

@@ -23,17 +23,25 @@ FRENLER = {"siki": ({"kuyruk": 5, "tekrar": True}, 2.0), "gevsek": ({"kuyruk": 2
 
 
 def kur():
-    """Hizalama denetçisi son jetonları 200 ms'de ve üst üste iki aynı jetonda kesiyor: uzun "ya" bu yüzden kısalıyor. Eşiği ayarlanabilir yap."""
-    import chatterbox.models.t3.inference.alignment_stream_analyzer as a
     from chatterbox.mtl_tts import ChatterboxMultilingualTTS
-    f = pathlib.Path(a.__file__)
+    ChatterboxMultilingualTTS.from_pretrained(device="cpu")  # ağırlıklar imaja girsin, soğuk başlangıç kısalsın
+
+
+def fren_yama():
+    """Hizalama denetçisi son jetonları 200 ms'de ve üst üste iki aynı jetonda kesiyor: uzun "ya" bu yüzden kısalıyor. Eşiği ayarlanabilir yap.
+    Konteyner açılışında, chatterbox yüklenmeden çalışır: imaj aşamasındaki yama çalışma anına ulaşmadı (2 Kas)."""
+    import importlib.metadata
+    f = pathlib.Path(importlib.metadata.distribution("chatterbox-tts").locate_file("chatterbox/models/t3/inference/alignment_stream_analyzer.py"))
     s = f.read_text(encoding="utf8")
+    if s.startswith("FREN ="):
+        return
     for eski, yeni in [("A[self.completed_at:, -3:].sum(dim=0).max() >= 5)", 'A[self.completed_at:, -3:].sum(dim=0).max() >= FREN["kuyruk"])'),
                        ("if long_tail or alignment_repetition or token_repetition:", 'if long_tail or alignment_repetition or (token_repetition and FREN["tekrar"]):')]:
         assert eski in s, eski
         s = s.replace(eski, yeni)
     f.write_text('FREN = {"kuyruk": 5, "tekrar": True}\n' + s, encoding="utf8")
-    ChatterboxMultilingualTTS.from_pretrained(device="cpu")  # ağırlıklar imaja girsin, soğuk başlangıç kısalsın
+    for c in f.parent.glob("__pycache__/alignment_stream_analyzer*"):
+        c.unlink()
 
 
 image = (modal.Image.debian_slim(python_version="3.11").apt_install("ffmpeg")
@@ -54,6 +62,7 @@ def uygun(sn, hedef):
 class Klon:
     @modal.enter()
     def yukle(self):
+        fren_yama()
         import torch
         from chatterbox.mtl_tts import ChatterboxMultilingualTTS, Conditionals
         self.m = ChatterboxMultilingualTTS.from_pretrained(device="cuda")

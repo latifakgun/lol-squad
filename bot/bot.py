@@ -295,10 +295,12 @@ async def argon(prompt):
     from google import genai
     from google.genai import types
 
-    client = genai.Client(vertexai=True, project=os.environ["GOOGLE_CLOUD_PROJECT"], location="global")
+    # Argon ara sıra birkaç dakika 429 veriyor (1 Kas): istemci 429/503'te kendi bekleyip dener, bekleme toplamı ~4 dk.
+    client = genai.Client(vertexai=True, project=os.environ["GOOGLE_CLOUD_PROJECT"], location="global",
+                          http_options=types.HttpOptions(retry_options=types.HttpRetryOptions(attempts=6, initial_delay=15, max_delay=60)))
     r = await asyncio.wait_for(client.aio.models.generate_content(
         model=ARGON_MODEL, contents=prompt,
-        config=types.GenerateContentConfig(system_instruction="Verilen görevi uygula. Yalnızca okunacak metni yaz.")), timeout=240)
+        config=types.GenerateContentConfig(system_instruction="Verilen görevi uygula. Yalnızca okunacak metni yaz.")), timeout=480)
     if not (r.text or "").strip():
         raise RuntimeError("Argon boş döndü")
     return r.text.strip()

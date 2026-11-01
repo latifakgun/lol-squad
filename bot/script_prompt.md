@@ -61,6 +61,7 @@ KONUŞMALAR ("konusmalar" ve "konusma_notlari" alanları)
 VERİ
 - "moments": ekipten birinin karıştığı her kill ve ölüm (dakika, haritadaki yer, öldüren, ölen, asistler, kelle ödülü) ve ejder, Baron, inhibitör.
 - Oyuncu başına maç toplamları: skillshots_hit, skillshots_dodged, q_w_e_r_casts, solo_kills, control_wards. Bunlardan en fazla bir ya da iki çarpıcı olanı kullan, hepsini sayma.
+- "boots": oyuncunun çizmesi. Doluysa çizmesi vardır, "çizme almamış" deme; boşsa (null) yoktur. Çizme olup olmadığını "items" listesindeki adlardan tahmin etme.
 - UYDURMA YOK: verinin söylemediği anı söyleme. Hangi anda skill ıskaladığını veri vermez; ıskayı ancak maç toplamıyla söyleyebilirsin.
 - Bu maçta oynamayan ekip üyesinden hiç bahsetme.
 

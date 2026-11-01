@@ -85,6 +85,7 @@ def load_env():
 # ---------- Riot ----------
 
 UA = {"User-Agent": "lol-squad-bot/1.0 (+https://github.com/latifakgun/lol-squad)"}  # Cloudflare Python-urllib'i 1010 ile reddediyor
+BOOTS = set()  # item_names doldurur
 
 
 def get_json(url, headers=None):
@@ -115,6 +116,7 @@ def puuids():
 def item_names():
     ver = get_json("https://ddragon.leagueoflegends.com/api/versions.json")[0]
     data = get_json(f"https://ddragon.leagueoflegends.com/cdn/{ver}/data/tr_TR/item.json")
+    BOOTS.update(int(i) for i, v in data["data"].items() if "Boots" in v.get("tags", []))  # 3. kademe çizmeler de (Zincirli Eziciler): adından anlaşılmıyor
     return {int(i): v["name"] for i, v in data["data"].items()}
 
 
@@ -132,7 +134,9 @@ def summarize(match, ids_by_key, items):
 
     def row(p):
         cs = p["totalMinionsKilled"] + p["neutralMinionsKilled"]
+        slots = [p.get(k) for k in [*(f"item{i}" for i in range(6)), "roleBoundItem"]]
         return {
+            "boots": next((items.get(i) for i in slots if i in BOOTS), None),
             "champ": p["championName"], "role": p.get("teamPosition") or "-", "win": p["win"],
             "kills": p["kills"], "deaths": p["deaths"], "assists": p["assists"],
             "cs": cs, "cs_per_min": round(cs / mins, 1), "gold": p["goldEarned"],
@@ -338,14 +342,20 @@ def tts(text, path):
         w.setnchannels(1); w.setsampwidth(2); w.setframerate(24000); w.writeframes(pcm)
 
 
-async def analysis_audio(summary, name):
-    path, txt = OUT / f"{name}.wav", OUT / f"{name}.txt"
+async def analysis_text(summary, name):
+    txt = OUT / f"{name}.txt"
     cached = name != "test"  # bir adım patlayıp tekrar /bitti denenirse hazır metni/sesi kullan, Argon'a baştan yazdırma
-    if cached and path.exists():
-        return txt.read_text(encoding="utf-8"), path
     text = txt.read_text(encoding="utf-8") if cached and txt.exists() else await argon_script(summary)
     OUT.mkdir(exist_ok=True)
     txt.write_text(text, encoding="utf-8")
+    return text
+
+
+async def analysis_audio(summary, name):
+    path = OUT / f"{name}.wav"
+    text = await analysis_text(summary, name)
+    if name != "test" and path.exists():
+        return text, path
     for attempt in range(5):  # TTS bağlantısı ara sıra kopuyor (yanıtsız kesme, laptopta TLS INVALID_SESSION_ID)
         try:
             await asyncio.to_thread(tts, text, path)
@@ -417,7 +427,12 @@ def run_bot():
                 summary["konusmalar"], summary["konusma_notlari"] = talk(match)
                 history, end = load_history(), match_end(match)
                 direct(summary, history, match_id, end)
-                text, path = await analysis_audio(summary, match_id)
+                import atisma
+                if os.environ.get("KLON_URL"):
+                    asyncio.create_task(asyncio.to_thread(atisma.isit))  # konteyner uyansın, metin yazılırken ısınır
+                text = await analysis_text(summary, match_id)
+                (_, path), ek = await asyncio.gather(analysis_audio(summary, match_id), atisma.guvenli(summary, match_id, text))
+                path = atisma.ekle(path, ek, match_id)
 
                 vc = await voice.channel.connect()
                 try:

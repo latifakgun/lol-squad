@@ -66,7 +66,7 @@ lolbot ve kulak, Google Cloud'daki `lol-squad` sanal makinesinde (`europe-west1-
 ## Klon atışması
 Monologdan sonra Keriz (Fenrir) ile maçtaki oyuncuların klon sesleri karşılıklı konuşur (`atisma.py`, `atisma_prompt.md`). Üretim Modal'da T4 (`klon_modal.py`); `.env`'de `KLON_URL` ve `KLON_ANAHTAR` yoksa ya da servis patlarsa `/bitti` yalnız Fenrir'le okur. Yalnız onay vermiş kişiler klonlanır.
 - Profil, LoRA ve `ayar.json` Modal'daki `lol-klon` Volume'unda; repoya girmez. Kişi ayarı (tempo, perde, fren, uzat, hece) deploy gerektirmez, konteyner yeniden açılınca geçerli olur.
-- Deploy etmeden deneme: `modal run klon_dene.py --kim Swag --metin "..."`. Kendi kendine test: `python atisma.py`.
+- Deploy etmeden deneme: `modal run klon_dene.py --isler isler.json --klasor cikti`. Kendi kendine test: `python atisma.py`.
 
 ## Ayarlar
 - Ekip, Riot ID'ler, model ve ses: `bot.py` başındaki `SQUAD`, `TTS_MODEL`, `TTS_VOICE`.

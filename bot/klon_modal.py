@@ -28,7 +28,7 @@ def kur():
 
 
 def fren_yama():
-    """Hizalama denetçisi son jetonları 200 ms'de ve üst üste iki aynı jetonda kesiyor: uzun "ya" bu yüzden kısalıyor. Eşiği ayarlanabilir yap.
+    """Hizalama denetçisi son jetonları 200 ms'de ve üst üste iki aynı jetonda kesiyor. Eşiği ayarlanabilir yap: Yılmaz gevsek kullanıyor, LoRA'lılarda fren devreye girmiyor (2 Kas).
     Konteyner açılışında, chatterbox yüklenmeden çalışır: imaj aşamasındaki yama çalışma anına ulaşmadı (2 Kas)."""
     import importlib.metadata
     f = pathlib.Path(importlib.metadata.distribution("chatterbox-tts").locate_file("chatterbox/models/t3/inference/alignment_stream_analyzer.py"))
@@ -57,12 +57,10 @@ def uygun(sn, hedef):
     return 0.4 * hedef <= sn <= 1.6 * hedef + 1
 
 
-@app.cls(image=image, gpu="T4", volumes={"/veri": hacim}, secrets=[modal.Secret.from_name("lol-klon-anahtar")],
-         scaledown_window=120, timeout=280, max_containers=1)
-class Klon:
-    @modal.enter()
-    def yukle(self):
-        fren_yama()
+class Motor:
+    """Model, profiller ve LoRA'lar bellekte. Hem servis hem klon_dene bunu çalıştırır."""
+
+    def __init__(self):
         import torch
         from chatterbox.mtl_tts import ChatterboxMultilingualTTS, Conditionals
         self.m = ChatterboxMultilingualTTS.from_pretrained(device="cuda")
@@ -105,18 +103,8 @@ class Klon:
                 break
         return en_iyi, a
 
-    @modal.fastapi_endpoint(method="POST")
-    def uret(self, istek: dict):
+    def wav(self, y, a):
         import soundfile as sf
-        from fastapi import HTTPException, Response
-        if not hmac.compare_digest(str(istek.get("anahtar")), os.environ["KLON_ANAHTAR"]):
-            raise HTTPException(401)
-        if istek.get("isit"):  # /bitti başında konteyneri uyandırır
-            return {"hazir": sorted(self.kosul)}
-        kim = istek["kim"]
-        if kim not in self.kosul:
-            raise HTTPException(404, f"profil yok: {kim}")
-        y, a = self.sentez(kim, istek["metin"], int(istek.get("ton", 1)))
         with tempfile.TemporaryDirectory() as d:
             g, c = f"{d}/g.wav", f"{d}/c.wav"
             sf.write(g, y, self.m.sr)
@@ -124,4 +112,26 @@ class Klon:
             sr = self.m.sr
             filtre = f"asetrate={sr * perde:.0f},aresample={sr},atempo={tempo / perde:.3f},loudnorm=I=-15:TP=-1.5:LRA=11"
             subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", g, "-af", filtre, "-ar", str(sr), "-ac", "1", "-c:a", "pcm_s16le", c], check=True)
-            return Response(pathlib.Path(c).read_bytes(), media_type="audio/wav")
+            return pathlib.Path(c).read_bytes()
+
+
+@app.cls(image=image, gpu="T4", volumes={"/veri": hacim}, secrets=[modal.Secret.from_name("lol-klon-anahtar")],
+         scaledown_window=120, timeout=280, max_containers=1)
+class Klon:
+    @modal.enter()
+    def yukle(self):
+        fren_yama()
+        self.motor = Motor()
+
+    @modal.fastapi_endpoint(method="POST")
+    def uret(self, istek: dict):
+        from fastapi import HTTPException, Response
+        if not hmac.compare_digest(str(istek.get("anahtar")), os.environ["KLON_ANAHTAR"]):
+            raise HTTPException(401)
+        if istek.get("isit"):  # /bitti başında konteyneri uyandırır
+            return {"hazir": sorted(self.motor.kosul)}
+        kim = istek["kim"]
+        if kim not in self.motor.kosul:
+            raise HTTPException(404, f"profil yok: {kim}")
+        y, a = self.motor.sentez(kim, istek["metin"], int(istek.get("ton", 1)))
+        return Response(self.motor.wav(y, a), media_type="audio/wav")

@@ -42,9 +42,8 @@ SQUAD = {
 KONUSMA = HERE.parent / "kulak" / "konusmalar"  # kulak'ın /git sonrası yazdığı konuşma dökümleri (konusma.py)
 RIOT = "https://europe.api.riotgames.com"
 ARGON_MODEL = "gemini-4-argon"
-TTS_MODEL, TTS_VOICE, TTS_RATE = "gemini-2.5-pro-tts", "Fenrir", 0.9
-# Cloud TTS'te prompt ve text ayrı alan: ton talimatı asla seslendirilmez.
-# Uzun, emir kipli talimat metin uzayınca sesli okundu (26 Eki); kısa bir ses tarifi olarak kalsın.
+TTS_MODEL, TTS_VOICE = "gemini-2.5-pro-tts", "Fenrir"
+# Ton tarifi metnin başına "<tarif> oku:" diye gider. Uzun, emir kipli talimat sesli okundu (26 Eki); kısa bir ses tarifi olarak kalsın.
 TTS_STYLE = "Samimi, enerjik, gülerek laf sokan bir Türk Twitch yayıncısı sesiyle"
 # Tekrarı model tarafında "tekrar etme" demek kırmıyor: açı, açılış ve Patrick lafları burada rastgele seçilir.
 ANGLES = [
@@ -68,7 +67,8 @@ OPENINGS = [
 ]
 PATRICK_LINES = ["Yarma ya, yarma!", "Ölüsünü sikicem onun!", "Ya kanka hadi ya!", "Ya yok amına koyayım ya!"]
 # Kötü oynayan iki kişiye heceye bölünmüş ikili adı: ikisi yan yana gelince küfür çıkar.
-DUO_NAMES = [("Yar", "Rak"), ("Sa", "Lak"), ("Ga", "Vat"), ("Beyin", "Siz"), ("E", "Zik"), ("Dan", "Galak"), ("Ap", "Tal")]
+DUO_NAMES = [("Yar", "Rak"), ("Am", "Cık"), ("Sa", "Lak"), ("Ga", "Vat"), ("Beyin", "Siz"), ("E", "Zik"), ("Dan", "Galak"), ("Ap", "Tal")]
+DUO_TOP, DUO_TOP_CHANCE = DUO_NAMES[:2], 0.8  # Latif 3 Kas: ikili adı çoğunlukla Yar-Rak ya da Am-Cık
 PATRICK_LINE_CHANCE, DUO_CHANCE = 0.4, 0.35  # ponytail: elle seçilmiş sıklık; hâlâ sık/seyrek gelirse buradan ayarla
 QUEUES = {400: "Normal", 420: "Dereceli Tek/Çift", 430: "Normal", 440: "Esnek", 450: "ARAM", 490: "Hızlı Oyun"}
 
@@ -86,6 +86,7 @@ def load_env():
 
 UA = {"User-Agent": "lol-squad-bot/1.0 (+https://github.com/latifakgun/lol-squad)"}  # Cloudflare Python-urllib'i 1010 ile reddediyor
 BOOTS = set()  # item_names doldurur
+RUNES = {}  # item_names doldurur: rün kimliği → Türkçe ad (eşya kimlikleriyle çakışabildiği için ayrı)
 
 
 def get_json(url, headers=None):
@@ -117,6 +118,9 @@ def item_names():
     ver = get_json("https://ddragon.leagueoflegends.com/api/versions.json")[0]
     data = get_json(f"https://ddragon.leagueoflegends.com/cdn/{ver}/data/tr_TR/item.json")
     BOOTS.update(int(i) for i, v in data["data"].items() if "Boots" in v.get("tags", []))  # 3. kademe çizmeler de (Zincirli Eziciler): adından anlaşılmıyor
+    for style in get_json(f"https://ddragon.leagueoflegends.com/cdn/{ver}/data/tr_TR/runesReforged.json"):
+        RUNES[style["id"]] = style["name"]
+        RUNES.update((r["id"], r["name"]) for slot in style["slots"] for r in slot["runes"])
     return {int(i): v["name"] for i, v in data["data"].items()}
 
 
@@ -141,6 +145,7 @@ def summarize(match, ids_by_key, items):
             "kills": p["kills"], "deaths": p["deaths"], "assists": p["assists"],
             "cs": cs, "cs_per_min": round(cs / mins, 1), "gold": p["goldEarned"],
             "damage": p["totalDamageDealtToChampions"], "vision": p["visionScore"],
+            "magic_damage": p.get("magicDamageDealtToChampions"), "physical_damage": p.get("physicalDamageDealtToChampions"),
             "kill_participation": round(p.get("challenges", {}).get("killParticipation", 0) * 100),
             "items": [items.get(p[k], "") for k in [*(f"item{i}" for i in range(6)), "roleBoundItem"] if p.get(k)],
             "level": p.get("summonerLevel"),
@@ -153,7 +158,10 @@ def summarize(match, ids_by_key, items):
             ch = p.get("challenges", {})
             squad[SQUAD[k][2]] = {**row(p), "skillshots_hit": ch.get("skillshotsHit"), "skillshots_dodged": ch.get("skillshotsDodged"),
                                   "q_w_e_r_casts": [p.get(f"spell{i}Casts") for i in range(1, 5)],
-                                  "solo_kills": ch.get("soloKills"), "control_wards": ch.get("controlWardsPlaced")}
+                                  "solo_kills": ch.get("soloKills"), "control_wards": ch.get("controlWardsPlaced"),
+                                  # ana ağaç (ilk ad = temel rün), sonra ikincil ağaç
+                                  "runes": [RUNES.get(x) for s in p.get("perks", {}).get("styles", [])
+                                            for x in [s["style"], *(sel["perk"] for sel in s["selections"])]]}
         else:
             others.append({"name": p.get("riotIdGameName"), "team_win": p["win"], **row(p)})
     return {"queue": QUEUES.get(info["queueId"], str(info["queueId"])), "minutes": round(mins),
@@ -274,7 +282,8 @@ def direct(summary, history, match_id, end):
     if len(bad) >= 2 and not any(h.get("ikili") for h in tonight) and random.random() < DUO_CHANCE:
         used = {tuple(h["ikili"]) for h in older[-10:] if h.get("ikili")}
         summary["yonlendirme"]["kotu_ikili"] = {"oyuncular": bad[:2],
-                                                "ad": random.choice([d for d in DUO_NAMES if d not in used] or DUO_NAMES)}
+                                                "ad": random.choice(DUO_TOP) if random.random() < DUO_TOP_CHANCE
+                                                else random.choice([d for d in DUO_NAMES[2:] if d not in used] or DUO_NAMES[2:])}
     return summary
 
 
@@ -310,34 +319,18 @@ async def argon(prompt):
     return r.text.strip()
 
 
-def chunks(text, limit=3500):
-    """Cloud TTS metin alanı 4000 baytla sınırlı: cümle sınırından böl."""
-    out, cur = [], ""
-    for s in text.replace("! ", "!\n").replace("? ", "?\n").replace(". ", ".\n").splitlines():
-        if cur and len((cur + " " + s).encode()) > limit:
-            out.append(cur); cur = s
-        else:
-            cur = f"{cur} {s}".strip()
-    return out + [cur] if cur else out
-
-
 def tts(text, path):
-    import base64, io
-    import google.auth
-    from google.auth.transport.requests import AuthorizedSession
+    # Cloud TTS 4000 baytta bölüyordu, ikinci parçada ses incelip değişiyordu (3 Kas, ~3:10).
+    # Vertex generateContent tek istekte bütün metni okur: tek ses, ek yeri yok.
+    from google import genai
+    from google.genai import types
 
-    project = os.environ["GOOGLE_CLOUD_PROJECT"]
-    cred, _ = google.auth.default(scopes=["https://www.googleapis.com/auth/cloud-platform"], quota_project_id=project)
-    session = AuthorizedSession(cred)
-    pcm = b""
-    for part in chunks(text):
-        r = session.post("https://texttospeech.googleapis.com/v1/text:synthesize", timeout=180, json={
-            "input": {"prompt": TTS_STYLE, "text": part},
-            "voice": {"languageCode": "tr-TR", "name": TTS_VOICE, "modelName": TTS_MODEL},
-            "audioConfig": {"audioEncoding": "LINEAR16", "sampleRateHertz": 24000, "speakingRate": TTS_RATE}})
-        r.raise_for_status()
-        with wave.open(io.BytesIO(base64.b64decode(r.json()["audioContent"]))) as w:
-            pcm += w.readframes(w.getnframes())
+    client = genai.Client(vertexai=True, project=os.environ["GOOGLE_CLOUD_PROJECT"], location="global",
+                          http_options=types.HttpOptions(timeout=300_000))
+    r = client.models.generate_content(model=TTS_MODEL, contents=f"{TTS_STYLE} oku: {text}",
+        config=types.GenerateContentConfig(response_modalities=["AUDIO"], speech_config=types.SpeechConfig(
+            language_code="tr-TR", voice_config=types.VoiceConfig(prebuilt_voice_config=types.PrebuiltVoiceConfig(voice_name=TTS_VOICE)))))
+    pcm = r.candidates[0].content.parts[0].inline_data.data  # audio/L16, 24 kHz, mono
     with wave.open(str(path), "wb") as w:
         w.setnchannels(1); w.setsampwidth(2); w.setframerate(24000); w.writeframes(pcm)
 

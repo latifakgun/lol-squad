@@ -22,6 +22,7 @@ import wave
 HERE = pathlib.Path(__file__).resolve().parent
 OUT = HERE / "out"
 STATE = HERE / "state.json"
+BUSY = HERE / ".mesgul"  # /bitti sürerken var; güncelleme okunan sesi kesmesin (4 Kas: push 6. maçın TTS'ini kesti)
 HISTORY = HERE / "gecmis.json"  # okunan metinler: akşamın hafızası + tekrar etmeme
 SESSION_GAP = 4 * 3600 * 1000  # son maçtan 4 saat geçtiyse yeni akşam (gece yarısını geçen maçlar aynı akşama sayılır)
 
@@ -56,6 +57,11 @@ ANGLES = [
     "altın farkı hikâyesi: maç nerede kırıldı, nasıl döndü ya da elden kaçtı",
     "takım oyunu: birlikte mi oynandı, herkes kendi kafasına mı",
 ]
+TALIMAT = {
+    "iyi": "SADECE küfürlü, coşkulu öv. Hiçbir eleştiri, 'ama', kusur, rün ya da eşya lafı yok.",
+    "orta": "İyi yaptığını küfürlü öv, kötü yaptığını küfürlü göm; ikisi de kısa.",
+    "kötü": "Sayılarıyla küfürlü göm.",
+}
 # Kimse kötü oynamadıysa bu açılar elenir: kusur aramaya zorluyorlar.
 NEGATIVE_ANGLES = {ANGLES[2], ANGLES[3], ANGLES[7]}
 OPENINGS = [
@@ -274,13 +280,28 @@ def direct(summary, history, match_id, end):
     older = past[:len(past) - len(tonight)]
     recent = {h.get("aci") for h in past[-3:]}
     ratio = lambda p: (p["kills"] + p["assists"]) / max(p["deaths"], 1)
-    # Hüküm kodda verilir, model karar vermez (4 Kas: herkes iyi oynadığı maçta "ama"larla gömüldük).
-    # ponytail: eşikler elle; iyi = skor oranı 2,5+ (kazanılan maçta 2+ ve 5 altı ölüm), kötü = oran 1 altı ya da 8+ ölüm.
+    # Hüküm kodda verilir, model karar vermez (4 Kas: 20/5/1 taşıyan Patrick'e "asistin az" dendi).
+    # ponytail: eşikler elle, 4 Kas'ın beş maçına göre; yanlış hüküm görülürse buradan ayarla.
+    win = any(p["win"] for p in summary["squad"].values())
+    team = list(summary["squad"].values()) + [o for o in summary["others"] if o["team_win"] == win]
+    team_dmg, team_kills = sum(p["damage"] for p in team) or 1, sum(p["kills"] for p in team) or 1
+    aram = summary["queue"] == "ARAM"
     for p in summary["squad"].values():
         r = ratio(p)
-        d20 = p["deaths"] * 20 / max(summary["minutes"], 15)  # ölüm sayısı süreye göre: 41 dk'da 12 ölüm, 20 dk'da 6 ölümdür
-        p["performans"] = ("kötü" if r < 1 or d20 >= 8
-                           else "iyi" if r >= 2.5 or (p["win"] and r >= 2 and d20 <= 5) else "orta")
+        p["hasar_payi"] = round(100 * p["damage"] / team_dmg)  # takım hasarının yüzdesi
+        p["kill_payi"] = round(100 * p["kills"] / team_kills)
+        # 20 dakikalık eşdeğer ölüm: 41 dk'da 12 ölüm, 20 dk'da 6 ölümdür; ARAM'da ölüm bol, yarısı sayılır
+        d20 = p["deaths"] * 20 / max(summary["minutes"], 15) / (2 if aram else 1)
+        # maçı sırtlayan: kill ve hasarda pay büyük, ya da takım hasarının üçte birinden fazlası tek başına
+        carry = (p["hasar_payi"] >= 28 and p["kill_payi"] >= 30 and r >= 1.5) or (p["hasar_payi"] >= 35 and r >= 1.2)
+        p["performans"] = ("iyi" if carry or r >= 2.5 or (r >= 2 and d20 <= 6)
+                           else "kötü" if r < 1 or (d20 >= 8 and r < 2) or (p["hasar_payi"] < 12 and r < 1.6) else "orta")
+        p["talimat"] = TALIMAT[p["performans"]]
+        if p["performans"] == "iyi":
+            # Prompttaki "iyi oynayana eleştiri yok" kuralı tek başına tutmadı (4 Kas 6. maç: çizme "satıldı" yazıyordu,
+            # yine de "çizmen yok" dendi). Eleştiri cephanesi veriden silinir: görmediği şeye laf sokamaz.
+            for k in ("boots", "q_w_e_r_casts", "control_wards", "runes"):
+                p.pop(k, None)
     anyone_bad = any(p["performans"] == "kötü" for p in summary["squad"].values())
     angles = [a for a in ANGLES if a not in recent and (anyone_bad or a not in NEGATIVE_ANGLES)]
     summary["oturum"] = {"mac_no": len(tonight) + 1, "onceki_sonuclar": ["G" if h["win"] else "M" for h in tonight],
@@ -318,10 +339,10 @@ def remember(history, match_id, end, summary, text):
 
 async def argon_script(summary):
     return await argon((HERE / "script_prompt.md").read_text(encoding="utf-8").replace(
-        "__MATCH__", json.dumps(summary, ensure_ascii=False, indent=1)))
+        "__MATCH__", json.dumps(summary, ensure_ascii=False, indent=1)), think=True)
 
 
-async def argon(prompt):
+async def argon(prompt, think=False):
     # CLI değil doğrudan Vertex API: sunucuda tarayıcı girişi gerekmiyor, kimlik google.auth.default() (VM servis hesabı).
     from google import genai
     from google.genai import types
@@ -331,7 +352,9 @@ async def argon(prompt):
                           http_options=types.HttpOptions(retry_options=types.HttpRetryOptions(attempts=6, initial_delay=15, max_delay=60)))
     r = await asyncio.wait_for(client.aio.models.generate_content(
         model=ARGON_MODEL, contents=prompt,
-        config=types.GenerateContentConfig(system_instruction="Verilen görevi uygula. Yalnızca okunacak metni yaz.")), timeout=480)
+        # Varsayılanda Argon hiç düşünmüyor (5 Kas ölçümü: düşünme tokeni yok); maç metni yüksek düşünmeyle yazılır.
+        config=types.GenerateContentConfig(system_instruction="Verilen görevi uygula. Yalnızca okunacak metni yaz.",
+                                           thinking_config=types.ThinkingConfig(thinking_level="high") if think else None)), timeout=480)
     if not (r.text or "").strip():
         raise RuntimeError("Argon boş döndü")
     return r.text.strip()
@@ -399,6 +422,7 @@ def run_bot():
             return await interaction.response.send_message("Bir önceki maçı okuyorum, bitince tekrar dene.", ephemeral=True)
         await interaction.response.defer(thinking=True)
         async with lock:
+            BUSY.touch()  # sunucu/guncelle.sh bu dosya varken botu yeniden başlatmaz
             try:
                 if "puuids" not in cache:
                     cache["puuids"] = await asyncio.to_thread(puuids)
@@ -429,6 +453,9 @@ def run_bot():
                 else:
                     return await interaction.followup.send(f"{match_id} verisi Riot'ta hâlâ hazır değil. Bir dakika sonra tekrar /bitti yaz.")
                 summary = summarize(match, cache["puuids"], cache["items"])
+                if match["info"]["gameDuration"] < 300:  # remake: 2 dk'lık maçta "sıfır hasar" diye gömüyordu (4 Kas)
+                    STATE.write_text(json.dumps(sorted(done | {match_id})))
+                    return await interaction.followup.send(f"{match_id} remake, {summary['minutes']} dk sürmüş. Konuşacak bir şey yok, yeni maça basın.")
                 summary["moments"] = moments(match, timeline, cache["puuids"])
                 summary["altin_farki"] = gold_curve(match, timeline, cache["puuids"])
                 for _ in range(40):  # /git sonrası döküm hâlâ işleniyorsa bekle (en fazla 2 dk)
@@ -466,6 +493,8 @@ def run_bot():
             except Exception as e:
                 await interaction.followup.send(f"Bir şey patladı: `{type(e).__name__}: {str(e)[:300]}`")
                 raise
+            finally:
+                BUSY.unlink(missing_ok=True)
 
     @client.event
     async def on_ready():

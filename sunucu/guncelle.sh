@@ -5,6 +5,8 @@ set -euo pipefail
 U=$1; R=$2
 as() { runuser -u "$U" -- "$@"; }
 cd "$R"
+# /bitti sürerken (bot/.mesgul, 20 dk'dan taze) hiçbir şey çekme; 5 dk sonra tekrar denenir. 4 Kas: push 6. maçın sesini kesti.
+[ -n "$(find bot/.mesgul -mmin -20 2>/dev/null)" ] && exit 0
 as git fetch -q origin
 old=$(as git rev-parse HEAD); new=$(as git rev-parse '@{u}')
 [ "$old" = "$new" ] && exit 0

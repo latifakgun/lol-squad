@@ -125,9 +125,12 @@ def item_names():
 
 
 def latest_match_id(ids_by_key, done):
-    """Ekipten herhangi birinin en yeni, henüz analiz edilmemiş maçı."""
-    ids = {riot_get(f"/lol/match/v5/matches/by-puuid/{p}/ids?count=1")[0] for p in ids_by_key.values()}
-    fresh = sorted((i for i in ids if i not in done), key=lambda i: int(i.split("_")[1]))
+    """Ekipten en az ikisinin birlikte oynadığı, en yeni, henüz analiz edilmemiş maç (tek kişinin solo maçı sayılmaz)."""
+    seen = {}
+    for p in ids_by_key.values():
+        for i in riot_get(f"/lol/match/v5/matches/by-puuid/{p}/ids?count=5"):
+            seen[i] = seen.get(i, 0) + 1
+    fresh = sorted((i for i, n in seen.items() if n >= 2 and i not in done), key=lambda i: int(i.split("_")[1]))
     return fresh[-1] if fresh else None
 
 

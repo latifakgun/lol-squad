@@ -48,7 +48,7 @@ TTS_STYLE = "Samimi, enerjik, gülerek laf sokan bir Türk Twitch yayıncısı s
 # Tekrarı model tarafında "tekrar etme" demek kırmıyor: açı, açılış ve Patrick lafları burada rastgele seçilir.
 ANGLES = [
     "maçı belirleyen tek an: o anı kim, nasıl yaşattı",
-    "en iyi oynayan: maçı onun gözünden anlat, diğerleri ona nasıl yük oldu",
+    "en iyi oynayan: maçı onun gözünden anlat",
     "en kötü oynayan: maçı nasıl kendi eliyle sattı ya da az kalsın satıyordu",
     "maçın en saçma istatistiği: o sayıdan yola çıkıp herkese bağla",
     "koridor savaşları: ekipten herkes kendi rakibine karşı nasıl gitti",
@@ -56,6 +56,8 @@ ANGLES = [
     "altın farkı hikâyesi: maç nerede kırıldı, nasıl döndü ya da elden kaçtı",
     "takım oyunu: birlikte mi oynandı, herkes kendi kafasına mı",
 ]
+# Kimse kötü oynamadıysa bu açılar elenir: kusur aramaya zorluyorlar.
+NEGATIVE_ANGLES = {ANGLES[2], ANGLES[3], ANGLES[7]}
 OPENINGS = [
     "doğrudan en çarpıcı olayla, sanki biri az önce sormuş gibi",
     "sahte sakin bir başlangıç, sonra patlama",
@@ -267,12 +269,20 @@ def direct(summary, history, match_id, end):
         t = h["end"]
     older = past[:len(past) - len(tonight)]
     recent = {h.get("aci") for h in past[-3:]}
+    ratio = lambda p: (p["kills"] + p["assists"]) / max(p["deaths"], 1)
+    # Hüküm kodda verilir, model karar vermez (4 Kas: herkes iyi oynadığı maçta "ama"larla gömüldük).
+    # ponytail: eşikler elle; iyi = skor oranı 2,5+ (kazanılan maçta 2+ ve 5 altı ölüm), kötü = oran 1 altı ya da 8+ ölüm.
+    for p in summary["squad"].values():
+        r = ratio(p)
+        p["performans"] = ("kötü" if r < 1 or p["deaths"] >= 8
+                           else "iyi" if r >= 2.5 or (p["win"] and r >= 2 and p["deaths"] <= 5) else "orta")
+    anyone_bad = any(p["performans"] == "kötü" for p in summary["squad"].values())
+    angles = [a for a in ANGLES if a not in recent and (anyone_bad or a not in NEGATIVE_ANGLES)]
     summary["oturum"] = {"mac_no": len(tonight) + 1, "onceki_sonuclar": ["G" if h["win"] else "M" for h in tonight],
                          "bu_aksam_okunanlar": [h["text"] for h in tonight],
                          "onceki_gunlerin_acilislari": [h["text"].split(".")[0] for h in older[-10:]],
                          "onceki_gunlerin_dersleri": [h["text"] for h in older[-6:]]}
-    summary["yonlendirme"] = {"aci": random.choice([a for a in ANGLES if a not in recent]), "acilis": random.choice(OPENINGS)}
-    ratio = lambda p: (p["kills"] + p["assists"]) / max(p["deaths"], 1)
+    summary["yonlendirme"] = {"aci": random.choice(angles), "acilis": random.choice(OPENINGS)}
     if "Patrick" in summary["squad"]:
         p = summary["squad"]["Patrick"]
         # ponytail: "kötü" = skor oranı 1,5 altı ya da 8+ ölüm; "çok kötü" = oran 1 altı ya da 10+ ölüm. Eşikler elle.

@@ -169,6 +169,10 @@ def summarize(match, ids_by_key, items):
                                             for x in [s["style"], *(sel["perk"] for sel in s["selections"])]]}
         else:
             others.append({"name": p.get("riotIdGameName"), "team_win": p["win"], **row(p)})
+    # Veri maç SONUNDAKİ envanter: geç oyunda çizme satılıp yerine eşya alınır (4 Kas: "çizme almamışsın" yanlış alarmı).
+    for v in squad.values():
+        if not v["boots"] and mins >= 25:
+            v["boots"] = "yok, büyük ihtimalle slot için satıldı (hata değil)"
     return {"queue": QUEUES.get(info["queueId"], str(info["queueId"])), "minutes": round(mins),
             "squad": squad, "others": others}
 
@@ -274,8 +278,9 @@ def direct(summary, history, match_id, end):
     # ponytail: eşikler elle; iyi = skor oranı 2,5+ (kazanılan maçta 2+ ve 5 altı ölüm), kötü = oran 1 altı ya da 8+ ölüm.
     for p in summary["squad"].values():
         r = ratio(p)
-        p["performans"] = ("kötü" if r < 1 or p["deaths"] >= 8
-                           else "iyi" if r >= 2.5 or (p["win"] and r >= 2 and p["deaths"] <= 5) else "orta")
+        d20 = p["deaths"] * 20 / max(summary["minutes"], 15)  # ölüm sayısı süreye göre: 41 dk'da 12 ölüm, 20 dk'da 6 ölümdür
+        p["performans"] = ("kötü" if r < 1 or d20 >= 8
+                           else "iyi" if r >= 2.5 or (p["win"] and r >= 2 and d20 <= 5) else "orta")
     anyone_bad = any(p["performans"] == "kötü" for p in summary["squad"].values())
     angles = [a for a in ANGLES if a not in recent and (anyone_bad or a not in NEGATIVE_ANGLES)]
     summary["oturum"] = {"mac_no": len(tonight) + 1, "onceki_sonuclar": ["G" if h["win"] else "M" for h in tonight],

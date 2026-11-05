@@ -118,8 +118,16 @@ def riot_get(path):
 
 
 def puuids():
-    q = urllib.parse.quote
-    return {k: riot_get(f"/riot/account/v1/accounts/by-riot-id/{q(n)}/{q(t)}")["puuid"] for k, (n, t, _) in SQUAD.items()}
+    # Biri Riot ID'sini değiştirince 404 bütün /bitti'yi düşürüyordu (5 Kas, DOMALANGO#chu): o kişi atlanır.
+    q, out = urllib.parse.quote, {}
+    for k, (n, t, _) in SQUAD.items():
+        try:
+            out[k] = riot_get(f"/riot/account/v1/accounts/by-riot-id/{q(n)}/{q(t)}")["puuid"]
+        except urllib.error.HTTPError as e:
+            if e.code != 404:
+                raise
+            print(f"Riot ID bulunamadı, atlandı: {n}#{t}", flush=True)
+    return out
 
 
 def item_names():

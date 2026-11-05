@@ -37,7 +37,7 @@ SQUAD = {
     "taner": ("hTune", "SF90", "Taner"),
     "eda": ("ibo kaypakkaya", "111", "Eda"),
     "malatya": ("MalatyaJigolosu", "AYIII", "Malatya Jigolosu"),
-    "domalango": ("DOMALANGO", "chu", "Domalango"),
+    "domalango": ("siliquastrum", "chu", "Domalango"),  # 5 Kas: eski DOMALANGO#chu
     "ateck": ("ateck28", "2828", "Ateck"),
 }
 KONUSMA = HERE.parent / "kulak" / "konusmalar"  # kulak'ın /git sonrası yazdığı konuşma dökümleri (konusma.py)
@@ -46,7 +46,7 @@ ARGON_MODEL = "gemini-4-argon"
 TTS_MODEL, TTS_VOICE = "gemini-2.5-pro-tts", "Fenrir"
 # Ton tarifi metnin başına "<tarif> oku:" diye gider. Uzun, emir kipli talimat sesli okundu (26 Eki); kısa bir ses tarifi olarak kalsın.
 TTS_STYLE = "Samimi, enerjik, gülerek laf sokan bir Türk Twitch yayıncısı sesiyle"
-# Tekrarı model tarafında "tekrar etme" demek kırmıyor: açı, açılış ve Patrick lafları burada rastgele seçilir.
+# Tekrarı model tarafında "tekrar etme" demek kırmıyor: açı ve açılış burada rastgele seçilir.
 ANGLES = [
     "maçı belirleyen tek an: o anı kim, nasıl yaşattı",
     "en iyi oynayan: maçı onun gözünden anlat",
@@ -73,11 +73,10 @@ OPENINGS = [
     "maç spikeri gibi, anons eder gibi",
     "fısıldar gibi bir sır vererek",
 ]
-PATRICK_LINES = ["Yarma ya, yarma!", "Ölüsünü sikicem onun!", "Ya kanka hadi ya!", "Ya yok amına koyayım ya!"]
 # Kötü oynayan iki kişiye heceye bölünmüş ikili adı: ikisi yan yana gelince küfür çıkar.
 DUO_NAMES = [("Yar", "Rak"), ("Am", "Cık"), ("Sa", "Lak"), ("Ga", "Vat"), ("Beyin", "Siz"), ("E", "Zik"), ("Dan", "Galak"), ("Ap", "Tal")]
 DUO_TOP, DUO_TOP_CHANCE = DUO_NAMES[:2], 0.8  # Latif 3 Kas: ikili adı çoğunlukla Yar-Rak ya da Am-Cık
-PATRICK_LINE_CHANCE, DUO_CHANCE = 0.4, 0.35  # ponytail: elle seçilmiş sıklık; hâlâ sık/seyrek gelirse buradan ayarla
+DUO_CHANCE = 0.35  # ponytail: elle seçilmiş sıklık; hâlâ sık/seyrek gelirse buradan ayarla
 QUEUES = {400: "Normal", 420: "Dereceli Tek/Çift", 430: "Normal", 440: "Esnek", 450: "ARAM", 490: "Hızlı Oyun"}
 
 
@@ -302,7 +301,8 @@ def direct(summary, history, match_id, end):
         d20 = p["deaths"] * 20 / max(summary["minutes"], 15) / (2 if aram else 1)
         # maçı sırtlayan: kill ve hasarda pay büyük, ya da takım hasarının üçte birinden fazlası tek başına
         carry = (p["hasar_payi"] >= 28 and p["kill_payi"] >= 30 and r >= 1.5) or (p["hasar_payi"] >= 35 and r >= 1.2)
-        p["performans"] = ("iyi" if carry or r >= 2.5 or (r >= 2 and d20 <= 6)
+        # 5 Kas: 39 dk'da 6/10/16, hasar payı 18 olan Ezreal Ateck "iyi" çıkıp saf övgü aldı; oran 2–2,5 bandında hasar payı da şart
+        p["performans"] = ("iyi" if carry or r >= 2.5 or (r >= 2 and d20 <= 6 and p["hasar_payi"] >= 20)
                            else "kötü" if r < 1 or (d20 >= 8 and r < 2) or (p["hasar_payi"] < 12 and r < 1.6) else "orta")
         p["talimat"] = TALIMAT[p["performans"]]
         if p["performans"] == "iyi":
@@ -317,14 +317,8 @@ def direct(summary, history, match_id, end):
                          "onceki_gunlerin_acilislari": [h["text"].split(".")[0] for h in older[-10:]],
                          "onceki_gunlerin_dersleri": [h["text"] for h in older[-6:]]}
     summary["yonlendirme"] = {"aci": random.choice(angles), "acilis": random.choice(OPENINGS)}
-    if "Patrick" in summary["squad"]:
-        p = summary["squad"]["Patrick"]
-        # ponytail: "kötü" = skor oranı 1,5 altı ya da 8+ ölüm; "çok kötü" = oran 1 altı ya da 10+ ölüm. Eşikler elle.
-        if (ratio(p) < 1.5 or p["deaths"] >= 8) and random.random() < PATRICK_LINE_CHANCE:
-            used = {h.get("patrick_lafi") for h in tonight}
-            summary["yonlendirme"]["patrick_lafi"] = random.choice([l for l in PATRICK_LINES if l not in used] or PATRICK_LINES)
-    # Kötü ikili şakası: gerçekten iki kişi batırdıysa ve bu akşam yapılmadıysa, arada bir.
-    bad = sorted((n for n, p in summary["squad"].items() if n != "Eda" and ratio(p) < 1 and p["deaths"] >= 6),
+    # Kötü ikili şakası: gerçekten iki kişi batırdıysa ve bu akşam yapılmadıysa, arada bir. Kimse muaf değil (5 Kas).
+    bad = sorted((n for n, p in summary["squad"].items() if ratio(p) < 1 and p["deaths"] >= 6),
                  key=lambda n: ratio(summary["squad"][n]))
     if len(bad) >= 2 and not any(h.get("ikili") for h in tonight) and random.random() < DUO_CHANCE:
         used = {tuple(h["ikili"]) for h in older[-10:] if h.get("ikili")}
@@ -338,7 +332,7 @@ def remember(history, match_id, end, summary, text):
     win = any(p["win"] for p in summary["squad"].values())
     y = summary["yonlendirme"]
     entry = {"id": match_id, "end": end, "win": win, "aci": y["aci"], "text": text,
-             "patrick_lafi": y.get("patrick_lafi"), "ikili": y.get("kotu_ikili", {}).get("ad")}
+             "ikili": y.get("kotu_ikili", {}).get("ad")}
     keep = sorted([h for h in history if h["id"] != match_id] + [entry], key=lambda h: h["end"])[-30:]
     HISTORY.write_text(json.dumps(keep, ensure_ascii=False, indent=1), encoding="utf-8")
 

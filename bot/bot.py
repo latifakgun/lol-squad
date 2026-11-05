@@ -37,7 +37,7 @@ SQUAD = {
     "taner": ("hTune", "SF90", "Taner"),
     "eda": ("ibo kaypakkaya", "111", "Eda"),
     "malatya": ("MalatyaJigolosu", "AYIII", "Malatya Jigolosu"),
-    "domalango": ("siliquastrum", "chu", "Domalango"),  # 5 Kas: eski DOMALANGO#chu
+    "domalango": ("siliquastrum", "chu", "Erdoğan Çiçeği"),  # 5 Kas: eski DOMALANGO#chu; 6 Kas Latif: artık "Erdoğan Çiçeği" denir
     "ateck": ("ateck28", "2828", "Ateck"),
 }
 KONUSMA = HERE.parent / "kulak" / "konusmalar"  # kulak'ın /git sonrası yazdığı konuşma dökümleri (konusma.py)
@@ -341,7 +341,7 @@ def remember(history, match_id, end, summary, text):
 
 async def argon_script(summary):
     return await argon((HERE / "script_prompt.md").read_text(encoding="utf-8").replace(
-        "__MATCH__", json.dumps(summary, ensure_ascii=False, indent=1)), think=True)
+        "__MATCH__", json.dumps(summary, ensure_ascii=False, indent=1)))  # 6 Kas: high düşünme 28k token, 4-6 dk sürüyordu; kapalı 27 sn, kalite farkı küçük
 
 
 async def argon(prompt, think=False):
